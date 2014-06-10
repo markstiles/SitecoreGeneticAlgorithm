@@ -9,7 +9,17 @@ namespace GA.Lib {
 	/// represents a rendering
 	/// </summary>
 	public class AlgoGene {
-		public int Clicks { get; set; }
+		public string PlaceholderID { get; set; }
 		public string Tag { get; set; }
+		public string GeneID {
+			get {
+				return string.Format("{0}-{1}", PlaceholderID, Tag);
+			}
+		}
+
+		public AlgoGene(string PHID, string tag) {
+			PlaceholderID = PHID;
+			Tag = tag;
+		}
 	}
 }

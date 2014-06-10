@@ -2,22 +2,37 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
+using System.Web.UI.WebControls;
 
 namespace GA.Lib {
-	[DebuggerDisplay("Gene={Gene}")]
-	public class AlgoChromosome : Dictionary<int, AlgoGene>, IComparable<AlgoChromosome> {
+	public class AlgoChromosome : Dictionary<string, AlgoGene>, IComparable<AlgoChromosome> {
 
 		#region Properties
 
 		private static Random rand = new Random(Environment.TickCount);
-		
+
+		public static Dictionary<string, int> EngagementValues = new Dictionary<string, int>();
+
 		public int Fitness {
 			get {
 				int fitness = 0;
-				foreach (KeyValuePair<string, AlgoGene> g in this) 
-					fitness += g.Value.Clicks; // find the combination of most clicked on renderings
-
+				foreach (KeyValuePair<string, AlgoGene> g in this) {
+					if(EngagementValues.ContainsKey(g.Value.GeneID))
+						fitness += EngagementValues[g.Value.GeneID]; // find the combination of most clicked on renderings
+				}
 				return fitness;
+			}
+		}
+
+		public string GeneSequence {
+			get {
+				StringBuilder sb = new StringBuilder();
+				foreach (KeyValuePair<string, AlgoGene> g in this) {
+					if (sb.Length > 0)
+						sb.Append("-");
+					sb.Append(g.Value.GeneID);
+				}
+				return sb.ToString();
 			}
 		}
 
@@ -42,13 +57,11 @@ namespace GA.Lib {
 		/// <summary>
 		/// builds new chromosome with random gene sequence
 		/// </summary>
-		public static AlgoChromosome GenerateRandom(List<string> tags, int geneCount) {
+		public static AlgoChromosome GenerateRandom(List<Button> placeholders, List<string> tags) {
 			AlgoChromosome ac = new AlgoChromosome();
-			for (int count = 0; count < geneCount; count++) {
-				AlgoGene ag = new AlgoGene();
-				ag.Clicks = 0;
-				ag.Tag = tags[rand.Next(0, tags.Count)];
-				ac.Add(count, ag); // not sure why adds 32 after instead of before
+			for (int count = 0; count < placeholders.Count; count++) {
+				AlgoGene ag = new AlgoGene(placeholders[count].ID, tags[rand.Next(0, tags.Count)]);
+				ac.Add(ag.PlaceholderID, ag); 
 			}
 
 			return ac;
@@ -57,12 +70,11 @@ namespace GA.Lib {
 		/// <summary>
 		/// changes a random character in the gene to a random character
 		/// </summary>
-		public void Mutate(List<string> tags) {
-			//randomly get a gene and set it to a random tag
-			AlgoGene ag = new AlgoGene();
-			ag.Tag = tags[rand.Next(0, tags.Count)];
-			ag.Clicks = 0;
-			this[rand.Next(0, this.Count)] = ag;
+		public void Mutate(List<Button> placeholders, List<string> tags) {
+			//randomly get a gene and set it to a random placeholder and tag
+			string ph = placeholders[rand.Next(0, placeholders.Count)].ID;
+			AlgoGene ag = new AlgoGene(ph, tags[rand.Next(0, tags.Count)]);
+			this[ph] = ag;
 		}
 
 		/// <summary>
@@ -74,16 +86,19 @@ namespace GA.Lib {
 			AlgoChromosome ac1 = new AlgoChromosome();
 			AlgoChromosome ac2 = new AlgoChromosome();
 
-			for(int j = 0; j < pivotIndex; j++){
-				ac1[j] = this[j];
-				ac2[j] = mate[j];
-			}
+			int i = 0;
 			// cut the genes in half and mix
-			for (int i = pivotIndex; i < this.Count; i++) {
-				ac1[i] = mate[i];
-				ac2[i] = this[i];
+			foreach(KeyValuePair<string, AlgoGene> g in this){
+				if(i < pivotIndex) {
+					ac1.Add(g.Key, g.Value);
+					ac2.Add(g.Key, mate[g.Key]);
+				} else {
+					ac1.Add(g.Key, mate[g.Key]);
+					ac2.Add(g.Key, g.Value);
+				}
+				i++;
 			}
-
+			
 			return new List<AlgoChromosome>(2) { ac1, ac2 };
 		}
 

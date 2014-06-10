@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.UI.WebControls;
 
 namespace GA.Lib {
 	public class AlgoPopulation {
@@ -10,24 +11,26 @@ namespace GA.Lib {
 		#region Properties
 
 		private const int TOURNAMENT_SIZE = 3;
-		private static Random _rand = new Random(Environment.TickCount);
+		public static Random _rand = new Random(Environment.TickCount);
 		public float Eliteism { get; set; }
 		public float Mutation { get; set; }
 		public float Crossover { get; set; }
 		public List<string> Tags { get; set; }
+		public List<Button> Placeholders { get; set; }
 		public int GeneCount { get; set; }
-		public Dictionary<string, AlgoChromosome> Chromosomes { get; set; }
+		public List<AlgoChromosome> Chromosomes { get; set; }
 
+		
 		#endregion Properties
 
 		#region ctor
 
-		public AlgoPopulation(int size, float crossoverRatio, float eliteismRatio, float mutationRatio, List<string> tags, int geneCount) {
+		public AlgoPopulation(int size, float crossoverRatio, float eliteismRatio, float mutationRatio, List<string> tags, List<Button> placeholders) {
 			this.Crossover = crossoverRatio;
 			this.Eliteism = eliteismRatio;
 			this.Mutation = mutationRatio;
 			this.Tags = tags;
-			this.GeneCount = geneCount;
+			this.Placeholders = placeholders;
 
 			InitializePopulation(size);
 		}
@@ -40,19 +43,19 @@ namespace GA.Lib {
 		/// builds 'size' number of chromosomes and sorts
 		/// </summary>
 		private void InitializePopulation(int size) {
-			this.Chromosomes = new Dictionary<string, AlgoChromosome>(size);
+			this.Chromosomes = new List<AlgoChromosome>(size);
 			for (int count = 0; count < size; count++) {
-				this.Chromosomes.Add(string.Format("Gene {0}", count.ToString()), AlgoChromosome.GenerateRandom(Tags, GeneCount));
+				this.Chromosomes.Add(AlgoChromosome.GenerateRandom(Placeholders, Tags));
 			}
 
-			this.Chromosomes.OrderBy(a => a.Value.Fitness);
+			this.Chromosomes = this.Chromosomes.OrderByDescending(a => a.Fitness).ToList();
 		}
 
 		/// <summary>
 		/// updates the elite portion by mating the most fit and mutate randomly
 		/// </summary>
 		public void Evolve() {
-			Dictionary<string, AlgoChromosome> evolvedSet = new Dictionary<string, AlgoChromosome>(this.Chromosomes);
+			List<AlgoChromosome> evolvedSet = new List<AlgoChromosome>(this.Chromosomes);
 
 			//get a position in the number of chromosomes based on the percent of elitism
 			int unchangedIndex = (int)Math.Round(this.Chromosomes.Count * this.Eliteism);
@@ -67,22 +70,21 @@ namespace GA.Lib {
 					evolvedSet[changedIndex] = children.First(); //replace an elite
 
 					if (_rand.NextDouble() <= this.Mutation) // if random is less than mutation rate (low probability) then mutate
-						evolvedSet[changedIndex] = evolvedSet[changedIndex].Mutate();
+						evolvedSet[changedIndex].Mutate(Placeholders, Tags);
 
-					if (changedIndex < evolvedSet.Count - 1) { // if not the last
+					if (changedIndex < evolvedSet.Count - 1) { // if not the last item in set
 						changedIndex++;
 
 						evolvedSet[changedIndex] = children.Last(); // set the next too 
 						if (_rand.NextDouble() <= this.Mutation) // possibly mutate it since the next round may not mate or mutate
-							evolvedSet[changedIndex] = evolvedSet[changedIndex].Mutate();
+							evolvedSet[changedIndex].Mutate(Placeholders, Tags);
 					}
 				} else if (_rand.NextDouble() <= this.Mutation) { // or if the random double is less than the mutation rate (low probability) then mutate
-					evolvedSet[changedIndex].Mutate();
+					evolvedSet[changedIndex].Mutate(Placeholders, Tags);
 				}
 				changedIndex++;
 			}
-			evolvedSet.Sort();
-			this.Chromosomes = evolvedSet;
+			this.Chromosomes = evolvedSet.OrderByDescending(a => a.Fitness).ToList();
 		}
 
 		/// <summary>
@@ -98,7 +100,7 @@ namespace GA.Lib {
 				//it tries TOURNAMENT_SIZE times to randomly find a better parent
 				for (int tournyIndex = 0; tournyIndex < TOURNAMENT_SIZE; tournyIndex++) {
 					int randomIndex = _rand.Next(this.Chromosomes.Count - 1);
-					if (this.Chromosomes[randomIndex].Fitness < parents[parentIndex].Fitness) { // closer to 0 is more fit
+					if (this.Chromosomes[randomIndex].Fitness > parents[parentIndex].Fitness) { // closer to 0 is more fit
 						parents[parentIndex] = this.Chromosomes[randomIndex];
 					}
 				}
