@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
@@ -11,16 +12,18 @@ namespace GA.Lib {
 
 		private static Random rand = new Random(Environment.TickCount);
 
-		public static Dictionary<string, int> EngagementValues = new Dictionary<string, int>();
+		public static Dictionary<string, List<EngagementValue>> EngagementValues = new Dictionary<string, List<EngagementValue>>();
 
-		public int Fitness {
+		public double Fitness {
 			get {
-				int fitness = 0;
+				double fitness = 0;
 				foreach (KeyValuePair<string, AlgoGene> g in this) {
-					if(EngagementValues.ContainsKey(g.Value.GeneID))
-						fitness += EngagementValues[g.Value.GeneID]; // find the combination of most clicked on renderings
+					if (EngagementValues.ContainsKey(g.Value.Tag)) { //need to change how this gets stored.
+						List<EngagementValue> evl = EngagementValues[g.Value.Tag];
+						fitness += evl.Sum(a => a.CurrentValue());
+					}
 				}
-				return fitness;
+				return Math.Round(fitness, 3);
 			}
 		}
 
@@ -57,7 +60,7 @@ namespace GA.Lib {
 		/// <summary>
 		/// builds new chromosome with random gene sequence
 		/// </summary>
-		public static AlgoChromosome GenerateRandom(List<Button> placeholders, List<string> tags) {
+		public static AlgoChromosome GenerateRandom(List<Literal> placeholders, List<string> tags) {
 			AlgoChromosome ac = new AlgoChromosome();
 			for (int count = 0; count < placeholders.Count; count++) {
 				AlgoGene ag = new AlgoGene(placeholders[count].ID, tags[rand.Next(0, tags.Count)]);
@@ -70,7 +73,7 @@ namespace GA.Lib {
 		/// <summary>
 		/// changes a random character in the gene to a random character
 		/// </summary>
-		public void Mutate(List<Button> placeholders, List<string> tags) {
+		public void Mutate(List<Literal> placeholders, List<string> tags) {
 			//randomly get a gene and set it to a random placeholder and tag
 			string ph = placeholders[rand.Next(0, placeholders.Count)].ID;
 			AlgoGene ag = new AlgoGene(ph, tags[rand.Next(0, tags.Count)]);

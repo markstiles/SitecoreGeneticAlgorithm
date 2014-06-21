@@ -43,6 +43,7 @@
     <Compile Include="AlgoChromosome.cs" />
     <Compile Include="AlgoGene.cs" />
     <Compile Include="AlgoPopulation.cs" />
+    <Compile Include="EngagementValue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

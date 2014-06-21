@@ -16,7 +16,7 @@ namespace GA.Lib {
 		public float Mutation { get; set; }
 		public float Crossover { get; set; }
 		public List<string> Tags { get; set; }
-		public List<Button> Placeholders { get; set; }
+		public List<Literal> Placeholders { get; set; }
 		public int GeneCount { get; set; }
 		public List<AlgoChromosome> Chromosomes { get; set; }
 
@@ -25,7 +25,7 @@ namespace GA.Lib {
 
 		#region ctor
 
-		public AlgoPopulation(int size, float crossoverRatio, float eliteismRatio, float mutationRatio, List<string> tags, List<Button> placeholders) {
+		public AlgoPopulation(int size, float crossoverRatio, float eliteismRatio, float mutationRatio, List<string> tags, List<Literal> placeholders) {
 			this.Crossover = crossoverRatio;
 			this.Eliteism = eliteismRatio;
 			this.Mutation = mutationRatio;
