@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.UI.WebControls;
 
 namespace GA.Lib {
@@ -36,6 +37,30 @@ namespace GA.Lib {
 		}
 
 		#endregion ctor
+
+		#region Storage and Retrieval
+
+		protected static readonly string PopKey = "population";
+
+		public static void RestartPop(AlgoPopulationOptions apo, List<string> Tags, List<Literal> Placeholders) {
+			AlgoChromosome.EngagementValues.Clear();
+			HttpContext.Current.Session[PopKey] = new AlgoPopulation(apo.PopSizeCalc, apo.crossoverRatio, apo.elitismRatio, apo.mutationRatio, Tags, Placeholders);
+		}
+
+		public static AlgoPopulation GetPop(AlgoPopulationOptions apo, List<string> Tags, List<Literal> Placeholders) {
+			if (HttpContext.Current.Session[PopKey] != null)
+				return (AlgoPopulation)HttpContext.Current.Session[PopKey];
+
+			AlgoPopulation p = new AlgoPopulation(apo.PopSizeCalc, apo.crossoverRatio, apo.elitismRatio, apo.mutationRatio, Tags, Placeholders);
+			HttpContext.Current.Session[PopKey] = p;
+			return p;
+		}
+
+		public static void SetPop(AlgoPopulation p) {
+			HttpContext.Current.Session[PopKey] = p;
+		}
+
+		#endregion Storage and Retrieval
 
 		#region Methods
 
