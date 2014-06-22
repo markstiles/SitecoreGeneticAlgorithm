@@ -1,0 +1,12 @@
+EvoAlgos.WebApp/obj/
+Libraries/GAHelloWorld/bin/Debug/
+Libraries/GAHelloWorld/obj/
+Libraries/GAHelloWorld/GAHelloWorld.csproj.user
+EvoAlgos.WebApp/EvoAlgos.WebApp.csproj.user
+EvoAlgos.WebApp.v11.suo
+EvoAlgos.WebApp/bin/
+Libraries/GA.Lib/bin/
+Libraries/GA.Lib/obj/
+Libraries/GA.UI/bin/
+Libraries/GA.UI/obj/
+.csproj.user

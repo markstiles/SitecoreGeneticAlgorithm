@@ -31,8 +31,8 @@ namespace GA.Lib {
 			get {
 				StringBuilder sb = new StringBuilder();
 				foreach (KeyValuePair<string, AlgoGene> g in this) {
-					if (sb.Length > 0)
-						sb.Append("-");
+					//if (sb.Length > 0)
+					//	sb.Append("-");
 					sb.Append(g.Value.GeneID);
 				}
 				return sb.ToString();

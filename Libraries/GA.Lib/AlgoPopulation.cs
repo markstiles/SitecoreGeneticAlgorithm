@@ -44,16 +44,20 @@ namespace GA.Lib {
 
 		public static void RestartPop(AlgoPopulationOptions apo, List<string> Tags, List<Literal> Placeholders) {
 			AlgoChromosome.EngagementValues.Clear();
-			HttpContext.Current.Session[PopKey] = new AlgoPopulation(apo.PopSizeCalc, apo.crossoverRatio, apo.elitismRatio, apo.mutationRatio, Tags, Placeholders);
+			HttpContext.Current.Session[PopKey] = CreatePop(apo, Tags, Placeholders); 
 		}
 
 		public static AlgoPopulation GetPop(AlgoPopulationOptions apo, List<string> Tags, List<Literal> Placeholders) {
 			if (HttpContext.Current.Session[PopKey] != null)
 				return (AlgoPopulation)HttpContext.Current.Session[PopKey];
 
-			AlgoPopulation p = new AlgoPopulation(apo.PopSizeCalc, apo.crossoverRatio, apo.elitismRatio, apo.mutationRatio, Tags, Placeholders);
+			AlgoPopulation p = CreatePop(apo, Tags, Placeholders);
 			HttpContext.Current.Session[PopKey] = p;
 			return p;
+		}
+
+		public static AlgoPopulation CreatePop(AlgoPopulationOptions apo, List<string> Tags, List<Literal> Placeholders) {
+			return new AlgoPopulation(apo.PopSizeCalc, apo.crossoverRatio, apo.elitismRatio, apo.mutationRatio, Tags, Placeholders);
 		}
 
 		public static void SetPop(AlgoPopulation p) {

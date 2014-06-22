@@ -13,7 +13,8 @@ namespace GA.Lib {
 		public string Tag { get; set; }
 		public string GeneID {
 			get {
-				return string.Format("{0}-{1}", PlaceholderID, Tag);
+				return string.Format("{1}", PlaceholderID, Tag);
+				//return string.Format("{0}-{1}", PlaceholderID, Tag);
 			}
 		}
 

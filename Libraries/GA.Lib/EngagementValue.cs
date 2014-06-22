@@ -31,7 +31,7 @@ namespace GA.Lib {
 			double startVal = this.Value;
 			double timespan = Math.Abs(((TimeSpan)(DateTime.Now - this.LastUpdated)).TotalSeconds); //seconds since last event
 			//put in an end of life. If timespan is greater than a year then it's value is zero
-			double halfLife = 8; //half life in seconds
+			double halfLife = 2; //half life in seconds
 			double halfLifeRatio = Math.Abs(timespan / halfLife); // should be non-zero. a lower value is a faster drop off
 			double minRatio = 0.1; // make the min value a percentage of start value
 			double minVal = minRatio * startVal; // makes sure min values are not the same for all
