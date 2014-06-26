@@ -16,24 +16,21 @@ namespace GA.Lib {
 		public float Eliteism { get; set; }
 		public float Mutation { get; set; }
 		public float Crossover { get; set; }
-		public List<string> Tags { get; set; }
-		public List<Literal> Placeholders { get; set; }
 		public int GeneCount { get; set; }
 		public List<AlgoChromosome> Chromosomes { get; set; }
-
+		public List<IGene> Genotype { get; set; }
 		
 		#endregion Properties
 
 		#region ctor
 
-		public AlgoPopulation(int size, float crossoverRatio, float eliteismRatio, float mutationRatio, List<string> tags, List<Literal> placeholders) {
-			this.Crossover = crossoverRatio;
-			this.Eliteism = eliteismRatio;
-			this.Mutation = mutationRatio;
-			this.Tags = tags;
-			this.Placeholders = placeholders;
-
-			InitializePopulation(size);
+		public AlgoPopulation(AlgoPopulationOptions apo) {
+			this.Crossover = apo.crossoverRatio;
+			this.Eliteism = apo.elitismRatio;
+			this.Mutation = apo.mutationRatio;
+			this.Genotype = apo.Genes;
+			
+			InitializePopulation(apo.PopSize);
 		}
 
 		#endregion ctor
@@ -42,22 +39,22 @@ namespace GA.Lib {
 
 		protected static readonly string PopKey = "population";
 
-		public static void RestartPop(AlgoPopulationOptions apo, List<string> Tags, List<Literal> Placeholders) {
+		public static void RestartPop(AlgoPopulationOptions apo) {
 			AlgoChromosome.EngagementValues.Clear();
-			HttpContext.Current.Session[PopKey] = CreatePop(apo, Tags, Placeholders); 
+			HttpContext.Current.Session[PopKey] = CreatePop(apo); 
 		}
 
-		public static AlgoPopulation GetPop(AlgoPopulationOptions apo, List<string> Tags, List<Literal> Placeholders) {
+		public static AlgoPopulation GetPop(AlgoPopulationOptions apo) {
 			if (HttpContext.Current.Session[PopKey] != null)
 				return (AlgoPopulation)HttpContext.Current.Session[PopKey];
 
-			AlgoPopulation p = CreatePop(apo, Tags, Placeholders);
+			AlgoPopulation p = CreatePop(apo);
 			HttpContext.Current.Session[PopKey] = p;
 			return p;
 		}
 
-		public static AlgoPopulation CreatePop(AlgoPopulationOptions apo, List<string> Tags, List<Literal> Placeholders) {
-			return new AlgoPopulation(apo.PopSizeCalc, apo.crossoverRatio, apo.elitismRatio, apo.mutationRatio, Tags, Placeholders);
+		public static AlgoPopulation CreatePop(AlgoPopulationOptions apo) {
+			return new AlgoPopulation(apo);
 		}
 
 		public static void SetPop(AlgoPopulation p) {
@@ -74,7 +71,7 @@ namespace GA.Lib {
 		private void InitializePopulation(int size) {
 			this.Chromosomes = new List<AlgoChromosome>(size);
 			for (int count = 0; count < size; count++) {
-				this.Chromosomes.Add(AlgoChromosome.GenerateRandom(Placeholders, Tags));
+				this.Chromosomes.Add(AlgoChromosome.GenerateRandom(Genotype));
 			}
 
 			this.Chromosomes = this.Chromosomes.OrderByDescending(a => a.Fitness).ToList();
@@ -99,17 +96,17 @@ namespace GA.Lib {
 					evolvedSet[changedIndex] = children.First(); //replace an elite
 
 					if (_rand.NextDouble() <= this.Mutation) // if random is less than mutation rate (low probability) then mutate
-						evolvedSet[changedIndex].Mutate(Placeholders, Tags);
+						evolvedSet[changedIndex].Mutate(Genotype);
 
 					if (changedIndex < evolvedSet.Count - 1) { // if not the last item in set
 						changedIndex++;
 
 						evolvedSet[changedIndex] = children.Last(); // set the next too 
 						if (_rand.NextDouble() <= this.Mutation) // possibly mutate it since the next round may not mate or mutate
-							evolvedSet[changedIndex].Mutate(Placeholders, Tags);
+							evolvedSet[changedIndex].Mutate(Genotype);
 					}
 				} else if (_rand.NextDouble() <= this.Mutation) { // or if the random double is less than the mutation rate (low probability) then mutate
-					evolvedSet[changedIndex].Mutate(Placeholders, Tags);
+					evolvedSet[changedIndex].Mutate(Genotype);
 				}
 				changedIndex++;
 			}

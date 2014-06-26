@@ -8,7 +8,7 @@ namespace GA.Lib {
 	/// <summary>
 	/// represents a rendering
 	/// </summary>
-	public class AlgoGene {
+	public class AlgoGene : IGene {
 		public string PlaceholderID { get; set; }
 		public string Tag { get; set; }
 		public string GeneID {

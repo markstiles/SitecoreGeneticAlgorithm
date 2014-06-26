@@ -6,7 +6,7 @@ using System.Text;
 using System.Web.UI.WebControls;
 
 namespace GA.Lib {
-	public class AlgoChromosome : Dictionary<string, AlgoGene>, IComparable<AlgoChromosome> {
+	public class AlgoChromosome : Dictionary<string, IGene>, IComparable<AlgoChromosome> {
 
 		#region Properties
 
@@ -17,9 +17,9 @@ namespace GA.Lib {
 		public double Fitness {
 			get {
 				double fitness = 0;
-				foreach (KeyValuePair<string, AlgoGene> g in this) {
-					if (EngagementValues.ContainsKey(g.Value.Tag)) { //need to change how this gets stored.
-						List<EngagementValue> evl = EngagementValues[g.Value.Tag];
+				foreach (KeyValuePair<string, IGene> g in this) {
+					if (EngagementValues.ContainsKey(((AlgoGene)g.Value).Tag)) { //need to change how this gets stored.
+						List<EngagementValue> evl = EngagementValues[((AlgoGene)g.Value).Tag];
 						fitness += evl.Sum(a => a.CurrentValue());
 					}
 				}
@@ -30,10 +30,10 @@ namespace GA.Lib {
 		public string GeneSequence {
 			get {
 				StringBuilder sb = new StringBuilder();
-				foreach (KeyValuePair<string, AlgoGene> g in this) {
+				foreach (KeyValuePair<string, IGene> g in this) {
 					//if (sb.Length > 0)
 					//	sb.Append("-");
-					sb.Append(g.Value.GeneID);
+					sb.Append(((AlgoGene)g.Value).GeneID);
 				}
 				return sb.ToString();
 			}
@@ -44,6 +44,11 @@ namespace GA.Lib {
 		#region ctor
 
 		public AlgoChromosome() { }
+
+		public void AddRange(IEnumerable<KeyValuePair<string, IGene>> g) {
+			foreach (KeyValuePair<string, IGene> kvp in g)
+				this.Add(kvp.Key, kvp.Value);
+		}
 
 		#endregion ctor
 		
@@ -60,10 +65,15 @@ namespace GA.Lib {
 		/// <summary>
 		/// builds new chromosome with random gene sequence
 		/// </summary>
-		public static AlgoChromosome GenerateRandom(List<Literal> placeholders, List<string> tags) {
+		public static AlgoChromosome GenerateRandom(List<IGene> Genotype, int geneCount) {
 			AlgoChromosome ac = new AlgoChromosome();
-			for (int count = 0; count < placeholders.Count; count++) {
-				AlgoGene ag = new AlgoGene(placeholders[count].ID, tags[rand.Next(0, tags.Count)]);
+			var a = from IGene g in Genotype
+					select new KeyValuePair<string, IGene>(g.GeneID, g);
+			
+			ac.AddRange(a);
+			for (int c = 0; c < geneCount; c++) {
+				IGene g = Genotype[rand.Next(0, Genotype.Count)];
+				AlgoGene ag = g.GetRandom(); new AlgoGene(placeholders[count].ID, tags[rand.Next(0, tags.Count)]);
 				ac.Add(ag.PlaceholderID, ag); 
 			}
 
@@ -91,7 +101,7 @@ namespace GA.Lib {
 
 			int i = 0;
 			// cut the genes in half and mix
-			foreach(KeyValuePair<string, AlgoGene> g in this){
+			foreach(KeyValuePair<string, IGene> g in this){
 				if(i < pivotIndex) {
 					ac1.Add(g.Key, g.Value);
 					ac2.Add(g.Key, mate[g.Key]);

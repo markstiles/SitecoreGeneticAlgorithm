@@ -28,6 +28,9 @@ namespace GA.UI.Sublayouts {
 		 *
 		 *could also just have a chromosome for each day or even time of day. a set by season. In this way you don't defeat
 		 *monocultures. You can 
+		 *
+		 * this is just like levels of navigation. you can create categories at a top level and subcategories below them each will have it's own population. visually stored in a tree or bucket.
+		 * 
 		 * */
 
 		
@@ -56,10 +59,11 @@ namespace GA.UI.Sublayouts {
 		protected void RunAlgo() {
 
 			//try to calculate the max number of permutations
-			apo.PopSize = Math.Pow(Placeholders.Count, Tags.Count);
-				
+			apo.PopSize = ((int)Math.Pow(Placeholders.Count, Tags.Count)) * 1;
+			for(int z = 0; z < Tags.Count; z++)
+				apo.Genes.Add(new AlgoGene(Placeholders[z].ID, Tags[rand.Next(0, Tags.Count)]));
 			//get or create the population
-			AlgoPopulation p = AlgoPopulation.GetPop(apo, Tags, Placeholders);
+			AlgoPopulation p = AlgoPopulation.GetPop(apo);
 
 			//list the chromosomes
 			ltlChromeList.Text = string.Empty;
@@ -88,7 +92,7 @@ namespace GA.UI.Sublayouts {
 
 			//wire up renderings with results
 			foreach (Literal b in Placeholders)
-				b.Text = CurrentChromosome[b.ID].Tag;
+				b.Text = ((AlgoGene)CurrentChromosome[b.ID]).Tag;
 
 			//list all engagement values stored
 			ltlEV.Text = string.Format("Gene Count is: {0}<br/>", i.ToString());
@@ -149,7 +153,7 @@ namespace GA.UI.Sublayouts {
 		protected void btn_Click(object sender, EventArgs e) {
 
 			//get pop
-			AlgoPopulation p = AlgoPopulation.GetPop(apo, Tags, Placeholders);
+			AlgoPopulation p = AlgoPopulation.GetPop(apo);
 
 			//update clicks
 			Button b = (Button)sender;
@@ -175,8 +179,8 @@ namespace GA.UI.Sublayouts {
 		}
 
 		protected void btnRestart_Click(object sender, EventArgs e) {
-			apo.PopSize = Math.Pow(Placeholders.Count, Tags.Count);
-			AlgoPopulation.RestartPop(apo, Tags, Placeholders);
+			apo.PopSize = ((int)Math.Pow(Placeholders.Count, Tags.Count));
+			AlgoPopulation.RestartPop(apo);
 			RunAlgo();
 		}
 	}

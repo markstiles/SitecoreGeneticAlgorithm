@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace GA.Lib {
 	public class EngagementValue {
+		
 		private double _Value;
 		public double Value {
 			get {
@@ -16,6 +17,7 @@ namespace GA.Lib {
 				_Value = value;
 			}
 		}
+		
 		public DateTime LastUpdated { get; internal set; }
 
 		public EngagementValue(double val) {
