@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using GA.Lib.Chromosome;
 
 namespace GA.Lib.Population {
-	public abstract class AbstractPopulation : IPopulation {
+	public abstract class BasePopulation : IPopulation {
 
 		#region Properties
 
@@ -17,7 +17,7 @@ namespace GA.Lib.Population {
 
 		#region ctor
 
-		public AbstractPopulation(IPopulationOptions ipo) {
+		public BasePopulation(IPopulationOptions ipo) {
 			Options = ipo;
 			InitializePopulation(ipo.PopSize);
 		}

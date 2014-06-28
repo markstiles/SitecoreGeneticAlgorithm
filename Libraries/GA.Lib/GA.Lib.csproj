@@ -40,11 +40,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Chromosome\AbstractChromosome.cs" />
-    <Compile Include="Population\AbstractPopulation.cs" />
+    <Compile Include="Chromosome\BaseChromosome.cs" />
+    <Compile Include="Extensions\SystemExtensions.cs" />
+    <Compile Include="Population\BasePopulation.cs" />
     <Compile Include="Population\IPopulation.cs" />
     <Compile Include="Population\IPopulationOptions.cs" />
-    <Compile Include="PopulationOptions.cs" />
+    <Compile Include="Population\PopulationOptions.cs" />
     <Compile Include="Chromosome\IChromosome.cs" />
     <Compile Include="Gene\IGene.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

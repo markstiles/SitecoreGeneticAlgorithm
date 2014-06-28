@@ -8,6 +8,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using GA.Lib;
 using GA.Lib.Chromosome;
+using GA.Lib.Population;
 using GA.SC;
 
 namespace GA.UI.Sublayouts {
@@ -57,7 +58,7 @@ namespace GA.UI.Sublayouts {
 			for (int z = 0; z < Tags.Count; z++) //add all the tags to the genotype
 				apo.Genotype.Add(new SCTagGene(Tags[RandomUtil.Instance.Next(0, Tags.Count)]));
 			
-			//run pop
+			//run pop... or not
 			if (!IsPostBack)
 				RunAlgo();
 
@@ -125,9 +126,6 @@ namespace GA.UI.Sublayouts {
 		/// <param name="e"></param>
 		protected void btn_Click(object sender, EventArgs e) {
 
-			//get pop
-			SCPopulation p = SCPopulation.GetPop(apo);
-
 			//update clicks
 			Button b = (Button)sender;
 			string key = b.Text; // string.Format("ltl{0}-{1}", b.CssClass, b.Text);
@@ -135,9 +133,6 @@ namespace GA.UI.Sublayouts {
 				SCChromosome.EngagementValues.Add(key, new List<EngagementValue>());
 			SCChromosome.EngagementValues[key].Add(new EngagementValue(1));
 			
-			//store
-			SCPopulation.SetPop(p);
-
 			//run algo
 			RunAlgo();
 		}
@@ -152,7 +147,6 @@ namespace GA.UI.Sublayouts {
 		}
 
 		protected void btnRestart_Click(object sender, EventArgs e) {
-			apo.PopSize = ((int)Math.Pow(Placeholders.Count, Tags.Count));
 			SCPopulation.RestartPop(apo);
 			RunAlgo();
 		}

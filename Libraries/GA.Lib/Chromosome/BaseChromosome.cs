@@ -7,13 +7,13 @@ using GA.Lib.Gene;
 using GA.Lib.Population;
 
 namespace GA.Lib.Chromosome {
-	public abstract class AbstractChromosome : List<IGene>, IChromosome {
+	public abstract class BaseChromosome : List<IGene>, IChromosome {
 
 		public IPopulationOptions Options;
 
 		#region ctor
 
-		public AbstractChromosome(IPopulationOptions ipo){
+		public BaseChromosome(IPopulationOptions ipo){
 			Options = ipo;
 			for (int j = 0; j < Options.GeneCount; j++) {
 				IGene g = Options.Genotype.GetRandom();
@@ -56,8 +56,9 @@ namespace GA.Lib.Chromosome {
 		/// take the genes from this and a mate and split them in half and swap them
 		/// </summary>
 		public virtual List<IChromosome> Mate(IChromosome mate) {
-			int pivotIndex = RandomUtil.Instance.Next(1, this.Count - 1);
+			int pivotIndex = RandomUtil.Instance.Next(1, this.Count - 1); // don't want the first or last position
 
+			//instantiate two more chromosomes from the current object type
 			Object[] args = { Options };
 			Type t = this.GetType();
 			IChromosome ac1 = (IChromosome)Activator.CreateInstance(t, Options);

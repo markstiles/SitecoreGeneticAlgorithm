@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using GA.Lib.Gene;
 using GA.Lib.Population;
 
-namespace GA.Lib {
+namespace GA.Lib.Population {
 	public class PopulationOptions : IPopulationOptions {
 		
 		private int _TourneySize = 3;

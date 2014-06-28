@@ -10,7 +10,7 @@ using GA.Lib.Chromosome;
 using GA.Lib.Population;
 
 namespace GA.SC {
-	public class SCPopulation : AbstractPopulation {
+	public class SCPopulation : BasePopulation {
 
 		#region ctor
 

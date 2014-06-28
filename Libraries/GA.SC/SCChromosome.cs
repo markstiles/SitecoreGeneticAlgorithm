@@ -9,7 +9,7 @@ using GA.Lib.Gene;
 using GA.Lib.Population;
 
 namespace GA.SC {
-	public class SCChromosome : AbstractChromosome {
+	public class SCChromosome : BaseChromosome {
 
 		#region Properties
 
