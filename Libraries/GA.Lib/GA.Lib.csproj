@@ -40,14 +40,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AlgoChromosome.cs" />
-    <Compile Include="AlgoGene.cs" />
-    <Compile Include="AlgoPopulation.cs" />
-    <Compile Include="AlgoPopulationOptions.cs" />
-    <Compile Include="EngagementValue.cs" />
-    <Compile Include="IGene.cs" />
+    <Compile Include="Chromosome\AbstractChromosome.cs" />
+    <Compile Include="Population\AbstractPopulation.cs" />
+    <Compile Include="Population\IPopulation.cs" />
+    <Compile Include="Population\IPopulationOptions.cs" />
+    <Compile Include="PopulationOptions.cs" />
+    <Compile Include="Chromosome\IChromosome.cs" />
+    <Compile Include="Gene\IGene.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StochasticList.cs" />
+    <Compile Include="Gene\GenotypeList.cs" />
+    <Compile Include="RandomUtil.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

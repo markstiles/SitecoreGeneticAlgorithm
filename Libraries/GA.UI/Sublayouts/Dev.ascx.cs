@@ -7,69 +7,73 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using GA.Lib;
+using GA.Lib.Chromosome;
+using GA.SC;
 
 namespace GA.UI.Sublayouts {
 	public partial class Dev : System.Web.UI.UserControl {
 
-		/* Got stuck with the fitness. new method of determination since i separated the buttons from the display. 
-		 * need to figure out how to determine what to show. if i click one all the boxes should go to one. 
-		 * then change if i go to two
-		 * 
-		 * 
-		 * 
-		 * manage the tag values in a single place
-		 * locations:
-		 *	Tags prop on dev.ascx.cs
-		 *	
-		 * 
-		 *Replace passing tags and placeholders with IGene or something. they need to be generic. 
-		 *The question is if you provide a list of unique gene elements and let it mix and match. 
-		 *That mix and match should also be an Interface. IChromosome probably so you can give it to the population 
+		/* 
+		 *could also just have a chromosome for each day or even time of day. a set by season. In this way you might defeat
+		 *monocultures by adding in more variability
 		 *
-		 *could also just have a chromosome for each day or even time of day. a set by season. In this way you don't defeat
-		 *monocultures. You can 
-		 *
-		 * this is just like levels of navigation. you can create categories at a top level and subcategories below them each will have it's own population. visually stored in a tree or bucket.
+		 * these can be used just like levels of navigation. you can create a population at a top level and each chromosome 
+		 * could have it's own population as subcategories. visually stored in a tree or bucket but just in a sense of 
+		 * giving depth to the category itself. for example you like shoes (top level chromosome) but you prefer sandals 
+		 * and sneakers (second level)
 		 * 
+		 * There's two places that are still tied to instances. In the algoChromosome it's sitecore specific for the use of Engagement values
+		 * also in the population it's instantiation the AlgoChromosome during init population. 
+		 * 
+		 * the population options could also be an interface and pull from the config. provide a default with the values pulling
+		 * from app settings
+		 * 
+		 * Engagement values might not be best stored on the SCChromosome class
 		 * */
 
-		
 		private StringBuilder sbOut = new StringBuilder();
 
 		protected List<Literal> Placeholders;
+		protected List<Button> Buttons;
 
 		protected List<string> Tags = new List<string> { "1", "2", "3", "4" };
 
-		protected AlgoChromosome CurrentChromosome;
+		protected IChromosome CurrentChromosome;
 
-		protected AlgoPopulationOptions apo = new AlgoPopulationOptions();
+		protected PopulationOptions apo = new PopulationOptions();
 
 		protected void Page_Load(object sender, EventArgs e) {
 
+			//setup accessors
 			Placeholders = new List<Literal>() { ltlOne, ltlTwo, ltlThree, ltlFour };
+			Buttons = new List<Button>() { btnA, btnB, btnC, btnD };
+			//setup button text
+			for (int i = 0; i < Buttons.Count; i++)
+				Buttons[i].Text = Tags[i];
 
+			//setup population options
+			apo.PopSize = (int)Math.Pow(Placeholders.Count, Tags.Count); //try to calculate the max number of permutations
+			apo.GeneCount = Placeholders.Count; //number of genes corresponds to the number of placeholders to fill with display content
+			for (int z = 0; z < Tags.Count; z++) //add all the tags to the genotype
+				apo.Genotype.Add(new SCTagGene(Tags[RandomUtil.Instance.Next(0, Tags.Count)]));
+			
+			//run pop
 			if (!IsPostBack)
 				RunAlgo();
-
-			//RunSequence();
 
 			ltlOut.Text = sbOut.ToString();
 		}
 
 		protected void RunAlgo() {
 
-			//try to calculate the max number of permutations
-			apo.PopSize = ((int)Math.Pow(Placeholders.Count, Tags.Count)) * 1;
-			for(int z = 0; z < Tags.Count; z++)
-				apo.Genes.Add(new AlgoGene(Placeholders[z].ID, Tags[rand.Next(0, Tags.Count)]));
 			//get or create the population
-			AlgoPopulation p = AlgoPopulation.GetPop(apo);
+			SCPopulation p = SCPopulation.GetPop(apo);
 
 			//list the chromosomes
 			ltlChromeList.Text = string.Empty;
 			List<string> uniqueSet = new List<string>();
-			foreach (AlgoChromosome c in p.Chromosomes) {
-				string uKey = string.Format("{0}-{1}", c.GeneSequence, c.Fitness);
+			foreach (IChromosome c in p.Chromosomes) {
+				string uKey = string.Format("{0}-{1}", c.GeneSequence(), c.Fitness);
 				if(!uniqueSet.Contains(uKey))
 					uniqueSet.Add(uKey);
 			}
@@ -80,23 +84,16 @@ namespace GA.UI.Sublayouts {
 			}
 
 			//choose best
-			double topFit = p.Chromosomes.First().Fitness;
-			List<AlgoChromosome> lac = (topFit < 1) // if all values have decayed below 1 then don't filter any options out
-				? p.Chromosomes
-				: p.Chromosomes.Where(a => a.Fitness >= (topFit * apo.fitnessRatio)).ToList();
-			int newPos = AlgoPopulation._rand.Next(0, lac.Count);
-			CurrentChromosome = (lac.Any()) // if the filter worked too well just select the first item
-				? lac[newPos]
-				: p.Chromosomes.First();
-			ltlChrome.Text = string.Format("{0}-{1}", CurrentChromosome.GeneSequence, CurrentChromosome.Fitness);
+			CurrentChromosome = p.ChooseFitChromosome();
+			ltlChrome.Text = string.Format("{0}-{1}", CurrentChromosome.GeneSequence(), CurrentChromosome.Fitness);
 
 			//wire up renderings with results
-			foreach (Literal b in Placeholders)
-				b.Text = ((AlgoGene)CurrentChromosome[b.ID]).Tag;
+			for (int z = 0; z < Placeholders.Count; z++)
+				Placeholders[z].Text = CurrentChromosome[z].GeneID;
 
 			//list all engagement values stored
 			ltlEV.Text = string.Format("Gene Count is: {0}<br/>", i.ToString());
-			foreach (KeyValuePair<string, List<EngagementValue>> kvp in AlgoChromosome.EngagementValues) {
+			foreach (KeyValuePair<string, List<EngagementValue>> kvp in SCChromosome.EngagementValues) {
 				double tv = kvp.Value.Sum(a => a.CurrentValue());
 				ltlEV.Text += string.Format("{0}-{1}<br/>", kvp.Key, tv);
 			}
@@ -104,30 +101,6 @@ namespace GA.UI.Sublayouts {
 			//evolve
 			p.Evolve();
 		}
-
-		//protected void RunSequence() {
-		//	ltlGene.Text = targetGene;
-		//	// set goal
-		//	Chromosome.SetTargetGene(targetGene);
-		//	// build population
-		//	Population population = new Population(populationSize, crossoverRatio, elitismRatio, mutationRatio);
-		//	// start with the best
-		//	Chromosome topChromosome = population.Chromosomes.First();
-		//	// start timing it
-		//	Stopwatch sw = new Stopwatch();
-		//	sw.Start();
-		//	// keep evolving until you hit an optimal fitness
-		//	int count = 1;
-		//	while ((count++ <= maxGenerations) && (topChromosome.Fitness != 0)) {
-		//		Log(topChromosome.Gene);
-		//		population.Evolve();
-		//		topChromosome = population.Chromosomes.First();
-		//	}
-		//	sw.Stop();
-		//	Log(topChromosome.Gene);
-		//	Log("{0} generations in {1} ms", count, sw.ElapsedMilliseconds);
-		//	Log();
-		//}
 
 		#region Log
 
@@ -153,24 +126,24 @@ namespace GA.UI.Sublayouts {
 		protected void btn_Click(object sender, EventArgs e) {
 
 			//get pop
-			AlgoPopulation p = AlgoPopulation.GetPop(apo);
+			SCPopulation p = SCPopulation.GetPop(apo);
 
 			//update clicks
 			Button b = (Button)sender;
 			string key = b.Text; // string.Format("ltl{0}-{1}", b.CssClass, b.Text);
-			if (!AlgoChromosome.EngagementValues.ContainsKey(key))
-				AlgoChromosome.EngagementValues.Add(key, new List<EngagementValue>());
-			AlgoChromosome.EngagementValues[key].Add(new EngagementValue(1));
+			if (!SCChromosome.EngagementValues.ContainsKey(key))
+				SCChromosome.EngagementValues.Add(key, new List<EngagementValue>());
+			SCChromosome.EngagementValues[key].Add(new EngagementValue(1));
 			
 			//store
-			AlgoPopulation.SetPop(p);
+			SCPopulation.SetPop(p);
 
 			//run algo
 			RunAlgo();
 		}
 
 		protected void btnClearEvents_Click(object sender, EventArgs e) {
-			AlgoChromosome.EngagementValues.Clear();
+			SCChromosome.EngagementValues.Clear();
 			RunAlgo();
 		}
 
@@ -180,7 +153,7 @@ namespace GA.UI.Sublayouts {
 
 		protected void btnRestart_Click(object sender, EventArgs e) {
 			apo.PopSize = ((int)Math.Pow(Placeholders.Count, Tags.Count));
-			AlgoPopulation.RestartPop(apo);
+			SCPopulation.RestartPop(apo);
 			RunAlgo();
 		}
 	}

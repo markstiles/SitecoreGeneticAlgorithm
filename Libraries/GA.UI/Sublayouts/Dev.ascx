@@ -48,16 +48,16 @@
 		</div>
 		<div class="Buttons">
 			<div class="A">
-				<asp:Button ID="btnA" runat="server" Text="1" CssClass="One" OnClick="btn_Click" />
+				<asp:Button ID="btnA" runat="server" CssClass="One" OnClick="btn_Click" />
 			</div>
 			<div class="B">
-				<asp:Button ID="btnB" runat="server" Text="2" CssClass="Two" OnClick="btn_Click" />
+				<asp:Button ID="btnB" runat="server" CssClass="Two" OnClick="btn_Click" />
 			</div>
 			<div class="C">
-				<asp:Button ID="btnC" runat="server" Text="3" CssClass="Three" OnClick="btn_Click" />
+				<asp:Button ID="btnC" runat="server" CssClass="Three" OnClick="btn_Click" />
 			</div>
 			<div class="D">
-				<asp:Button ID="btnD" runat="server" Text="4" CssClass="Four" OnClick="btn_Click" />
+				<asp:Button ID="btnD" runat="server" CssClass="Four" OnClick="btn_Click" />
 			</div>
 			<div class="NextGen">
 				<asp:Button ID="btnNextGen" runat="server" Text="Next Gen" OnClick="btnNextGen_Click" />

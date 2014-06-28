@@ -4,11 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GA.Lib {
-	public class StochasticList<T> : List<T> {
-		
-		//public T GetRandom() {
-		//	//this.Count
-		//}
+namespace GA.Lib.Gene {
+	public interface IGene {
+
+		#region Properties
+
+		string GeneID { get; }
+
+		#endregion Properties
 	}
 }

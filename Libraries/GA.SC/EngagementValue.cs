@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GA.Lib {
+namespace GA.SC {
 	public class EngagementValue {
 		
 		private double _Value;
