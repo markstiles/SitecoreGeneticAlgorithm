@@ -40,6 +40,7 @@ namespace GA.UI.Sublayouts {
 		 * 
 		 * it may be the number of generations before its honed
 		 * 
+		 * populations should be refreshed every session but the ev's should be stored. 
 		 * */
 
 		private StringBuilder sbOut = new StringBuilder();
