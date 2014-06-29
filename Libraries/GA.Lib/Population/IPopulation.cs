@@ -18,7 +18,7 @@ namespace GA.Lib.Population {
 		#region Methods 
 
 		IChromosome CreateChromosome(IPopulationOptions ipo);
-		void InitializePopulation(int size);
+		void InitializePopulation();
 		void Evolve();
 		IChromosome ChooseFitChromosome();
 		

@@ -30,6 +30,16 @@ namespace GA.UI.Sublayouts {
 		 * from app settings
 		 * 
 		 * Engagement values might not be best stored on the SCChromosome class
+		 * 
+		 * 
+		 * need to make sure the evolve function is leaving some diversity left
+		 * also make sure the top fittest isn't always chosen to add variability. or at least up the randomness either through mutation rate etc.
+		 * 
+		 * when you click around and the population gets too low you need to restart it. 
+		 * There may be a way to determine this lower bound by it's relation to other values
+		 * 
+		 * it may be the number of generations before its honed
+		 * 
 		 * */
 
 		private StringBuilder sbOut = new StringBuilder();
@@ -41,7 +51,7 @@ namespace GA.UI.Sublayouts {
 
 		protected IChromosome CurrentChromosome;
 
-		protected PopulationOptions apo = new PopulationOptions();
+		protected DefaultPopulationOptions apo = new DefaultPopulationOptions();
 
 		protected void Page_Load(object sender, EventArgs e) {
 
@@ -53,14 +63,30 @@ namespace GA.UI.Sublayouts {
 				Buttons[i].Text = Tags[i];
 
 			//setup population options
-			apo.PopSize = (int)Math.Pow(Placeholders.Count, Tags.Count); //try to calculate the max number of permutations
 			apo.GeneCount = Placeholders.Count; //number of genes corresponds to the number of placeholders to fill with display content
 			for (int z = 0; z < Tags.Count; z++) //add all the tags to the genotype
 				apo.Genotype.Add(new SCTagGene(Tags[RandomUtil.Instance.Next(0, Tags.Count)]));
 			
 			//run pop... or not
-			if (!IsPostBack)
+			if (!IsPostBack) {
+
+				//default options
+				txtCrossover.Text = apo.CrossoverRatio.ToString();
+				txtElitism.Text = apo.ElitismRatio.ToString();
+				txtFitness.Text = apo.FitnessRatio.ToString();
+				txtMutation.Text = apo.MutationRatio.ToString();
+				txtScalar.Text = apo.PopScalar.ToString();
+				txtTourney.Text = apo.TourneySize.ToString();
+
 				RunAlgo();
+			} else {
+				apo.CrossoverRatio = float.Parse(txtCrossover.Text);
+				apo.ElitismRatio = float.Parse(txtElitism.Text);
+				apo.FitnessRatio = float.Parse(txtFitness.Text);
+				apo.MutationRatio = float.Parse(txtMutation.Text);
+				apo.PopScalar = int.Parse(txtScalar.Text);
+				apo.TourneySize = int.Parse(txtTourney.Text);
+			}
 
 			ltlOut.Text = sbOut.ToString();
 		}
@@ -71,18 +97,9 @@ namespace GA.UI.Sublayouts {
 			SCPopulation p = SCPopulation.GetPop(apo);
 
 			//list the chromosomes
-			ltlChromeList.Text = string.Empty;
-			List<string> uniqueSet = new List<string>();
-			foreach (IChromosome c in p.Chromosomes) {
-				string uKey = string.Format("{0}-{1}", c.GeneSequence(), c.Fitness);
-				if(!uniqueSet.Contains(uKey))
-					uniqueSet.Add(uKey);
-			}
-			int i = 1;
-			foreach (string u in uniqueSet) {
-				ltlChromeList.Text += string.Format("<b>{0}</b>: {1}<br/>", i.ToString(), u);
-				i++;
-			}
+			List<IChromosome> u = p.GetUniqueChromosomes();
+			rptChromeList.DataSource = p.GetUniqueChromosomes();
+			rptChromeList.DataBind(); 
 
 			//choose best
 			CurrentChromosome = p.ChooseFitChromosome();
@@ -92,12 +109,13 @@ namespace GA.UI.Sublayouts {
 			for (int z = 0; z < Placeholders.Count; z++)
 				Placeholders[z].Text = CurrentChromosome[z].GeneID;
 
+			//list chromosome data
+			ltlChromes.Text = p.Chromosomes.Count.ToString();
+			ltlUChromes.Text = u.Count.ToString();
+
 			//list all engagement values stored
-			ltlEV.Text = string.Format("Gene Count is: {0}<br/>", i.ToString());
-			foreach (KeyValuePair<string, List<EngagementValue>> kvp in SCChromosome.EngagementValues) {
-				double tv = kvp.Value.Sum(a => a.CurrentValue());
-				ltlEV.Text += string.Format("{0}-{1}<br/>", kvp.Key, tv);
-			}
+			rptEV.DataSource = SCChromosome.EngagementValues;
+			rptEV.DataBind();
 
 			//evolve
 			p.Evolve();
@@ -118,6 +136,10 @@ namespace GA.UI.Sublayouts {
 		}
 
 		#endregion Log
+
+		protected string OddEven(int i) {
+			return (i % 2 == 0) ? "odd" : "even";
+		}
 
 		/// <summary>
 		/// This adds to engagement value by the tag that was clicked

@@ -19,7 +19,7 @@ namespace GA.Lib.Population {
 
 		public BasePopulation(IPopulationOptions ipo) {
 			Options = ipo;
-			InitializePopulation(ipo.PopSize);
+			InitializePopulation();
 		}
 
 		#endregion ctor
@@ -31,11 +31,21 @@ namespace GA.Lib.Population {
 		/// <summary>
 		/// builds 'size' number of chromosomes and sorts
 		/// </summary>
-		public virtual void InitializePopulation(int size) {
-			this.Chromosomes = new List<IChromosome>(size);
-			for (int count = 0; count < size; count++) {
+		public virtual void InitializePopulation() {
+			Chromosomes = new List<IChromosome>();
+			Dictionary<string, int> d = new Dictionary<string, int>();
+			for (int count = 0; count < Options.PopSize; count++) {
 				IChromosome ac = CreateChromosome(Options);
-				this.Chromosomes.Add(ac);
+				//if you've already got some of these (more than the scalar amount) try to make a different one
+				string seq = ac.GeneSequence();
+				if(d.ContainsKey(seq) && d[seq] > Options.PopScalar)
+					ac.Mutate(Options.Genotype);
+				seq = ac.GeneSequence();
+				if (d.ContainsKey(seq))
+					d[seq]++;
+				else
+					d.Add(seq, 1);
+				Chromosomes.Add(ac);
 			}
 
 			this.Chromosomes = this.Chromosomes.OrderByDescending(a => a.Fitness).ToList();
@@ -83,9 +93,10 @@ namespace GA.Lib.Population {
 		/// <returns></returns>
 		public virtual IChromosome ChooseFitChromosome() {
 			double topFit = Chromosomes.First().Fitness;
+			List<IChromosome> u = GetUniqueChromosomes();
 			List<IChromosome> lac = (topFit < 1) // if all values have decayed below 1 then don't filter any options out
-				? Chromosomes
-				: Chromosomes.Where(a => a.Fitness >= (topFit * Options.FitnessRatio)).ToList();
+				? u
+				: u.Where(a => a.Fitness >= (topFit * Options.FitnessRatio)).ToList();
 			int newPos = RandomUtil.Instance.Next(0, lac.Count);
 			IChromosome c = (lac.Any()) // if the filter worked too well just select the first item
 				? lac[newPos]
@@ -97,6 +108,16 @@ namespace GA.Lib.Population {
 		#endregion IPopulation
 
 		#region Methods
+
+		public List<IChromosome> GetUniqueChromosomes() {
+			Dictionary<string, IChromosome> uniqueSet = new Dictionary<string, IChromosome>();
+			foreach (IChromosome c in Chromosomes) {
+				string uKey = c.GeneSequence();
+				if (!uniqueSet.ContainsKey(uKey))
+					uniqueSet.Add(uKey, c);
+			}
+			return uniqueSet.Values.ToList();
+		}
 
 		/// <summary>
 		/// Selects two chromosomes randomly and tries to improve odds by comparing it's fitness to other chromosomes also randomly selected

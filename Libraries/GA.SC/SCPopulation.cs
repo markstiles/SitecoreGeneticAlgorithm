@@ -26,7 +26,6 @@ namespace GA.SC {
 		protected static readonly string PopKey = "population";
 
 		public static void RestartPop(IPopulationOptions apo) {
-			SCChromosome.EngagementValues.Clear();
 			HttpContext.Current.Session[PopKey] = CreatePop(apo); 
 		}
 
