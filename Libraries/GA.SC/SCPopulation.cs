@@ -49,9 +49,19 @@ namespace GA.SC {
 		#endregion Storage and Retrieval
 
 		#region IPopulation
-
-		public override IChromosome CreateChromosome(IPopulationOptions ipo){
-			return (IChromosome)new SCChromosome(ipo);
+	
+		public override IKaryotype CreateKaryotype(IPopulationOptions ipo){
+			string chromosomeName;
+			foreach (string cType in Options.Genotype.Keys.ToList()) {
+				List<IChromosome> c = new List<IChromosome>();
+				IChromosome ac = CreateChromosome(Options, cType);
+				//(IChromosome)new SCChromosome(ipo)
+				c.Add(ac);
+			}
+			Karyotypes.Add(cType, c);
+			//Chromosomes = this.Chromosomes.OrderByDescending(a => a.Fitness).ToList();
+						
+			return null;
 		}
 
 		#endregion IPopulation

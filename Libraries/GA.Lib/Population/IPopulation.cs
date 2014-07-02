@@ -11,16 +11,16 @@ namespace GA.Lib.Population {
 		#region Properties
 
 		IPopulationOptions Options { get; set; }
-		List<IChromosome> Chromosomes { get; set; }
+		List<IKaryotype> Karyotypes { get; set; }
 
 		#endregion Properties
 
 		#region Methods 
 
-		IChromosome CreateChromosome(IPopulationOptions ipo);
+		IKaryotype CreateKaryotype(IPopulationOptions ipo);
 		void InitializePopulation();
 		void Evolve();
-		IChromosome ChooseFitChromosome();
+		IChromosome ChooseFitChromosome(string chromosomeName);
 		
 		#endregion Methods
 	}

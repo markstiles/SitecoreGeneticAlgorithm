@@ -11,15 +11,16 @@ namespace GA.Lib.Chromosome {
 
 		#region Properties
 
+		IPopulationOptions Options { get; set; }
+
 		double Fitness { get; }
 
 		#endregion Properties
 
 		#region Methods
 
-		List<IChromosome> Mate(IChromosome mate); 
-		void Mutate(GenotypeList gt);
 		string GeneSequence();
+		void FillRandomly(string chromosomeName);
 
 		#endregion Methods
 	}

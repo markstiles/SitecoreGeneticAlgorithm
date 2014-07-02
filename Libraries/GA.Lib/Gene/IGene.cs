@@ -10,6 +10,7 @@ namespace GA.Lib.Gene {
 		#region Properties
 
 		string GeneID { get; }
+		bool IsDominant { get; set; }
 
 		#endregion Properties
 	}

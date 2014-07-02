@@ -4,6 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GA.Lib.Gene {
-	public class GenotypeList : Dictionary<string, List<IGene>> { }
+namespace GA.Lib.Chromosome {
+	public interface IHaploid : IDictionary<string, IChromosome>, ICloneable { }
 }

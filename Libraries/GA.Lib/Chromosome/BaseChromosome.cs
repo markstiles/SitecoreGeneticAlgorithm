@@ -8,17 +8,11 @@ using GA.Lib.Population;
 
 namespace GA.Lib.Chromosome {
 	public abstract class BaseChromosome : List<IGene>, IChromosome {
-
-		public IPopulationOptions Options;
-
+	
 		#region ctor
 
 		public BaseChromosome(IPopulationOptions ipo){
 			Options = ipo;
-			for (int j = 0; j < Options.GeneCount; j++) {
-				IGene g = Options.Genotype.GetRandom();
-				this.Add(g);
-			}
 		}
 
 		#endregion ctor
@@ -33,6 +27,8 @@ namespace GA.Lib.Chromosome {
 
 		#region IChromosome
 
+		public IPopulationOptions Options { get; set; }
+
 		public abstract double Fitness { get; }
 
 		public virtual string GeneSequence() {
@@ -42,35 +38,12 @@ namespace GA.Lib.Chromosome {
 			return sb.ToString();
 		}
 
-		/// <summary>
-		/// changes a random character in the gene to a random character
-		/// </summary>
-		public virtual void Mutate(GenotypeList gt) {
-			//randomly get a gene and set it to a random location
-			IGene g = gt[RandomUtil.Instance.Next(0, gt.Count)];
-			int mutPos = RandomUtil.Instance.Next(0, this.Count);
-			this[mutPos] = g;
-		}
-
-		/// <summary>
-		/// take the genes from this and a mate and split them in half and swap them
-		/// </summary>
-		public virtual List<IChromosome> Mate(IChromosome mate) {
-			int pivotIndex = RandomUtil.Instance.Next(1, this.Count - 1); // don't want the first or last position
-
-			//instantiate two more chromosomes from the current object type
-			Object[] args = { Options };
-			Type t = this.GetType();
-			IChromosome ac1 = (IChromosome)Activator.CreateInstance(t, Options);
-			IChromosome ac2 = (IChromosome)Activator.CreateInstance(t, Options);
-
-			// cut the genes in half and mix
-			for (int i = 0; i < this.Count; i++) {
-				ac1[i] = (i < pivotIndex) ? this[i] : mate[i];
-				ac2[i] = (i < pivotIndex) ? mate[i] : this[i];
+		public virtual void FillRandomly(string chromosomeName) {
+			List<IGene> genepool = Options.Genotype[chromosomeName];
+			for (int j = 0; j < Options.GeneCount; j++) {
+				IGene g = genepool[RandomUtil.Instance.Next(0, genepool.Count)];
+				this.Add(g);
 			}
-
-			return new List<IChromosome>(2) { ac1, ac2 };
 		}
 
 		#endregion IChromosome

@@ -11,7 +11,7 @@ namespace GA.Lib.Population {
 		#region Properties
 
 		public IPopulationOptions Options { get; set; }
-		public List<IChromosome> Chromosomes { get; set; }
+		public List<IKaryotype> Karyotypes { get; set; }
 
 		#endregion Properties
 
@@ -26,29 +26,17 @@ namespace GA.Lib.Population {
 
 		#region IPopulation
 
-		public abstract IChromosome CreateChromosome(IPopulationOptions ipo);
-
+		public abstract IKaryotype CreateKaryotype(IPopulationOptions ipo);
+			
 		/// <summary>
 		/// builds 'size' number of chromosomes and sorts
 		/// </summary>
 		public virtual void InitializePopulation() {
-			Chromosomes = new List<IChromosome>();
-			Dictionary<string, int> d = new Dictionary<string, int>();
+			Karyotypes = new List<IKaryotype>();
 			for (int count = 0; count < Options.PopSize; count++) {
-				IChromosome ac = CreateChromosome(Options);
-				//if you've already got some of these (more than the scalar amount) try to make a different one
-				string seq = ac.GeneSequence();
-				if(d.ContainsKey(seq) && d[seq] > Options.PopScalar)
-					ac.Mutate(Options.Genotype);
-				seq = ac.GeneSequence();
-				if (d.ContainsKey(seq))
-					d[seq]++;
-				else
-					d.Add(seq, 1);
-				Chromosomes.Add(ac);
+				IKaryotype k = CreateKaryotype(Options);
+				Karyotypes.Add(k);
 			}
-
-			this.Chromosomes = this.Chromosomes.OrderByDescending(a => a.Fitness).ToList();
 		}
 
 		/// <summary>

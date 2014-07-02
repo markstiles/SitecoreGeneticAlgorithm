@@ -12,5 +12,9 @@ namespace GA.Lib {
 		public static Random Instance {
 			get { return _rand; }
 		}
+
+		public static bool RandomBool() {
+			return (RandomUtil.Instance.Next(0, 1) == 0);
+		}
 	}
 }
