@@ -52,7 +52,7 @@ namespace GA.Lib.Population {
 			for (int i = elitePos; i < Karyotypes.Count - 1; i++) {
 				//roll the dice. 
 				if (RandomUtil.Instance.NextDouble() <= Options.CrossoverRatio) { // if a random double is less than the crossover value (high probability) then mate
-					List<IKaryotype> parents = this.SelectParents();
+					List<IKaryotype> parents = SelectParents();
 					List<IKaryotype> children = parents.First().Mate(parents.Last());
 
 					evolvedSet[i] = children.First(); //replace an elite
@@ -110,7 +110,7 @@ namespace GA.Lib.Population {
 		/// <summary>
 		/// Selects two chromosomes randomly and tries to improve odds by comparing it's fitness to other chromosomes also randomly selected
 		/// </summary>
-		protected virtual List<IKaryotype> SelectParents() {
+		protected virtual List<IKaryotype> SelectParents(string chromosomeName) {
 			List<IKaryotype> parents = new List<IKaryotype>(2);
 
 			//finds two randomly selected parents
@@ -120,9 +120,8 @@ namespace GA.Lib.Population {
 				//it tries TourneySize times to randomly find a better parent
 				for (int tournyIndex = 0; tournyIndex < Options.TourneySize; tournyIndex++) {
 					int randomIndex = RandomUtil.Instance.Next(Karyotypes.Count - 1);
-					if (Karyotypes[randomIndex].Fitness > parents[parentIndex].Fitness) { // closer to 0 is more fit
+					if (Karyotypes[randomIndex].ExpressedHaploid[chromosomeName].Fitness > parents[parentIndex].ExpressedHaploid[chromosomeName].Fitness) // closer to 0 is more fit
 						parents[parentIndex] = Karyotypes[randomIndex];
-					}
 				}
 			}
 
