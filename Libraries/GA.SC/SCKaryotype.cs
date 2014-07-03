@@ -1,0 +1,37 @@
+﻿using System;
+using System.Linq;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Text;
+using System.Web.UI.WebControls;
+using GA.Lib.Chromosome;
+using GA.Lib.Gene;
+using GA.Lib.Population;
+
+namespace GA.SC {
+	public class SCKaryotype : BaseKaryotype {
+		
+		#region ctor
+
+		public SCKaryotype(IPopulationOptions ipo, IHaploid mom, IHaploid dad) : base(ipo, mom, dad) { }
+
+		#endregion ctor
+
+		#region IKaryotype
+
+		public override double Fitness {
+			get {
+				double fitness = 0;
+				foreach (IGene g in this) {
+					if (EngagementValue.KnownValues.Any() && EngagementValue.KnownValues.ContainsKey(g.GeneID)) { //need to change how this gets stored.
+						List<EngagementValue> evl = EngagementValue.KnownValues[g.GeneID];
+						fitness += evl.Sum(a => a.CurrentValue());
+					}
+				}
+				return Math.Round(fitness, 3);
+			}
+		}
+
+		#endregion IKaryotype
+	}
+}

@@ -119,7 +119,7 @@ namespace GA.UI.Sublayouts {
 			ltlUChromes.Text = u.Count.ToString();
 
 			//list all engagement values stored
-			rptEV.DataSource = SCChromosome.EngagementValues;
+			rptEV.DataSource = SCKaryotype.EngagementValues;
 			rptEV.DataBind();
 
 			//evolve
@@ -156,16 +156,16 @@ namespace GA.UI.Sublayouts {
 			//update clicks
 			Button b = (Button)sender;
 			string key = b.Text; // string.Format("ltl{0}-{1}", b.CssClass, b.Text);
-			if (!SCChromosome.EngagementValues.ContainsKey(key))
-				SCChromosome.EngagementValues.Add(key, new List<EngagementValue>());
-			SCChromosome.EngagementValues[key].Add(new EngagementValue(1));
+			if (!SCKaryotype.EngagementValues.ContainsKey(key))
+				SCKaryotype.EngagementValues.Add(key, new List<EngagementValue>());
+			SCKaryotype.EngagementValues[key].Add(new EngagementValue(1));
 			
 			//run algo
 			RunAlgo();
 		}
 
 		protected void btnClearEvents_Click(object sender, EventArgs e) {
-			SCChromosome.EngagementValues.Clear();
+			SCKaryotype.EngagementValues.Clear();
 			RunAlgo();
 		}
 

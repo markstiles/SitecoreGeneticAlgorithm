@@ -26,15 +26,14 @@ namespace GA.Lib.Population {
 
 		#region IPopulation
 
-		public abstract IKaryotype CreateKaryotype(IPopulationOptions ipo);
-			
 		/// <summary>
 		/// builds 'size' number of chromosomes and sorts
 		/// </summary>
 		public virtual void InitializePopulation() {
 			Karyotypes = new List<IKaryotype>();
 			for (int count = 0; count < Options.PopSize; count++) {
-				IKaryotype k = CreateKaryotype(Options);
+				//add in the random population of chromosomes for each type in the genotype
+				IKaryotype k = (IKaryotype)Activator.CreateInstance(Options.KaryotypeType, Options, mom, dad);
 				Karyotypes.Add(k);
 			}
 		}
@@ -47,62 +46,50 @@ namespace GA.Lib.Population {
 
 			//get a position in the number of karyotes based on crossover
 			int elitePos = (int)Math.Round(Karyotypes.Count * Options.ElitismRatio);
-
-			//start looping through those elites
-			for (int i = elitePos; i < Karyotypes.Count - 1; i++) {
-				//roll the dice. 
-				if (RandomUtil.Instance.NextDouble() <= Options.CrossoverRatio) { // if a random double is less than the crossover value (high probability) then mate
+			
+			for (int i = elitePos; i < Karyotypes.Count; i++) { // loop through and replace or mutate elites
+				//possibly mate or mutate but not both
+				if (IfCrossover()) { 
 					List<IKaryotype> parents = SelectParents();
-					List<IKaryotype> children = parents.First().Mate(parents.Last());
+					evolvedSet[i] = parents.First().Mate(parents.Last()); //replace an elite
 
-					evolvedSet[i] = children.First(); //replace an elite
-
-					if (RandomUtil.Instance.NextDouble() <= Options.MutationRatio) // if random is less than mutation rate (low probability) then mutate
+					if (IfMutate()) 
 						evolvedSet[i].Mutate();
-
-					if (i < evolvedSet.Count - 1) { // if not the last item in set
-						i++;
-
-						evolvedSet[i] = children.Last(); // set the next too 
-						if (RandomUtil.Instance.NextDouble() <= Options.MutationRatio) // possibly mutate it since the next round may not mate or mutate
-							evolvedSet[i].Mutate();
-					}
-				} else if (RandomUtil.Instance.NextDouble() <= Options.MutationRatio) { // or if the random double is less than the mutation rate (low probability) then mutate
+				} else if (IfMutate()) { 
 					evolvedSet[i].Mutate();
 				}
-				i++;
 			}
 			Karyotypes = evolvedSet.OrderByDescending(a => a.Fitness).ToList();
 		}
-
+		
 		/// <summary>
 		/// select a chromosome fit enough to use
 		/// </summary>
 		/// <returns></returns>
-		public virtual IChromosome ChooseFitChromosome() {
-			double topFit = Chromosomes.First().Fitness;
-			List<IChromosome> u = GetUniqueChromosomes();
-			List<IChromosome> lac = (topFit < 1) // if all values have decayed below 1 then don't filter any options out
+		public virtual IKaryotype ChooseFitKaryotype() {
+			double topFit = Karyotypes.First().Fitness;
+			List<IKaryotype> u = GetUniqueKaryotypes();
+			List<IKaryotype> lk = (topFit < 1) // if all values have decayed below 1 then don't filter any options out
 				? u
 				: u.Where(a => a.Fitness >= (topFit * Options.FitnessRatio)).ToList();
-			int newPos = RandomUtil.Instance.Next(0, lac.Count);
-			IChromosome c = (lac.Any()) // if the filter worked too well just select the first item
-				? lac[newPos]
-				: Chromosomes.First();
+			int newPos = RandomUtil.Instance.Next(0, lk.Count);
+			IKaryotype k = (lk.Any()) // if the filter worked too well just select the first item
+				? lk[newPos]
+				: Karyotypes.First();
 
-			return c;
+			return k;
 		}
 
 		#endregion IPopulation
 
 		#region Methods
 
-		public List<IChromosome> GetUniqueChromosomes() {
-			Dictionary<string, IChromosome> uniqueSet = new Dictionary<string, IChromosome>();
-			foreach (IChromosome c in Chromosomes) {
-				string uKey = c.GeneSequence();
+		public List<IKaryotype> GetUniqueKaryotypes() {
+			Dictionary<string, IKaryotype> uniqueSet = new Dictionary<string, IKaryotype>();
+			foreach (IKaryotype k in Karyotypes) {
+				string uKey = k.ExpressedHaploid.DNASequence();
 				if (!uniqueSet.ContainsKey(uKey))
-					uniqueSet.Add(uKey, c);
+					uniqueSet.Add(uKey, k);
 			}
 			return uniqueSet.Values.ToList();
 		}
@@ -110,7 +97,7 @@ namespace GA.Lib.Population {
 		/// <summary>
 		/// Selects two chromosomes randomly and tries to improve odds by comparing it's fitness to other chromosomes also randomly selected
 		/// </summary>
-		protected virtual List<IKaryotype> SelectParents(string chromosomeName) {
+		protected virtual List<IKaryotype> SelectParents() {
 			List<IKaryotype> parents = new List<IKaryotype>(2);
 
 			//finds two randomly selected parents
@@ -120,7 +107,7 @@ namespace GA.Lib.Population {
 				//it tries TourneySize times to randomly find a better parent
 				for (int tournyIndex = 0; tournyIndex < Options.TourneySize; tournyIndex++) {
 					int randomIndex = RandomUtil.Instance.Next(Karyotypes.Count - 1);
-					if (Karyotypes[randomIndex].ExpressedHaploid[chromosomeName].Fitness > parents[parentIndex].ExpressedHaploid[chromosomeName].Fitness) // closer to 0 is more fit
+					if (Karyotypes[randomIndex].Fitness > parents[parentIndex].Fitness) // higher is more fit
 						parents[parentIndex] = Karyotypes[randomIndex];
 				}
 			}
@@ -128,6 +115,18 @@ namespace GA.Lib.Population {
 			return parents;
 		}
 
+		/// <summary>
+		/// if a random double is less than the crossover value (high probability) then mate
+		/// </summary>
+		/// <returns></returns>
+		protected bool IfCrossover() { return RandomUtil.Instance.NextDouble() <= Options.CrossoverRatio; }
+		
+		/// <summary>
+		/// if a random double is less than the mutation rate (low probability) then mutate
+		/// </summary>
+		/// <returns></returns>
+		protected bool IfMutate() { return RandomUtil.Instance.NextDouble() <= Options.MutationRatio; }
+				
 		#endregion IPopulation
 	}
 }

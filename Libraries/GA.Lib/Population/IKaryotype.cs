@@ -7,7 +7,7 @@ using GA.Lib.Chromosome;
 using GA.Lib.Gene;
 
 namespace GA.Lib.Population {
-	public interface IKaryotype {
+	public interface IKaryotype : IComparable<IKaryotype> {
 
 		#region Properties
 
@@ -19,6 +19,8 @@ namespace GA.Lib.Population {
 		IHaploid FathersHaploid { get; set; }
 
 		IHaploid ExpressedHaploid { get; } // compares the dominance settings
+
+		double Fitness { get; }
 
 		#endregion Properties
 

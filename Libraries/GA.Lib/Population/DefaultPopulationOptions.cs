@@ -77,6 +77,11 @@ namespace GA.Lib.Population {
 				_TourneySize = value;
 			}
 		}
+
+		Type KaryotypeType { get; set; }
+		Type HaploidType { get; set; }
+		Type ChromosomeType { get; set; }
+
 		private GenotypeList _Genotype = new GenotypeList();
 		public GenotypeList Genotype {
 			get {

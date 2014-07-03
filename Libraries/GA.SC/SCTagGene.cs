@@ -15,15 +15,17 @@ namespace GA.SC {
 	public class SCTagGene : IGene {
 
 		public string Tag { get; set; }
-		
+		public bool IsDominant { get; set; }
+
 		public string GeneID {
 			get {
 				return string.Format("{0}", Tag);
 			}
 		}
 
-		public SCTagGene(string tag) {
+		public SCTagGene(string tag, bool dominant) {
 			Tag = tag;
+			IsDominant = dominant;
 		}
 	}
 }

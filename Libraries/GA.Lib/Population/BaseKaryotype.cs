@@ -19,11 +19,11 @@ namespace GA.Lib.Population {
 		public IHaploid ExpressedHaploid {
 			get {
 				//create new every time because it might change due to mutation
-				IHaploid _ExpressedHaploid = (IHaploid)Activator.CreateInstance(MothersHaploid.GetType());
+				IHaploid _ExpressedHaploid = (IHaploid)Activator.CreateInstance(Options.HaploidType);
 				foreach (string key in MothersHaploid.Keys) {
 					IChromosome mc = MothersHaploid[key];
 					IChromosome fc = FathersHaploid[key];
-					IChromosome newC = (IChromosome)Activator.CreateInstance(mc.GetType(), Options);
+					IChromosome newC = (IChromosome)Activator.CreateInstance(Options.ChromosomeType, Options);
 					//compare each gene in MothersHaploid and FathersHaploid for dominance
 					for(int i = 0; i < Options.GeneCount; i++){
 						if(mc[i].IsDominant && !fc[i].IsDominant) // use mother if it's the only dominant one
@@ -37,7 +37,8 @@ namespace GA.Lib.Population {
 				}
 				return _ExpressedHaploid;
 			}
-		} 
+		}
+		public abstract double Fitness { get; }
 
 		#endregion Properties 
 
@@ -53,52 +54,6 @@ namespace GA.Lib.Population {
 		#endregion ctor
 
 		#region IKaryotype
-
-		/// <summary>
-		/// creates a duplication then crossover of existing haploids to make seeds for the next generation
-		/// </summary>
-		/// <param name="k"></param>
-		/// <returns></returns>
-		protected virtual List<IHaploid> Meiosis(IKaryotype k) {
-			
-			// Interphase - duplicate the haploids
-			IHaploid f1 = (IHaploid)k.FathersHaploid.Clone();
-			IHaploid f2 = (IHaploid)k.FathersHaploid.Clone();
-			IHaploid m1 = (IHaploid)k.MothersHaploid.Clone();
-			IHaploid m2 = (IHaploid)k.MothersHaploid.Clone();
-			
-			// Prophase - start crossover (f1 and m1) and (f2 and m2) by randomly start mixing the genes in each chromosome
-			foreach (string key in k.FathersHaploid.Keys) {
-				
-				// Metaphase, Anaphase and Telophase - splitting up parts
-				IChromosome f1c = f1[key];
-				IChromosome m1c = m1[key];
-				
-				IChromosome f2c = f2[key];
-				IChromosome m2c = m2[key];
-
-				for (int i = 0; i < Options.GeneCount; i++) { // randomly choose to switch genes
-					PerformCrossover(f1c, m1c, i);
-					PerformCrossover(f2c, m2c, i);
-				}
-			}
-
-			return new List<IHaploid> { f1, f2, m1, m2 };
-		}
-
-		/// <summary>
-		/// randomly decide whether or not to switch a gene at a specific position
-		/// </summary>
-		/// <param name="father"></param>
-		/// <param name="mother"></param>
-		/// <param name="pos"></param>
-		protected void PerformCrossover(IChromosome father, IChromosome mother, int pos) {
-			if (RandomUtil.NextBool()) {
-				IGene tempGene = father[pos];
-				father[pos] = mother[pos];
-				mother[pos] = tempGene;
-			}
-		}
 
 		/// <summary>
 		/// changes a random character in the gene to a random character
@@ -129,11 +84,69 @@ namespace GA.Lib.Population {
 			Type t = this.GetType();
 			IHaploid mom = mh[RandomUtil.Instance.Next(0, mh.Count)];
 			IHaploid dad = fh[RandomUtil.Instance.Next(0, fh.Count)];
-			IKaryotype newK = (IKaryotype)Activator.CreateInstance(t, Options, mom, dad);
+			IKaryotype newK = (IKaryotype)Activator.CreateInstance(Options.KaryotypeType, Options, mom, dad);
 			
 			return newK;
 		}
 
 		#endregion IKaryotype
+
+		#region IComparable
+
+		public int CompareTo(IKaryotype other) {
+			return Fitness.CompareTo(other.Fitness);
+		}
+
+		#endregion IComparable
+
+		#region Methods
+
+		/// <summary>
+		/// creates a duplication then crossover of existing haploids to make seeds for the next generation
+		/// </summary>
+		/// <param name="k"></param>
+		/// <returns></returns>
+		protected virtual List<IHaploid> Meiosis(IKaryotype k) {
+
+			// Interphase - duplicate the haploids
+			IHaploid f1 = (IHaploid)k.FathersHaploid.Clone();
+			IHaploid f2 = (IHaploid)k.FathersHaploid.Clone();
+			IHaploid m1 = (IHaploid)k.MothersHaploid.Clone();
+			IHaploid m2 = (IHaploid)k.MothersHaploid.Clone();
+
+			// Prophase - start crossover (f1 and m1) and (f2 and m2) by randomly start mixing the genes in each chromosome
+			foreach (string key in k.FathersHaploid.Keys) {
+
+				// Metaphase, Anaphase and Telophase - splitting up parts
+				IChromosome f1c = f1[key];
+				IChromosome m1c = m1[key];
+
+				IChromosome f2c = f2[key];
+				IChromosome m2c = m2[key];
+
+				for (int i = 0; i < Options.GeneCount; i++) { // randomly choose to switch genes
+					Crossover(f1c, m1c, i);
+					Crossover(f2c, m2c, i);
+				}
+			}
+
+			return new List<IHaploid> { f1, f2, m1, m2 };
+		}
+
+		/// <summary>
+		/// randomly decide whether or not to switch a gene at a specific position
+		/// </summary>
+		/// <param name="father"></param>
+		/// <param name="mother"></param>
+		/// <param name="pos"></param>
+		protected void Crossover(IChromosome father, IChromosome mother, int pos) {
+			if (RandomUtil.NextBool()) {
+				IGene tempGene = father[pos];
+				father[pos] = mother[pos];
+				mother[pos] = tempGene;
+			}
+		}
+		
+		#endregion Methods
 	}
 }

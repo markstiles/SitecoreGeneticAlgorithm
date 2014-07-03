@@ -13,6 +13,20 @@ namespace GA.Lib.Chromosome {
 
 		#endregion ctor
 
+		#region IHaploid
+
+		public string DNASequence() {
+			StringBuilder sb = new StringBuilder();
+			foreach (IChromosome c in this.Values) {
+				if (sb.Length > 0)
+					sb.Append("-");
+				sb.Append(c.GeneSequence());
+			}
+			return sb.ToString();
+		}
+
+		#endregion IHaploid
+
 		#region ICloneable
 
 		public object Clone() {

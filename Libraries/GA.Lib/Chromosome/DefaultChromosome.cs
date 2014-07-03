@@ -7,30 +7,20 @@ using GA.Lib.Gene;
 using GA.Lib.Population;
 
 namespace GA.Lib.Chromosome {
-	public abstract class BaseChromosome : List<IGene>, IChromosome {
+	public class DefaultChromosome : List<IGene>, IChromosome {
 	
 		#region ctor
 
-		public BaseChromosome(IPopulationOptions ipo){
+		public DefaultChromosome(IPopulationOptions ipo){
 			Options = ipo;
 		}
 
 		#endregion ctor
 
-		#region IComparable
-
-		public int CompareTo(IChromosome other) {
-			return this.Fitness.CompareTo(other.Fitness);
-		}
-
-		#endregion IComparable
-
 		#region IChromosome
 
 		public IPopulationOptions Options { get; set; }
-
-		public abstract double Fitness { get; }
-
+		
 		public virtual string GeneSequence() {
 			StringBuilder sb = new StringBuilder();
 			foreach (IGene g in this)

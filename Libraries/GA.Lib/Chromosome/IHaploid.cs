@@ -5,5 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace GA.Lib.Chromosome {
-	public interface IHaploid : IDictionary<string, IChromosome>, ICloneable { }
+	public interface IHaploid : IDictionary<string, IChromosome>, ICloneable {
+
+		#region Methods
+
+		string DNASequence();
+
+		#endregion Methods
+	}
 }

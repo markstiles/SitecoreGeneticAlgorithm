@@ -40,8 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Chromosome\BaseChromosome.cs" />
-    <Compile Include="Chromosome\BaseHaploid.cs" />
+    <Compile Include="Chromosome\DefaultChromosome.cs" />
+    <Compile Include="Chromosome\DefaultHaploid.cs" />
     <Compile Include="Chromosome\IHaploid.cs" />
     <Compile Include="Extensions\SystemExtensions.cs" />
     <Compile Include="Population\BaseKaryotype.cs" />

@@ -5,7 +5,16 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace GA.SC {
+	
 	public class EngagementValue {
+
+		#region Static Properties
+
+		public static Dictionary<string, List<EngagementValue>> KnownValues = new Dictionary<string, List<EngagementValue>>();
+
+		#endregion Static Properties
+
+		#region Properties 
 		
 		private double _Value;
 		public double Value {
@@ -17,7 +26,11 @@ namespace GA.SC {
 				_Value = value;
 			}
 		}
-		
+
+		#endregion Properties
+
+		#region Methods
+
 		public DateTime LastUpdated { get; internal set; }
 
 		public EngagementValue(double val) {
@@ -79,5 +92,7 @@ namespace GA.SC {
 				//previous burst
 				//both recent and previous burst
 		}
+
+		#endregion Methods
 	}
 }

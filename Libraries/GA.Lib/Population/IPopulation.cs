@@ -17,10 +17,9 @@ namespace GA.Lib.Population {
 
 		#region Methods 
 
-		IKaryotype CreateKaryotype(IPopulationOptions ipo);
 		void InitializePopulation();
 		void Evolve();
-		IChromosome ChooseFitChromosome(string chromosomeName);
+		IKaryotype ChooseFitKaryotype();
 		
 		#endregion Methods
 	}

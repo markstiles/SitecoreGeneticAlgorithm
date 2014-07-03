@@ -42,7 +42,7 @@
   <ItemGroup>
     <Compile Include="EngagementValue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SCChromosome.cs" />
+    <Compile Include="SCKaryotype.cs" />
     <Compile Include="SCPopulation.cs" />
     <Compile Include="SCTagGene.cs" />
   </ItemGroup>

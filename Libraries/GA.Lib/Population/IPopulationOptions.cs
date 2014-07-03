@@ -16,7 +16,11 @@ namespace GA.Lib.Population {
 		int PopSize { get; } // number of chromosomes to create
 		int PopScalar { get; set; } // number to population size by to get a larger number of chromosomes
 		int TourneySize { get; set; }
-		
+
+		Type KaryotypeType { get; set; }
+		Type HaploidType { get; set; }
+		Type ChromosomeType { get; set; }
+
 		GenotypeList Genotype { get; set; }
 	}
 }

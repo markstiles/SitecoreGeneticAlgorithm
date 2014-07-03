@@ -14,7 +14,10 @@
 				.ChromeList .odd,
 				.ChromeList .even { padding:4px 0; }
 				.ChromeList .odd { }
-				.ChromeList .even { background:#ddd; }
+				.ChromeList .even { background:#fff; }
+                .count { display:inline-block; width:35px; text-align:right; }
+                .dna { display:inline-block; width:260px; text-align:center; }
+                .fitness { display:inline-block; width:48px; text-align:center;}
 		.right { width: 400px; display: inline-block; vertical-align:top; }
 			.one, .two, .three, .four { display:inline-block; margin:10px; height:50px; width:50px; background-color:#ccc; }
 			.A, .B, .C, .D { width:30px; display:inline-block; }
@@ -27,7 +30,7 @@
 		.ChromStatus label { font-weight:bold; display: inline-block; font-weight: bold; text-align: right; width: 87px; }
 		.ChromStatus span { }
 	.PopNav .Btns input { border:1px solid #999; background:#f8f8f8; cursor:pointer; }
-		.PopNav .Btns input:hover { background: #33ADFF; color: #002E4C; }
+		.PopNav .Btns input:hover { background: #FFCC99; color: #002E4C; }
 </style>
 
 <div class="HelloWorld">
@@ -95,8 +98,9 @@
 				<asp:Repeater ID="rptChromeList" runat="server">
 					<ItemTemplate>
 						<div class="<%# OddEven(Container.ItemIndex) %>">
-							<b><%# Container.ItemIndex + 1 %></b>: 
-							<%# ((IChromosome)Container.DataItem).GeneSequence() %>-<%# ((IChromosome)Container.DataItem).Fitness %>
+							<div class="count"><%# Container.ItemIndex + 1 %>:</div> 
+							<div class="dna"><%# ((IChromosome)Container.DataItem).GeneSequence() %></div>
+                            <div class="fitness"><%# ((IChromosome)Container.DataItem).Fitness %></div>
 						</div>
 					</ItemTemplate>
 				</asp:Repeater>
