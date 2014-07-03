@@ -26,12 +26,12 @@ namespace GA.Lib.Population {
 					IChromosome newC = (IChromosome)Activator.CreateInstance(mc.GetType(), Options);
 					//compare each gene in MothersHaploid and FathersHaploid for dominance
 					for(int i = 0; i < Options.GeneCount; i++){
-						if(mc[i].IsDominant && !fc[i].IsDominant) // use mother if only it is dominant
+						if(mc[i].IsDominant && !fc[i].IsDominant) // use mother if it's the only dominant one
 							newC.Insert(i, mc[i]);
-						if (!mc[i].IsDominant && fc[i].IsDominant) // use father if only it is dominant
+						if (!mc[i].IsDominant && fc[i].IsDominant) // use father if it's' the only dominant one
 							newC.Insert(i, fc[i]);
 						else
-							newC.Insert(i, (RandomUtil.RandomBool()) ? mc[i] : fc[i]); // choose one at random
+							newC.Insert(i, (RandomUtil.NextBool()) ? mc[i] : fc[i]); // or just choose one at random
 					}
 					_ExpressedHaploid.Add(key, newC);
 				}
@@ -47,7 +47,7 @@ namespace GA.Lib.Population {
 			Options = ipo;
 			MothersHaploid = mom;
 			FathersHaploid = dad;
-			Gender = RandomUtil.RandomBool(); // 50/50 chance
+			Gender = RandomUtil.NextBool(); // 50/50 chance
 		}
 
 		#endregion ctor
@@ -55,7 +55,7 @@ namespace GA.Lib.Population {
 		#region IKaryotype
 
 		/// <summary>
-		/// creates a duplication then crossover of existing gametes
+		/// creates a duplication then crossover of existing haploids to make seeds for the next generation
 		/// </summary>
 		/// <param name="k"></param>
 		/// <returns></returns>
@@ -67,7 +67,7 @@ namespace GA.Lib.Population {
 			IHaploid m1 = (IHaploid)k.MothersHaploid.Clone();
 			IHaploid m2 = (IHaploid)k.MothersHaploid.Clone();
 			
-			// Prophase - start crossover (f1 and m1) and (f2 and m2) randomly start mixing the 
+			// Prophase - start crossover (f1 and m1) and (f2 and m2) by randomly start mixing the genes in each chromosome
 			foreach (string key in k.FathersHaploid.Keys) {
 				
 				// Metaphase, Anaphase and Telophase - splitting up parts
@@ -77,24 +77,27 @@ namespace GA.Lib.Population {
 				IChromosome f2c = f2[key];
 				IChromosome m2c = m2[key];
 
-				for (int i = 0; i < Options.GeneCount; i++) {
-					//randomly choose to switch first gene on first pair
-					if (RandomUtil.RandomBool()) {
-						IGene tempGene = f1c[i];
-						f1c[i] = m1c[i];
-						m1c[i] = tempGene;
-					}
-
-					//randomly choose to switch gene on second pair
-					if (RandomUtil.RandomBool()) {
-						IGene tempGene = f2c[i];
-						f2c[i] = m2c[i];
-						m2c[i] = tempGene;
-					}
+				for (int i = 0; i < Options.GeneCount; i++) { // randomly choose to switch genes
+					PerformCrossover(f1c, m1c, i);
+					PerformCrossover(f2c, m2c, i);
 				}
 			}
 
 			return new List<IHaploid> { f1, f2, m1, m2 };
+		}
+
+		/// <summary>
+		/// randomly decide whether or not to switch a gene at a specific position
+		/// </summary>
+		/// <param name="father"></param>
+		/// <param name="mother"></param>
+		/// <param name="pos"></param>
+		protected void PerformCrossover(IChromosome father, IChromosome mother, int pos) {
+			if (RandomUtil.NextBool()) {
+				IGene tempGene = father[pos];
+				father[pos] = mother[pos];
+				mother[pos] = tempGene;
+			}
 		}
 
 		/// <summary>
@@ -107,8 +110,8 @@ namespace GA.Lib.Population {
 			//randomly get a gene from that chromosome's genotype 
 			IGene g = rg[RandomUtil.Instance.Next(0, rg.Count)];
 			//choose a random Haploid to modify
-			IHaploid rh = (RandomUtil.RandomBool()) ? MothersHaploid : FathersHaploid;
-			//choose the same chromosome on the haploid but a random gene
+			IHaploid rh = (RandomUtil.NextBool()) ? MothersHaploid : FathersHaploid;
+			//choose the same chromosome from the genotype on the haploid but a random gene to replace it
 			rh[chromoKey][RandomUtil.Instance.Next(0, Options.GeneCount)] = g;
 		}
 
@@ -117,7 +120,7 @@ namespace GA.Lib.Population {
 		/// </summary>
 		public virtual IKaryotype Mate(IKaryotype mate) {
 
-			// run meiosis for each
+			// run meiosis for each to generate some seedlings
 			List<IHaploid> mh = (mate.Gender) ? Meiosis(mate) : Meiosis(this);
 			List<IHaploid> fh = (mate.Gender) ? Meiosis(this) : Meiosis(mate);
 

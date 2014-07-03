@@ -40,7 +40,10 @@ namespace GA.UI.Sublayouts {
 		 * 
 		 * it may be the number of generations before its honed
 		 * 
-		 * populations should be refreshed every session but the ev's should be stored. 
+		 * 
+		 * change the populationOptions to take types for the karyotype, haploid, and chromosome
+		 * 
+		 * add InsertRenderings pipeline event last and use it to set the datasource by using the user's Engagement Value to determine a fit chromosome used to select the content tag then search for a content item in a bucket folder for each sublayout.
 		 * */
 
 		private StringBuilder sbOut = new StringBuilder();
@@ -65,10 +68,11 @@ namespace GA.UI.Sublayouts {
 
 			//setup population options
 			apo.GeneCount = Placeholders.Count; //number of genes corresponds to the number of placeholders to fill with display content
-			for (int z = 0; z < Tags.Count; z++) //add all the tags to the genotype
+			for (int z = 0; z < Tags.Count; z++) { //add all the tags to the genotype
 				apo.Genotype.Add(new SCTagGene(Tags[RandomUtil.Instance.Next(0, Tags.Count)]));
+			}
 			
-			//run pop... or not
+			//run pop... or let events run it
 			if (!IsPostBack) {
 
 				//default options

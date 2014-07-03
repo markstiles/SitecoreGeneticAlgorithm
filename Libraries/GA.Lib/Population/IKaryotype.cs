@@ -18,7 +18,7 @@ namespace GA.Lib.Population {
 		IHaploid MothersHaploid { get; set; }
 		IHaploid FathersHaploid { get; set; }
 
-		IHaploid ExpressedHaploid { get; } // compares the dominant settings
+		IHaploid ExpressedHaploid { get; } // compares the dominance settings
 
 		#endregion Properties
 

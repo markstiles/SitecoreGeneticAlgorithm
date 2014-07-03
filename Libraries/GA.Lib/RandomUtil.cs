@@ -13,7 +13,7 @@ namespace GA.Lib {
 			get { return _rand; }
 		}
 
-		public static bool RandomBool() {
+		public static bool NextBool() {
 			return (RandomUtil.Instance.Next(0, 1) == 0);
 		}
 	}

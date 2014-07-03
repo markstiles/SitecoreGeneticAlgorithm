@@ -5,18 +5,18 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace GA.Lib.Chromosome {
-	public class BaseHaploid : Dictionary<string, IChromosome>, IHaploid {
+	public class DefaultHaploid : Dictionary<string, IChromosome>, IHaploid {
 
 		#region ctor
 
-		public BaseHaploid(){}
+		public DefaultHaploid(){}
 
 		#endregion ctor
 
 		#region ICloneable
 
 		public object Clone() {
-			IHaploid cloner = new BaseHaploid();
+			IHaploid cloner = new DefaultHaploid();
 			foreach (KeyValuePair<string, IChromosome> kvp in this)
 				cloner.Add(kvp.Key, kvp.Value);
 			return cloner;
