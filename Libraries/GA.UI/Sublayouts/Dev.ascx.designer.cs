@@ -148,6 +148,15 @@ namespace GA.UI.Sublayouts {
         protected global::System.Web.UI.WebControls.Repeater rptDNAList;
         
         /// <summary>
+        /// pnlOne control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlOne;
+        
+        /// <summary>
         /// ltlOne control.
         /// </summary>
         /// <remarks>
@@ -155,6 +164,15 @@ namespace GA.UI.Sublayouts {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal ltlOne;
+        
+        /// <summary>
+        /// pnlTwo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlTwo;
         
         /// <summary>
         /// ltlTwo control.
@@ -166,6 +184,15 @@ namespace GA.UI.Sublayouts {
         protected global::System.Web.UI.WebControls.Literal ltlTwo;
         
         /// <summary>
+        /// pnlThree control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlThree;
+        
+        /// <summary>
         /// ltlThree control.
         /// </summary>
         /// <remarks>
@@ -173,6 +200,15 @@ namespace GA.UI.Sublayouts {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal ltlThree;
+        
+        /// <summary>
+        /// pnlFour control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlFour;
         
         /// <summary>
         /// ltlFour control.

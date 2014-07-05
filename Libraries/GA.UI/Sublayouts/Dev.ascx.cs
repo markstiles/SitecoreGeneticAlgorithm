@@ -47,8 +47,9 @@ namespace GA.UI.Sublayouts {
 
 		protected List<Literal> Placeholders;
 		protected List<Button> Buttons;
+		protected List<Panel> Panels;
 
-		protected List<string> Tags = new List<string> { "1", "2", "3", "4" };
+		protected List<string> Tags = new List<string> { "Red", "Blue", "Yellow", "Green" };
 
 		protected List<KeyValuePair<int, string>> Chromosomes = new List<KeyValuePair<int, string>>();
 
@@ -60,6 +61,7 @@ namespace GA.UI.Sublayouts {
 
 			//setup accessors
 			Placeholders = new List<Literal>() { ltlOne, ltlTwo, ltlThree, ltlFour };
+			Panels = new List<Panel>() { pnlOne, pnlTwo, pnlThree, pnlFour };
 			Buttons = new List<Button>() { btnA, btnB, btnC, btnD };
 			//setup button text
 			for (int i = 0; i < Buttons.Count; i++)
@@ -122,7 +124,9 @@ namespace GA.UI.Sublayouts {
 
 			//wire up renderings with results
 			for (int z = 0; z < Placeholders.Count; z++) {
-				Placeholders[z].Text = CurrentKaryotype.ExpressedHaploid[Chromosomes[0].Value][z].GeneID;
+				string gid = CurrentKaryotype.ExpressedHaploid[Chromosomes[0].Value][z].GeneID;
+				Placeholders[z].Text = gid;
+				Panels[z].Attributes["style"] = string.Format("background-color:{0};", gid);
 			}
 
 			//list karyotype data

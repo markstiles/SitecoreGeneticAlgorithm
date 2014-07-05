@@ -6,6 +6,7 @@
 
 <style>
 	* { font-family:Tahoma; font-size:10px; }
+	h2 { margin:0px 0px 10px;  font-size: 16px; font-weight: normal; text-align: left; }
 	.HelloWorld { display:none; width: 200px; display:inline-block; }
 	.Algo { width: 820px; background: none repeat scroll 0 0 #fff; border: 1px solid #ddd; padding: 10px; margin:0px auto 30px; }
 		.left { width: 400px; display: inline-block; vertical-align:top; }
@@ -19,8 +20,8 @@
                 .dna { display:inline-block; width:260px; text-align:center; }
                 .fitness { display:inline-block; width:48px; text-align:center;}
 		.right { width: 400px; display: inline-block; vertical-align:top; }
-			.one, .two, .three, .four { display:inline-block; margin:10px; height:50px; width:50px; background-color:#ccc; }
-			.A, .B, .C, .D { width:30px; display:inline-block; }
+			.one, .two, .three, .four { border:1px solid #ccc; display:inline-block; margin:10px 5px; height:50px; font-size:22px; width:75px; background-color:#ccc; }
+			.A, .B, .C, .D { display:inline-block; }
 	.Section { border:1px solid #ccc; padding:10px 15px; margin-bottom:10px; background:#eee; }
 	.PopOptions { text-align: left; width:135px; display:inline-block; } 
 	.PopOptions input[type='text'] { width:30px; text-align:center; }
@@ -31,6 +32,10 @@
 		.PopStatus span { }
 	.PopNav .Btns input { border:1px solid #999; background:#f8f8f8; cursor:pointer; }
 		.PopNav .Btns input:hover { background: #FFCC99; color: #002E4C; }
+	.EV { border:1px solid #ccc; background:#eee; margin:10px 5px; padding:10px; }
+		.EV .entry { text-align:left; margin-bottom:5px; }
+		.EV .key { display:inline-block; width:75px; text-align:right; text-transform:uppercase; }
+		.EV .value { display:inline-block; font-weight:bold; }
 </style>
 
 <div class="HelloWorld">
@@ -44,6 +49,7 @@
 <div class="Algo">
 	<div class="left">
 		<div class="Section">
+			<h2>Population Information</h2>
 			<div class="PopOptions">
 				<div class="formRow">
 					<label title="the probability you'll mate (and possibly mutate) instead of just mutating.">Crossover Ratio (?)</label>
@@ -109,37 +115,45 @@
 	</div>
 	<div class="right">
 		<div class="Display">
-			<div class="one">
+			<asp:Panel ID="pnlOne" CssClass="one" runat="server">
 				<asp:Literal ID="ltlOne" runat="server"></asp:Literal>
-			</div>
-			<div class="two">
+			</asp:Panel>
+			<asp:Panel ID="pnlTwo" CssClass="two" runat="server">
 				<asp:Literal ID="ltlTwo" runat="server"></asp:Literal>
-			</div>
-			<div class="three">
+			</asp:Panel>
+			<asp:Panel ID="pnlThree" CssClass="three" runat="server">
 				<asp:Literal ID="ltlThree" runat="server"></asp:Literal>
-			</div>
-			<div class="four">
+			</asp:Panel>
+			<asp:Panel ID="pnlFour" CssClass="four" runat="server">
 				<asp:Literal ID="ltlFour" runat="server"></asp:Literal>
-			</div>
+			</asp:Panel>
 		</div>
 		<div class="Buttons">
 			<div class="A">
-				<asp:Button ID="btnA" runat="server" CssClass="One" OnClick="btn_Click" />
+				<asp:Button ID="btnA" runat="server" OnClick="btn_Click" />
 			</div>
 			<div class="B">
-				<asp:Button ID="btnB" runat="server" CssClass="Two" OnClick="btn_Click" />
+				<asp:Button ID="btnB" runat="server" OnClick="btn_Click" />
 			</div>
 			<div class="C">
-				<asp:Button ID="btnC" runat="server" CssClass="Three" OnClick="btn_Click" />
+				<asp:Button ID="btnC" runat="server" OnClick="btn_Click" />
 			</div>
 			<div class="D">
-				<asp:Button ID="btnD" runat="server" CssClass="Four" OnClick="btn_Click" />
+				<asp:Button ID="btnD" runat="server" OnClick="btn_Click" />
 			</div>
 		</div>
 		<div class="EV">
+			<h2>Engagement Values by Tag</h2>
 			<asp:Repeater ID="rptEV" runat="server">
 				<ItemTemplate>
-					<%# ((KeyValuePair<string, List<EngagementValue>>)Container.DataItem).Key %>-<%# ((KeyValuePair<string, List<EngagementValue>>)Container.DataItem).Value.Sum(a => a.CurrentValue()) %><br/>
+					<div class="entry">
+						<div class="key">
+							<%# ((KeyValuePair<string, List<EngagementValue>>)Container.DataItem).Key %> : 
+						</div>
+						<div class="value">
+							<%# ((KeyValuePair<string, List<EngagementValue>>)Container.DataItem).Value.Sum(a => a.CurrentValue()) %>
+						</div>
+					</div>
 				</ItemTemplate>
 			</asp:Repeater>
 		</div>
