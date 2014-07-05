@@ -148,6 +148,15 @@ namespace GA.UI.Sublayouts {
         protected global::System.Web.UI.WebControls.Repeater rptDNAList;
         
         /// <summary>
+        /// rptEV control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater rptEV;
+        
+        /// <summary>
         /// pnlOne control.
         /// </summary>
         /// <remarks>
@@ -256,12 +265,30 @@ namespace GA.UI.Sublayouts {
         protected global::System.Web.UI.WebControls.Button btnD;
         
         /// <summary>
-        /// rptEV control.
+        /// btnE control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rptEV;
+        protected global::System.Web.UI.WebControls.Button btnE;
+        
+        /// <summary>
+        /// btnF control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnF;
+        
+        /// <summary>
+        /// btnG control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnG;
     }
 }

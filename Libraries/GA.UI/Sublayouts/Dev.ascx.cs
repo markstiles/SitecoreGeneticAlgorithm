@@ -49,8 +49,6 @@ namespace GA.UI.Sublayouts {
 		protected List<Button> Buttons;
 		protected List<Panel> Panels;
 
-		protected List<string> Tags = new List<string> { "Red", "Blue", "Yellow", "Green" };
-
 		protected List<KeyValuePair<int, string>> Chromosomes = new List<KeyValuePair<int, string>>();
 
 		protected IKaryotype CurrentKaryotype;
@@ -62,11 +60,8 @@ namespace GA.UI.Sublayouts {
 			//setup accessors
 			Placeholders = new List<Literal>() { ltlOne, ltlTwo, ltlThree, ltlFour };
 			Panels = new List<Panel>() { pnlOne, pnlTwo, pnlThree, pnlFour };
-			Buttons = new List<Button>() { btnA, btnB, btnC, btnD };
-			//setup button text
-			for (int i = 0; i < Buttons.Count; i++)
-				Buttons[i].Text = Tags[i];
-
+			Buttons = new List<Button>() { btnA, btnB, btnC, btnD, btnE, btnF, btnG };
+			
 			//setup chromosomes
 			Chromosomes.Add(new KeyValuePair<int, string>(Placeholders.Count, "pageContent")); 
 			
@@ -77,8 +72,8 @@ namespace GA.UI.Sublayouts {
 				Genotype g = new Genotype();
 				//number of genes corresponds to the number of placeholders to fill with display content
 				g.GeneLimit = c.Key;
-				for (int z = 0; z < Tags.Count; z++) { //add all the tags to the genotype
-					SCTagGene t = new SCTagGene(Tags[z], true);
+				for (int z = 0; z < Buttons.Count; z++) { //add all the tags to the genotype
+					SCTagGene t = new SCTagGene(Buttons[z].Text, true);
 					g.Add(t);
 				}
 				apo.Genotype.Add(c.Value, g);
