@@ -11,16 +11,12 @@ namespace GA.Lib.Chromosome {
 	
 		#region ctor
 
-		public DefaultChromosome(IPopulationOptions ipo){
-			Options = ipo;
-		}
+		public DefaultChromosome(){ }
 
 		#endregion ctor
 
 		#region IChromosome
 
-		public IPopulationOptions Options { get; set; }
-		
 		public virtual string GeneSequence() {
 			StringBuilder sb = new StringBuilder();
 			foreach (IGene g in this)
@@ -28,9 +24,8 @@ namespace GA.Lib.Chromosome {
 			return sb.ToString();
 		}
 
-		public virtual void FillRandomly(string chromosomeName) {
-			List<IGene> genepool = Options.Genotype[chromosomeName];
-			for (int j = 0; j < Options.GeneCount; j++) {
+		public virtual void FillRandomly(List<IGene> genepool, int count) {
+			for (int j = 0; j < count; j++) {
 				IGene g = genepool[RandomUtil.Instance.Next(0, genepool.Count)];
 				this.Add(g);
 			}

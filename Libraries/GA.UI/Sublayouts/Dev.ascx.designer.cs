@@ -85,22 +85,22 @@ namespace GA.UI.Sublayouts {
         protected global::System.Web.UI.WebControls.TextBox txtTourney;
         
         /// <summary>
-        /// ltlChromes control.
+        /// ltlKaryos control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ltlChromes;
+        protected global::System.Web.UI.WebControls.Literal ltlKaryos;
         
         /// <summary>
-        /// ltlUChromes control.
+        /// ltlUKaryos control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ltlUChromes;
+        protected global::System.Web.UI.WebControls.Literal ltlUKaryos;
         
         /// <summary>
         /// btnNextGen control.
@@ -130,31 +130,22 @@ namespace GA.UI.Sublayouts {
         protected global::System.Web.UI.WebControls.Button btnRestart;
         
         /// <summary>
-        /// ltlChrome control.
+        /// ltlKaryotype control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ltlChrome;
+        protected global::System.Web.UI.WebControls.Literal ltlKaryotype;
         
         /// <summary>
-        /// rptChromeList control.
+        /// rptDNAList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rptChromeList;
-        
-        /// <summary>
-        /// ltlChromeList control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ltlChromeList;
+        protected global::System.Web.UI.WebControls.Repeater rptDNAList;
         
         /// <summary>
         /// ltlOne control.

@@ -9,16 +9,10 @@ using GA.Lib.Population;
 namespace GA.Lib.Chromosome {
 	public interface IChromosome : IList<IGene> {
 
-		#region Properties
-
-		IPopulationOptions Options { get; set; }
-
-		#endregion Properties
-
 		#region Methods
 
 		string GeneSequence();
-		void FillRandomly(string chromosomeName);
+		void FillRandomly(List<IGene> genepool, int count);
 
 		#endregion Methods
 	}

@@ -13,7 +13,7 @@ namespace GA.SC {
 		
 		#region ctor
 
-		public SCKaryotype(IPopulationOptions ipo, IHaploid mom, IHaploid dad) : base(ipo, mom, dad) { }
+		public SCKaryotype(IPopulationManager ipo, IHaploid mom, IHaploid dad) : base(ipo, mom, dad) { }
 
 		#endregion ctor
 
@@ -22,10 +22,12 @@ namespace GA.SC {
 		public override double Fitness {
 			get {
 				double fitness = 0;
-				foreach (IGene g in this) {
-					if (EngagementValue.KnownValues.Any() && EngagementValue.KnownValues.ContainsKey(g.GeneID)) { //need to change how this gets stored.
-						List<EngagementValue> evl = EngagementValue.KnownValues[g.GeneID];
-						fitness += evl.Sum(a => a.CurrentValue());
+				foreach (KeyValuePair<string, IChromosome> kvp in ExpressedHaploid){
+					foreach (IGene g in kvp.Value) {
+						if (EngagementValue.KnownValues.Any() && EngagementValue.KnownValues.ContainsKey(g.GeneID)) { //need to change how this gets stored.
+							List<EngagementValue> evl = EngagementValue.KnownValues[g.GeneID];
+							fitness += evl.Sum(a => a.CurrentValue());
+						}
 					}
 				}
 				return Math.Round(fitness, 3);

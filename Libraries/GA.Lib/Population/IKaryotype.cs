@@ -11,7 +11,7 @@ namespace GA.Lib.Population {
 
 		#region Properties
 
-		IPopulationOptions Options { get; set; }
+		IPopulationManager Manager { get; set; }
 
 		bool Gender { get; set; } // true = mother, false = father
 

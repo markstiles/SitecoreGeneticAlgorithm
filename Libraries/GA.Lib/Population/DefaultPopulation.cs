@@ -4,23 +4,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GA.Lib.Chromosome;
+using GA.Lib.Gene;
 
 namespace GA.Lib.Population {
-	public abstract class BasePopulation : IPopulation {
+	public class DefaultPopulation : IPopulation {
 
 		#region Properties
 
-		public IPopulationOptions Options { get; set; }
+		public IPopulationManager Manager { get; set; }
 		public List<IKaryotype> Karyotypes { get; set; }
 
 		#endregion Properties
 
 		#region ctor
 
-		public BasePopulation(IPopulationOptions ipo) {
-			Options = ipo;
-			InitializePopulation();
-		}
+		public DefaultPopulation() {}
 
 		#endregion ctor
 
@@ -29,11 +27,18 @@ namespace GA.Lib.Population {
 		/// <summary>
 		/// builds 'size' number of chromosomes and sorts
 		/// </summary>
-		public virtual void InitializePopulation() {
+		public virtual void InitializePopulation(IPopulationManager ipo) {
+			Manager = ipo;
 			Karyotypes = new List<IKaryotype>();
-			for (int count = 0; count < Options.PopSize; count++) {
-				//add in the random population of chromosomes for each type in the genotype
-				IKaryotype k = (IKaryotype)Activator.CreateInstance(Options.KaryotypeType, Options, mom, dad);
+			for (int count = 0; count < Manager.PopSize; count++) {
+				IHaploid mom = Manager.CreateHaploid();
+				IHaploid dad = Manager.CreateHaploid();
+				//add in the random population of chromosomes for each type in the genotype to each haploid
+				foreach (KeyValuePair<string, Genotype> kvp in Manager.Genotype) {
+					mom.Add(kvp.Key, GetRandomChromosome(kvp.Key));
+					dad.Add(kvp.Key, GetRandomChromosome(kvp.Key));
+				}
+				IKaryotype k = Manager.CreateKaryotype(mom, dad);
 				Karyotypes.Add(k);
 			}
 		}
@@ -45,7 +50,7 @@ namespace GA.Lib.Population {
 			List<IKaryotype> evolvedSet = new List<IKaryotype>(Karyotypes);
 
 			//get a position in the number of karyotes based on crossover
-			int elitePos = (int)Math.Round(Karyotypes.Count * Options.ElitismRatio);
+			int elitePos = (int)Math.Round(Karyotypes.Count * Manager.ElitismRatio);
 			
 			for (int i = elitePos; i < Karyotypes.Count; i++) { // loop through and replace or mutate elites
 				//possibly mate or mutate but not both
@@ -71,7 +76,7 @@ namespace GA.Lib.Population {
 			List<IKaryotype> u = GetUniqueKaryotypes();
 			List<IKaryotype> lk = (topFit < 1) // if all values have decayed below 1 then don't filter any options out
 				? u
-				: u.Where(a => a.Fitness >= (topFit * Options.FitnessRatio)).ToList();
+				: u.Where(a => a.Fitness >= (topFit * Manager.FitnessRatio)).ToList();
 			int newPos = RandomUtil.Instance.Next(0, lk.Count);
 			IKaryotype k = (lk.Any()) // if the filter worked too well just select the first item
 				? lk[newPos]
@@ -83,6 +88,12 @@ namespace GA.Lib.Population {
 		#endregion IPopulation
 
 		#region Methods
+
+		protected IChromosome GetRandomChromosome(string chromosomeName){
+			IChromosome c = Manager.CreateChromosome();
+			c.FillRandomly(Manager.Genotype[chromosomeName], Manager.Genotype[chromosomeName].GeneLimit);
+			return c;	
+		}
 
 		public List<IKaryotype> GetUniqueKaryotypes() {
 			Dictionary<string, IKaryotype> uniqueSet = new Dictionary<string, IKaryotype>();
@@ -105,7 +116,7 @@ namespace GA.Lib.Population {
 				parents.Add(Karyotypes[RandomUtil.Instance.Next(Karyotypes.Count - 1)]);
 
 				//it tries TourneySize times to randomly find a better parent
-				for (int tournyIndex = 0; tournyIndex < Options.TourneySize; tournyIndex++) {
+				for (int tournyIndex = 0; tournyIndex < Manager.TourneySize; tournyIndex++) {
 					int randomIndex = RandomUtil.Instance.Next(Karyotypes.Count - 1);
 					if (Karyotypes[randomIndex].Fitness > parents[parentIndex].Fitness) // higher is more fit
 						parents[parentIndex] = Karyotypes[randomIndex];
@@ -119,13 +130,13 @@ namespace GA.Lib.Population {
 		/// if a random double is less than the crossover value (high probability) then mate
 		/// </summary>
 		/// <returns></returns>
-		protected bool IfCrossover() { return RandomUtil.Instance.NextDouble() <= Options.CrossoverRatio; }
+		protected bool IfCrossover() { return RandomUtil.Instance.NextDouble() <= Manager.CrossoverRatio; }
 		
 		/// <summary>
 		/// if a random double is less than the mutation rate (low probability) then mutate
 		/// </summary>
 		/// <returns></returns>
-		protected bool IfMutate() { return RandomUtil.Instance.NextDouble() <= Options.MutationRatio; }
+		protected bool IfMutate() { return RandomUtil.Instance.NextDouble() <= Manager.MutationRatio; }
 				
 		#endregion IPopulation
 	}

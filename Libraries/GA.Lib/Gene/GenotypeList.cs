@@ -5,5 +5,5 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace GA.Lib.Gene {
-	public class GenotypeList : Dictionary<string, List<IGene>> { }
+	public class GenotypeList : Dictionary<string, Genotype> { }
 }

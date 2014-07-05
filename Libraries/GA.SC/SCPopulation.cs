@@ -10,11 +10,11 @@ using GA.Lib.Chromosome;
 using GA.Lib.Population;
 
 namespace GA.SC {
-	public class SCPopulation : BasePopulation {
+	public class SCPopulation : DefaultPopulation {
 
 		#region ctor
 
-		public SCPopulation(IPopulationOptions apo) : base(apo) { }
+		public SCPopulation() : base() { }
 
 		#endregion ctor
 
@@ -25,11 +25,11 @@ namespace GA.SC {
 
 		protected static readonly string PopKey = "population";
 
-		public static void RestartPop(IPopulationOptions apo) {
+		public static void RestartPop(IPopulationManager apo) {
 			HttpContext.Current.Session[PopKey] = CreatePop(apo); 
 		}
 
-		public static SCPopulation GetPop(IPopulationOptions apo) {
+		public static SCPopulation GetPop(IPopulationManager apo) {
 			if (HttpContext.Current.Session[PopKey] != null)
 				return (SCPopulation)HttpContext.Current.Session[PopKey];
 
@@ -38,8 +38,10 @@ namespace GA.SC {
 			return p;
 		}
 
-		public static SCPopulation CreatePop(IPopulationOptions apo) {
-			return new SCPopulation(apo);
+		public static SCPopulation CreatePop(IPopulationManager apo) {
+			SCPopulation p = new SCPopulation();
+			p.InitializePopulation(apo);
+			return p;
 		}
 
 		public static void SetPop(SCPopulation p) {

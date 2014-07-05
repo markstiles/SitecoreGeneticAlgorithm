@@ -11,7 +11,7 @@ namespace GA.Lib.Population {
 
 		#region Properties 
 
-		public IPopulationOptions Options { get; set; }
+		public IPopulationManager Manager { get; set; }
 		public bool Gender { get; set; } 
 		public IHaploid MothersHaploid { get; set; }
 		public IHaploid FathersHaploid { get; set; }
@@ -19,13 +19,13 @@ namespace GA.Lib.Population {
 		public IHaploid ExpressedHaploid {
 			get {
 				//create new every time because it might change due to mutation
-				IHaploid _ExpressedHaploid = (IHaploid)Activator.CreateInstance(Options.HaploidType);
+				IHaploid _ExpressedHaploid = Manager.CreateHaploid();
 				foreach (string key in MothersHaploid.Keys) {
 					IChromosome mc = MothersHaploid[key];
 					IChromosome fc = FathersHaploid[key];
-					IChromosome newC = (IChromosome)Activator.CreateInstance(Options.ChromosomeType, Options);
+					IChromosome newC = Manager.CreateChromosome();
 					//compare each gene in MothersHaploid and FathersHaploid for dominance
-					for(int i = 0; i < Options.GeneCount; i++){
+					for (int i = 0; i < Manager.Genotype[key].GeneLimit; i++) {
 						if(mc[i].IsDominant && !fc[i].IsDominant) // use mother if it's the only dominant one
 							newC.Insert(i, mc[i]);
 						if (!mc[i].IsDominant && fc[i].IsDominant) // use father if it's' the only dominant one
@@ -44,8 +44,8 @@ namespace GA.Lib.Population {
 
 		#region ctor
 
-		public BaseKaryotype(IPopulationOptions ipo, IHaploid mom, IHaploid dad) {
-			Options = ipo;
+		public BaseKaryotype(IPopulationManager ipo, IHaploid mom, IHaploid dad) {
+			Manager = ipo;
 			MothersHaploid = mom;
 			FathersHaploid = dad;
 			Gender = RandomUtil.NextBool(); // 50/50 chance
@@ -60,14 +60,14 @@ namespace GA.Lib.Population {
 		/// </summary>
 		public virtual void Mutate() {
 			//randomly select a chromosome from the master genotype list
-			string chromoKey = Options.Genotype.Keys.ToList()[RandomUtil.Instance.Next(0, Options.Genotype.Keys.Count)];
-			List<IGene> rg = Options.Genotype[chromoKey];
+			string chromoKey = Manager.Genotype.Keys.ToList()[RandomUtil.Instance.Next(0, Manager.Genotype.Keys.Count)];
+			List<IGene> rg = Manager.Genotype[chromoKey];
 			//randomly get a gene from that chromosome's genotype 
 			IGene g = rg[RandomUtil.Instance.Next(0, rg.Count)];
 			//choose a random Haploid to modify
 			IHaploid rh = (RandomUtil.NextBool()) ? MothersHaploid : FathersHaploid;
 			//choose the same chromosome from the genotype on the haploid but a random gene to replace it
-			rh[chromoKey][RandomUtil.Instance.Next(0, Options.GeneCount)] = g;
+			rh[chromoKey][RandomUtil.Instance.Next(0, Manager.Genotype[chromoKey].GeneLimit)] = g;
 		}
 
 		/// <summary>
@@ -80,11 +80,11 @@ namespace GA.Lib.Population {
 			List<IHaploid> fh = (mate.Gender) ? Meiosis(this) : Meiosis(mate);
 
 			// randomly pick a haploid from each and create a new karyotype
-			Object[] args = { Options };
+			Object[] args = { Manager };
 			Type t = this.GetType();
 			IHaploid mom = mh[RandomUtil.Instance.Next(0, mh.Count)];
 			IHaploid dad = fh[RandomUtil.Instance.Next(0, fh.Count)];
-			IKaryotype newK = (IKaryotype)Activator.CreateInstance(Options.KaryotypeType, Options, mom, dad);
+			IKaryotype newK = Manager.CreateKaryotype(mom, dad);
 			
 			return newK;
 		}
@@ -124,7 +124,7 @@ namespace GA.Lib.Population {
 				IChromosome f2c = f2[key];
 				IChromosome m2c = m2[key];
 
-				for (int i = 0; i < Options.GeneCount; i++) { // randomly choose to switch genes
+				for (int i = 0; i < Manager.Genotype[key].GeneLimit; i++) { // randomly choose to switch genes
 					Crossover(f1c, m1c, i);
 					Crossover(f2c, m2c, i);
 				}

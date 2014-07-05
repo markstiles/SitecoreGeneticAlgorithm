@@ -10,14 +10,14 @@ namespace GA.Lib.Population {
 		
 		#region Properties
 
-		IPopulationOptions Options { get; set; }
+		IPopulationManager Manager { get; set; }
 		List<IKaryotype> Karyotypes { get; set; }
 
 		#endregion Properties
 
 		#region Methods 
 
-		void InitializePopulation();
+		void InitializePopulation(IPopulationManager ipo);
 		void Evolve();
 		IKaryotype ChooseFitKaryotype();
 		

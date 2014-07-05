@@ -8,6 +8,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using GA.Lib;
 using GA.Lib.Chromosome;
+using GA.Lib.Gene;
 using GA.Lib.Population;
 using GA.SC;
 
@@ -15,22 +16,10 @@ namespace GA.UI.Sublayouts {
 	public partial class Dev : System.Web.UI.UserControl {
 
 		/* 
-		 *could also just have a chromosome for each day or even time of day. a set by season. In this way you might defeat
-		 *monocultures by adding in more variability
-		 *
-		 * these can be used just like levels of navigation. you can create a population at a top level and each chromosome 
+		 * populations can be used just like levels of navigation. create one at a top level and each 
 		 * could have it's own population as subcategories. visually stored in a tree or bucket but just in a sense of 
 		 * giving depth to the category itself. for example you like shoes (top level chromosome) but you prefer sandals 
 		 * and sneakers (second level)
-		 * 
-		 * There's two places that are still tied to instances. In the algoChromosome it's sitecore specific for the use of Engagement values
-		 * also in the population it's instantiation the AlgoChromosome during init population. 
-		 * 
-		 * the population options could also be an interface and pull from the config. provide a default with the values pulling
-		 * from app settings
-		 * 
-		 * Engagement values might not be best stored on the SCChromosome class
-		 * 
 		 * 
 		 * need to make sure the evolve function is leaving some diversity left
 		 * also make sure the top fittest isn't always chosen to add variability. or at least up the randomness either through mutation rate etc.
@@ -44,6 +33,14 @@ namespace GA.UI.Sublayouts {
 		 * change the populationOptions to take types for the karyotype, haploid, and chromosome
 		 * 
 		 * add InsertRenderings pipeline event last and use it to set the datasource by using the user's Engagement Value to determine a fit chromosome used to select the content tag then search for a content item in a bucket folder for each sublayout.
+		 * 
+		 * may want to change how the genotypelist works by collecting "Type" objects and having a default constructor that takes in an object
+		 * to be able to create new objects and set the datasource.
+		 * not sure which is more advantageous; to set the dominance automatically or manually
+		 * 
+		 * a mutation that picked genes to create randomly. the for loop would loop through all items but still pick a random one and this caused a low initial population number
+		 * 
+		 * change the gene count on the populations manager to be per chromosome on the genotypelist. make a class that stores the genelimit for that entity and the genes
 		 * */
 
 		private StringBuilder sbOut = new StringBuilder();
@@ -53,9 +50,11 @@ namespace GA.UI.Sublayouts {
 
 		protected List<string> Tags = new List<string> { "1", "2", "3", "4" };
 
-		protected IChromosome CurrentChromosome;
+		protected List<KeyValuePair<int, string>> Chromosomes = new List<KeyValuePair<int, string>>();
 
-		protected DefaultPopulationOptions apo = new DefaultPopulationOptions();
+		protected IKaryotype CurrentKaryotype;
+
+		protected DefaultPopulationManager apo = new DefaultPopulationManager();
 
 		protected void Page_Load(object sender, EventArgs e) {
 
@@ -66,10 +65,21 @@ namespace GA.UI.Sublayouts {
 			for (int i = 0; i < Buttons.Count; i++)
 				Buttons[i].Text = Tags[i];
 
+			//setup chromosomes
+			Chromosomes.Add(new KeyValuePair<int, string>(Placeholders.Count, "pageContent")); 
+			
 			//setup population options
-			apo.GeneCount = Placeholders.Count; //number of genes corresponds to the number of placeholders to fill with display content
-			for (int z = 0; z < Tags.Count; z++) { //add all the tags to the genotype
-				apo.Genotype.Add(new SCTagGene(Tags[RandomUtil.Instance.Next(0, Tags.Count)]));
+			apo.PopulationType = Type.GetType("GA.SC.SCPopulation,GA.SC");
+			apo.KaryotypeType = Type.GetType("GA.SC.SCKaryotype,GA.SC");
+			foreach (KeyValuePair<int, string> c in Chromosomes) {
+				Genotype g = new Genotype();
+				//number of genes corresponds to the number of placeholders to fill with display content
+				g.GeneLimit = c.Key;
+				for (int z = 0; z < Tags.Count; z++) { //add all the tags to the genotype
+					SCTagGene t = new SCTagGene(Tags[z], true);
+					g.Add(t);
+				}
+				apo.Genotype.Add(c.Value, g);
 			}
 			
 			//run pop... or let events run it
@@ -102,24 +112,25 @@ namespace GA.UI.Sublayouts {
 			SCPopulation p = SCPopulation.GetPop(apo);
 
 			//list the chromosomes
-			List<IChromosome> u = p.GetUniqueChromosomes();
-			rptChromeList.DataSource = p.GetUniqueChromosomes();
-			rptChromeList.DataBind(); 
+			List<IKaryotype> u = p.GetUniqueKaryotypes();
+			rptDNAList.DataSource = u;
+			rptDNAList.DataBind(); 
 
 			//choose best
-			CurrentChromosome = p.ChooseFitChromosome();
-			ltlChrome.Text = string.Format("{0}-{1}", CurrentChromosome.GeneSequence(), CurrentChromosome.Fitness);
+			CurrentKaryotype = p.ChooseFitKaryotype();
+			ltlKaryotype.Text = string.Format("{0}-{1}", CurrentKaryotype.ExpressedHaploid.DNASequence(), CurrentKaryotype.Fitness);
 
 			//wire up renderings with results
-			for (int z = 0; z < Placeholders.Count; z++)
-				Placeholders[z].Text = CurrentChromosome[z].GeneID;
+			for (int z = 0; z < Placeholders.Count; z++) {
+				Placeholders[z].Text = CurrentKaryotype.ExpressedHaploid[Chromosomes[0].Value][z].GeneID;
+			}
 
-			//list chromosome data
-			ltlChromes.Text = p.Chromosomes.Count.ToString();
-			ltlUChromes.Text = u.Count.ToString();
+			//list karyotype data
+			ltlKaryos.Text = p.Karyotypes.Count.ToString();
+			ltlUKaryos.Text = u.Count.ToString();
 
 			//list all engagement values stored
-			rptEV.DataSource = SCKaryotype.EngagementValues;
+			rptEV.DataSource = EngagementValue.KnownValues;
 			rptEV.DataBind();
 
 			//evolve
@@ -156,16 +167,16 @@ namespace GA.UI.Sublayouts {
 			//update clicks
 			Button b = (Button)sender;
 			string key = b.Text; // string.Format("ltl{0}-{1}", b.CssClass, b.Text);
-			if (!SCKaryotype.EngagementValues.ContainsKey(key))
-				SCKaryotype.EngagementValues.Add(key, new List<EngagementValue>());
-			SCKaryotype.EngagementValues[key].Add(new EngagementValue(1));
+			if (!EngagementValue.KnownValues.ContainsKey(key))
+				EngagementValue.KnownValues.Add(key, new List<EngagementValue>());
+			EngagementValue.KnownValues[key].Add(new EngagementValue(1));
 			
 			//run algo
 			RunAlgo();
 		}
 
 		protected void btnClearEvents_Click(object sender, EventArgs e) {
-			SCKaryotype.EngagementValues.Clear();
+			EngagementValue.KnownValues.Clear();
 			RunAlgo();
 		}
 
