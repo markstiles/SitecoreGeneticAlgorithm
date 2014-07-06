@@ -14,7 +14,7 @@
 		h1 { font-size:17px; }
 		a { color: #3366FF; }
 		a:hover { text-decoration:underline; }
-		.AlgoContent { padding:10px; }
+		.AlgoContent { padding:10px; text-align:center; }
 		.main { width:1000px; margin:0px auto; }
 			.header { }
 				.logo { margin:10px 0px; display: inline-block; vertical-align:middle; }
@@ -33,7 +33,7 @@
 			.center { width:430px; border-left:1px solid #ccc; border-right:1px solid #ccc; }
 			.right { width:280px; }
 				.left .AlgoContent,
-				.right .AlgoContent { height:100px; margin-bottom:10px; }
+				.right .AlgoContent { height:100px; margin-bottom:25px; }
 				.center .AlgoContent { height:100px; }
 	</style>
 </head>

@@ -9,7 +9,7 @@
 
 		private void Page_Load(object sender, EventArgs e) {
 			pnlOut.Attributes.Add("style", "background-color:#ccc;");
-			ltlOut.Text = "TODO";
+			ltlOut.Text = DataSourceItem.DisplayName;
 		}
 
 		protected override void EngagingEvent_Click(object sender, EventArgs e) {

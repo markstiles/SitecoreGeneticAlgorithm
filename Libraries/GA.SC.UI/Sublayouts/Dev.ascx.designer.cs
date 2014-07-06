@@ -112,15 +112,6 @@ namespace GA.SC.UI.Sublayouts {
         protected global::System.Web.UI.WebControls.Button btnNextGen;
         
         /// <summary>
-        /// btnClearEvents control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnClearEvents;
-        
-        /// <summary>
         /// btnRestart control.
         /// </summary>
         /// <remarks>
@@ -155,6 +146,15 @@ namespace GA.SC.UI.Sublayouts {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Repeater rptEV;
+        
+        /// <summary>
+        /// btnClearEvents control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnClearEvents;
         
         /// <summary>
         /// pnlOne control.

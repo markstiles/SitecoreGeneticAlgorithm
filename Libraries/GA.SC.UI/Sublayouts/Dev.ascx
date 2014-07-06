@@ -96,7 +96,6 @@
 				</div>
 				<div class="Btns">
 					<asp:Button ID="btnNextGen" runat="server" Text="Next Gen" OnClick="btnNextGen_Click" />
-					<asp:Button ID="btnClearEvents" runat="server" Text="Clear Events" OnClick="btnClearEvents_Click" />
 					<asp:Button ID="btnRestart" runat="server" Text="Restart" OnClick="btnRestart_Click" />
 				</div>
 			</div>
@@ -135,6 +134,9 @@
 						</div>
 					</ItemTemplate>
 				</asp:Repeater>
+			</div>
+			<div class="Btns">
+				<asp:Button ID="btnClearEvents" runat="server" Text="Clear Events" OnClick="btnClearEvents_Click" />
 			</div>
 		</div>
 		<div class="Section">

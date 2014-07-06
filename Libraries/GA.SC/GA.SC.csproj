@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Sitecore.ContentSearch">
+      <HintPath>..\..\..\testsite-sc-7.1\Website\bin\Sitecore.ContentSearch.dll</HintPath>
+    </Reference>
     <Reference Include="Sitecore.Kernel">
       <HintPath>..\..\..\testsite-sc-7.1\Website\bin\Sitecore.Kernel.dll</HintPath>
     </Reference>
