@@ -12,7 +12,7 @@ namespace GA.SC {
 	/// <summary>
 	/// represents the content tag for any given rendering
 	/// </summary>
-	public class SCTagGene : IGene {
+	public class TagGene : IGene {
 
 		public string Tag { get; set; }
 		public bool IsDominant { get; set; }
@@ -23,7 +23,7 @@ namespace GA.SC {
 			}
 		}
 
-		public SCTagGene(string tag, bool dominant) {
+		public TagGene(string tag, bool dominant) {
 			Tag = tag;
 			IsDominant = dominant;
 		}

@@ -18,22 +18,23 @@ namespace GA.Lib.Population {
 		private IHaploid _ExpressedHaploid;
 		public IHaploid ExpressedHaploid {
 			get {
-				//create new every time because it might change due to mutation
-				IHaploid _ExpressedHaploid = Manager.CreateHaploid();
-				foreach (string key in MothersHaploid.Keys) {
-					IChromosome mc = MothersHaploid[key];
-					IChromosome fc = FathersHaploid[key];
-					IChromosome newC = Manager.CreateChromosome();
-					//compare each gene in MothersHaploid and FathersHaploid for dominance
-					for (int i = 0; i < Manager.Genotype[key].GeneLimit; i++) {
-						if(mc[i].IsDominant && !fc[i].IsDominant) // use mother if it's the only dominant one
-							newC.Insert(i, mc[i]);
-						if (!mc[i].IsDominant && fc[i].IsDominant) // use father if it's' the only dominant one
-							newC.Insert(i, fc[i]);
-						else
-							newC.Insert(i, (RandomUtil.NextBool()) ? mc[i] : fc[i]); // or just choose one at random
+				if (_ExpressedHaploid == null) {
+					_ExpressedHaploid = Manager.CreateHaploid();
+					foreach (string key in MothersHaploid.Keys) {
+						IChromosome mc = MothersHaploid[key];
+						IChromosome fc = FathersHaploid[key];
+						IChromosome newC = Manager.CreateChromosome();
+						//compare each gene in MothersHaploid and FathersHaploid for dominance
+						for (int i = 0; i < Manager.Genotype[key].GeneLimit; i++) {
+							if (mc[i].IsDominant && !fc[i].IsDominant) // use mother if it's the only dominant one
+								newC.Insert(i, mc[i]);
+							if (!mc[i].IsDominant && fc[i].IsDominant) // use father if it's' the only dominant one
+								newC.Insert(i, fc[i]);
+							else
+								newC.Insert(i, (RandomUtil.NextBool()) ? mc[i] : fc[i]); // or just choose one at random
+						}
+						_ExpressedHaploid.Add(key, newC);
 					}
-					_ExpressedHaploid.Add(key, newC);
 				}
 				return _ExpressedHaploid;
 			}
@@ -80,8 +81,6 @@ namespace GA.Lib.Population {
 			List<IHaploid> fh = (mate.Gender) ? Meiosis(this) : Meiosis(mate);
 
 			// randomly pick a haploid from each and create a new karyotype
-			Object[] args = { Manager };
-			Type t = this.GetType();
 			IHaploid mom = mh[RandomUtil.Instance.Next(0, mh.Count)];
 			IHaploid dad = fh[RandomUtil.Instance.Next(0, fh.Count)];
 			IKaryotype newK = Manager.CreateKaryotype(mom, dad);

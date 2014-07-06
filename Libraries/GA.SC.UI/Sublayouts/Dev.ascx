@@ -1,11 +1,12 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" 
 	CodeBehind="Dev.ascx.cs" 
-	Inherits="GA.UI.Sublayouts.Dev" %>
+	Inherits="GA.SC.UI.Sublayouts.Dev" %>
 <%@ Import Namespace="GA.Lib.Population" %>
 <%@ Import Namespace="GA.SC" %>
 
 <style>
 	* { font-family:Tahoma; font-size:10px; }
+	h1 { font-size:20px; margin:0 0 10px; }
 	h2 { margin:0px 0px 10px;  font-size: 16px; font-weight: normal; text-align: left; border:1px solid #bbb; background:#ddd; padding:1px 7px; }
 	.odd,
 	.even { padding:4px 0; }
@@ -50,6 +51,7 @@
 	</div>
 </div>
 <div class="Algo">
+	<h1>Algorithm Manager</h1>
 	<div class="left">
 		<div class="Section">
 			<h2>Population Values</h2>
@@ -71,12 +73,12 @@
 					<asp:TextBox ID="txtMutation" runat="server"></asp:TextBox>
 				</div>
 				<div class="formRow">
-					<label title="number to mulitply the most number of combinations of karyotypes for the population size.">Population Scalar (?)</label>
-					<asp:TextBox ID="txtScalar" runat="server"></asp:TextBox>
-				</div>
-				<div class="formRow">
 					<label title="number of times to try to randomly find a better parent from the one randomly selected.">Tournament Size (?)</label>
 					<asp:TextBox ID="txtTourney" runat="server"></asp:TextBox>
+				</div>
+				<div class="formRow">
+					<label title="number of karyotypes to create in your population.">Population Size (?)</label>
+					<asp:TextBox ID="txtPopSize" runat="server"></asp:TextBox>
 				</div>
 			</div>
 			<div class="PopNav">

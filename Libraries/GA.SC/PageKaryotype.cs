@@ -9,11 +9,11 @@ using GA.Lib.Gene;
 using GA.Lib.Population;
 
 namespace GA.SC {
-	public class SCKaryotype : BaseKaryotype {
+	public class PageKaryotype : BaseKaryotype {
 		
 		#region ctor
 
-		public SCKaryotype(IPopulationManager ipo, IHaploid mom, IHaploid dad) : base(ipo, mom, dad) { }
+		public PageKaryotype(IPopulationManager ipo, IHaploid mom, IHaploid dad) : base(ipo, mom, dad) { }
 
 		#endregion ctor
 

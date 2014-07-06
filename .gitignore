@@ -12,3 +12,5 @@ Libraries/GA.UI/obj/
 .csproj.user
 Libraries/GA.SC/bin/
 Libraries/GA.SC/obj/
+Libraries/GA.SC.UI/obj/
+Libraries/GA.SC.UI/bin/

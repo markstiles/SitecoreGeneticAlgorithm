@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace GA.UI.Sublayouts {
+namespace GA.SC.UI.Sublayouts {
     
     
     public partial class Dev {
@@ -67,15 +67,6 @@ namespace GA.UI.Sublayouts {
         protected global::System.Web.UI.WebControls.TextBox txtMutation;
         
         /// <summary>
-        /// txtScalar control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtScalar;
-        
-        /// <summary>
         /// txtTourney control.
         /// </summary>
         /// <remarks>
@@ -83,6 +74,15 @@ namespace GA.UI.Sublayouts {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtTourney;
+        
+        /// <summary>
+        /// txtPopSize control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtPopSize;
         
         /// <summary>
         /// ltlKaryos control.

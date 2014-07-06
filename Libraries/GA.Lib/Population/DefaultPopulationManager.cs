@@ -30,7 +30,7 @@ namespace GA.Lib.Population {
 				_ElitismRatio = value;
 			}
 		}
-		private float _FitnessRatio = .8f;
+		private float _FitnessRatio = 0.9f;
 		public float FitnessRatio {
 			get {
 				return _FitnessRatio;
@@ -39,7 +39,7 @@ namespace GA.Lib.Population {
 				_FitnessRatio = value;
 			}
 		}
-		private float _MutationRatio = .3f;
+		private float _MutationRatio = .1f;
 		public float MutationRatio {
 			get {
 				return _MutationRatio;
@@ -48,27 +48,23 @@ namespace GA.Lib.Population {
 				_MutationRatio = value;
 			}
 		}
-		public virtual int PopSize {
+		private int _PopSize = 300;
+		public int PopSize {
 			get {
-				//get the highest number from the chromosome with the most genes
-				int i = 0;
-				foreach (string s in Genotype.Keys) {
-					int j = (int)Math.Pow(Genotype[s].GeneLimit, Genotype[s].Count);
-					i = (i < j) ? j : i;
-				}
-				return i * Genotype.Count * PopScalar; //try to calculate the max number of permutations
-			}
-		}
-		private int _PopScalar = 1;
-		public int PopScalar {
-			get {
-				return _PopScalar;
+				return _PopSize;
+				////get the highest number from the chromosome with the most genes
+				//int i = 0;
+				//foreach (string s in Genotype.Keys) {
+				//	int j = (int)Math.Pow(Genotype[s].GeneLimit, Genotype[s].Count);
+				//	i = (i < j) ? j : i;
+				//}
+				//return i * Genotype.Count; //try to calculate the max number of permutations
 			}
 			set {
-				_PopScalar = value;
+				_PopSize = value;
 			}
 		}
-		private int _TourneySize = 3;
+		private int _TourneySize = 5;
 		public int TourneySize { 
 			get {
 				return _TourneySize;
