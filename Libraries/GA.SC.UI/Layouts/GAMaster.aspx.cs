@@ -7,13 +7,13 @@ namespace GA.SC.UI.Layouts {
 	using Sitecore.Data.Items;
 	using Sitecore.Links;
 
-	public partial class AlgoMaster : Page {
+	public partial class GAMaster : Page {
 		private void Page_Load(object sender, System.EventArgs e) {
 			// TODO copy the UI files to the modules folder instead of the root and update the sublayout/layout items
 			List<KeyValuePair<string, string>> navItems = new List<KeyValuePair<string,string>>();
 			
 			Item h = Sitecore.Context.Database.GetItem(Sitecore.Context.Site.StartPath);
-			Item ap = h.Children.Where(a => a.Name == "AlgoPage").First();
+			Item ap = h.Children.Where(a => a.Name == "GAPage").First();
 
 			lnkLogo.NavigateUrl = LinkManager.GetItemUrl(ap);
 			foreach (Item i in ap.Children) 

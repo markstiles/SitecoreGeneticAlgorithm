@@ -10,7 +10,7 @@
 namespace GA.SC.UI.Sublayouts {
     
     
-    public partial class AlgoDrivenContent {
+    public partial class GADrivenContent {
         
         /// <summary>
         /// pnlOut control.

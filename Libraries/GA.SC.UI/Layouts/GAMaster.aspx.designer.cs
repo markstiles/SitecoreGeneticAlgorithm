@@ -10,7 +10,7 @@
 namespace GA.SC.UI.Layouts {
     
     
-    public partial class AlgoMaster {
+    public partial class GAMaster {
         
         /// <summary>
         /// mainform control.
