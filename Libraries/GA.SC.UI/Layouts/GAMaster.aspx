@@ -14,20 +14,20 @@
 		h1 { font-size:17px; }
 		a { color: #3366FF; }
 		a:hover { text-decoration:underline; }
-		.GAContent { padding:10px; text-align:center; }
-	        .GAContent a { font-weight:bold; font-size:44px; }
+		.GAContent { text-align:center; border:1px solid #ccc; padding:5px; }
+	        .GAContent a { font-weight:bold; font-size:44px; color:#fff; text-decoration:none; display:block; height:100%; }
 		.main { width:1000px; margin:0px auto; }
 			.header { }
 				.logo { margin:10px 0px; display: inline-block; vertical-align:middle; }
 					.logo a { font-size:28px; font-weight:bold; text-decoration: none; color:#000;  }
 						.logo a:hover { text-decoration: none; color: #3366FF; }
-				.headcontent { display: inline-block; vertical-align:middle; left: 206px; position: relative; width: 600px } 
-					.headcontent .GAContent { height:20px; }
+				.headcontent { display: inline-block; vertical-align:middle; left: 228px; position: relative; width: 600px } 
+					.headcontent .GAContent { height:40px; }
 	                    .headcontent .GAContent a { font-size:16px; } 
 				.nav { border-color: #ccc; border-style: solid; border-width: 1px 0; padding: 5px 0; }
 					.nav ul { margin:0px; padding:0px; }
 					.nav li { display:inline-block; }
-					.nav a { display:block; margin:0 4px; padding:3px 5px; border-radius:4px; text-decoration:none;}
+					.nav a { display:block; margin:0 4px; padding:3px 5px; border-radius:4px; text-decoration:none; font-size:14px; }
 					.nav a:hover { color:#fff; background-color:#3366FF; }
 			.content { }
 			.left, .center, .right { display:inline-block; vertical-align:top; min-height:500px; padding:10px; }	
@@ -35,8 +35,8 @@
 			.center { width:430px; border-left:1px solid #ccc; border-right:1px solid #ccc; }
 			.right { width:280px; }
 				.left .GAContent,
-				.right .GAContent { height:100px; margin-bottom:25px; }
-				.center .GAContent { height:100px; }
+				.right .GAContent { height:120px; margin-bottom:25px; }
+				.center .GAContent { height:120px; }
 	</style>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> 
     <script>

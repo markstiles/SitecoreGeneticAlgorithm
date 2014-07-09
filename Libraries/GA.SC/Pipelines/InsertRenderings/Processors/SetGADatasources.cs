@@ -43,7 +43,7 @@ namespace GA.SC.Pipelines.InsertRenderings.Processors {
 			popman.KaryotypeType = Type.GetType("GA.SC.PageKaryotype,GA.SC");
 
 			// get tags TODO change with search or api call
-			List<Item> tags = Sitecore.Context.Database.SelectItems("/sitecore/system/Settings/Buckets/TagRepository//*[@@templatename='Tag']").ToList();
+			List<Item> tags = Sitecore.Context.Database.SelectItems("/sitecore/content/GAContentTags//*[@@templatename='Tag']").ToList();
 
 			foreach (KeyValuePair<int, string> c in Chromosomes) {
 				Genotype g = new Genotype();
@@ -96,7 +96,7 @@ namespace GA.SC.Pipelines.InsertRenderings.Processors {
 				// TODO move this to config or constants
 				Item cItem = Sitecore.Context.Database.GetItem("/sitecore/content/GAContent");
 				// TODO find a place to store this. It's not in Sitecore.FieldIDs
-				List<Item> contentMatches = cItem.Children.Where(a => a.Fields["__Semantics"].Value.Contains(tid)).ToList();
+				List<Item> contentMatches = cItem.Children.Where(a => a.Fields["Tags"].Value.Contains(tid)).ToList();
 				if(!contentMatches.Any())
 					continue;
 

@@ -176,7 +176,7 @@
 					<asp:Button ID="btnB" runat="server" Text="Blue" OnClick="btn_Click" />
 				</div>
 				<div class="btn">
-					<asp:Button ID="btnC" runat="server" Text="Yellow" OnClick="btn_Click" />
+					<asp:Button ID="btnC" runat="server" Text="Black" OnClick="btn_Click" />
 				</div>
 				<div class="btn">
 					<asp:Button ID="btnD" runat="server" Text="Green" OnClick="btn_Click" />
@@ -185,7 +185,7 @@
 					<asp:Button ID="btnE" runat="server" Text="Purple" OnClick="btn_Click" />
 				</div>
 				<div class="btn">
-					<asp:Button ID="btnF" runat="server" Text="White" OnClick="btn_Click" />
+					<asp:Button ID="btnF" runat="server" Text="Orange" OnClick="btn_Click" />
 				</div>
 				<div class="btn">
 					<asp:Button ID="btnG" runat="server" Text="Magenta" OnClick="btn_Click" />
