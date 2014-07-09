@@ -86,8 +86,6 @@ namespace GA.SC.Pipelines.InsertRenderings.Processors {
 					continue;
 
 				//wire up renderings with results 
-				Item newItem = r.RenderingItem.InnerItem.Clone(Sitecore.Data.ID.NewID, Sitecore.Context.Database);
-				RenderingReference newR = new RenderingReference(new RenderingItem(newItem));
 				string tagName = CurrentKaryotype.ExpressedHaploid[Chromosomes[0].Value][i].GeneID;
 				IEnumerable<Item> tagMatches = tags.Where(a => a.DisplayName.Equals(tagName));
 				if (!tagMatches.Any())
@@ -102,9 +100,7 @@ namespace GA.SC.Pipelines.InsertRenderings.Processors {
 				if(!contentMatches.Any())
 					continue;
 
-				newR.Settings.DataSource = contentMatches[RandomUtil.Instance.Next(0, contentMatches.Count)].ID.ToString();
-				//then set it
-				args.Renderings[kvp.Key] = newR;
+				r.Settings.DataSource = contentMatches[RandomUtil.Instance.Next(0, contentMatches.Count)].ID.ToString();
 			}
 
 			//evolve
