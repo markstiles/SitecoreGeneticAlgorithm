@@ -42,8 +42,8 @@ namespace GA.SC.UI.Sublayouts {
 		protected void Page_Load(object sender, EventArgs e) {
 
 			//setup accessors
-			Placeholders = new List<Literal>() { ltlOne, ltlTwo, ltlThree, ltlFour };
-			Panels = new List<Panel>() { pnlOne, pnlTwo, pnlThree, pnlFour };
+			Placeholders = new List<Literal>() { ltlOne, ltlTwo, ltlThree, ltlFour, ltlFive, ltlSix, ltlSeven, ltlEight };
+			Panels = new List<Panel>() { pnlOne, pnlTwo, pnlThree, pnlFour, pnlFive, pnlSix, pnlSeven, pnlEight };
 			Buttons = new List<Button>() { btnA, btnB, btnC, btnD, btnE, btnF, btnG };
 			
 			//setup chromosomes

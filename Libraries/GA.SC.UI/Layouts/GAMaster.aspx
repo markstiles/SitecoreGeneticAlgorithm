@@ -15,6 +15,7 @@
 		a { color: #3366FF; }
 		a:hover { text-decoration:underline; }
 		.GAContent { padding:10px; text-align:center; }
+	        .GAContent a { font-weight:bold; font-size:44px; }
 		.main { width:1000px; margin:0px auto; }
 			.header { }
 				.logo { margin:10px 0px; display: inline-block; vertical-align:middle; }
@@ -22,6 +23,7 @@
 						.logo a:hover { text-decoration: none; color: #3366FF; }
 				.headcontent { display: inline-block; vertical-align:middle; left: 206px; position: relative; width: 600px } 
 					.headcontent .GAContent { height:20px; }
+	                    .headcontent .GAContent a { font-size:16px; } 
 				.nav { border-color: #ccc; border-style: solid; border-width: 1px 0; padding: 5px 0; }
 					.nav ul { margin:0px; padding:0px; }
 					.nav li { display:inline-block; }
@@ -36,6 +38,28 @@
 				.right .GAContent { height:100px; margin-bottom:25px; }
 				.center .GAContent { height:100px; }
 	</style>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> 
+    <script>
+        var $j = jQuery.noConflict();
+        $j(document).ready(function () {
+            $j(".GAContent a, .nav a").click(function (e) {
+                e.preventDefault();
+                var tagName = $j(this).text();
+                var href = $j(this).attr("href");
+                $j.ajax({
+                    type: "POST",
+                    url: "/sitecore modules/Web/GA/WebService/EventTracking.asmx/TrackEvent",
+                    data: "{ 'TagClick':'" + tagName + "'}",
+                    contentType: "application/json",
+                    dataType: "json",
+                    success: function (data, status) {
+                        window.location.href = href;
+                    },
+                    error: function (e) { }
+                });
+            });
+        });
+    </script>
 </head>
 <body>
 	<form method="post" runat="server" id="mainform">

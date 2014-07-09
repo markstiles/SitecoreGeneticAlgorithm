@@ -37,6 +37,8 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -73,6 +75,9 @@
     <Compile Include="Sublayouts\Dev.ascx.designer.cs">
       <DependentUpon>Dev.ascx.cs</DependentUpon>
     </Compile>
+    <Compile Include="WebService\EventTracking.cs">
+      <SubType>Component</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GA.Lib\GA.Lib.csproj">
@@ -97,18 +102,21 @@
     <Content Include="Sublayouts\Dev.ascx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
+    <Content Include="WebService\EventTracking.asmx" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Packages\" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="Config\GA.config" />
-    <None Include="Packages\GA-2014.7.7.zip" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>start xcopy  /S /Y "$(ProjectDir)Layouts\*" "$(SolutionDir)Website\sitecore modules\Web\GA\layouts\"
-start xcopy  /S /Y "$(ProjectDir)Sublayouts\*" "$(SolutionDir)Website\sitecore modules\Web\GA\sublayouts\"
+    <PostBuildEvent>start xcopy  /S /Y "$(ProjectDir)Layouts\*.aspx" "$(SolutionDir)Website\sitecore modules\Web\GA\layouts\"
+start xcopy  /S /Y "$(ProjectDir)Sublayouts\*.ascx" "$(SolutionDir)Website\sitecore modules\Web\GA\sublayouts\"
 start xcopy  /S /Y "$(ProjectDir)Config\*" "$(SolutionDir)Website\App_Config\Include\"
-start xcopy  /S /Y "$(ProjectDir)Packages\*" "$(SolutionDir)Data\packages\"</PostBuildEvent>
+start xcopy  /S /Y "$(ProjectDir)Packages\*" "$(SolutionDir)Data\packages\"
+start xcopy  /S /Y "$(ProjectDir)WebService\*.asmx" "$(SolutionDir)Website\sitecore modules\Web\GA\WebService\"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

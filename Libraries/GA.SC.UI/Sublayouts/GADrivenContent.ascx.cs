@@ -5,25 +5,13 @@
 	using GA.Lib.Population;
 	using GA.SC.Sublayouts;
 
-	public partial class GADrivenContent : GABaseSublayout {
+	public partial class GADrivenContent : BaseSublayout {
 
 		private void Page_Load(object sender, EventArgs e) {
-			pnlOut.Attributes.Add("style", "background-color:#ccc;");
-			if (DataSourceItem != null)
-				ltlOut.Text = DataSourceItem.DisplayName;
-			else
-				ltlOut.Text = "Datasource was null";
-		}
-
-		protected override void EngagingEvent_Click(object sender, EventArgs e) {
-			//update clicks
-
-			// TODO is this a button or hyperlink or querystring url?
-			Button b = (Button)sender;
-			string key = b.Text; // string.Format("ltl{0}-{1}", b.CssClass, b.Text);
-			if (!EngagementValue.KnownValues.ContainsKey(key))
-				EngagementValue.KnownValues.Add(key, new List<EngagementValue>());
-			EngagementValue.KnownValues[key].Add(new EngagementValue(1));
+			string color = DataSourceItem["Content"];
+			pnlOut.Attributes.Add("style", string.Format("background-color:{0};", color));
+			lnkBtn.Text = color;
+			lnkBtn.NavigateUrl = string.Format("/GAPage/{0}.aspx", color);
 		}
 	}
 }

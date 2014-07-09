@@ -54,9 +54,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PageKaryotype.cs" />
     <Compile Include="SCPopulation.cs" />
-    <Compile Include="Sublayouts\GABaseSublayout.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
     <Compile Include="Sublayouts\BaseSublayout.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>

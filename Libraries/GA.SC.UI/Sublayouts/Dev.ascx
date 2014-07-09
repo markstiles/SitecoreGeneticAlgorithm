@@ -21,9 +21,10 @@
                 .dna { display:inline-block; width:260px; text-align:center; }
                 .fitness { display:inline-block; width:48px; text-align:center;}
 		.right { width: 400px; display: inline-block; vertical-align:top; }
-			.one, .two, .three, .four { border:1px solid #ccc; display:inline-block; margin:10px 5px; height:50px; font-size:22px; width:75px; background-color:#ccc; }
+			.one, .two, .three, .four,
+            .five, .six, .seven, .eight { border:1px solid #ccc; display:inline-block; margin:10px 5px; height:50px; font-size:22px; width:75px; background-color:#ccc; }
 			.btn { display:inline-block; }
-			.Display { height:90px; }
+			.Display { height:150px; }
 			.Buttons input[type='submit'] { height:20px; }
 	.Section { border:1px solid #ccc; padding:10px 15px; margin-bottom:3px; background:#eee; }
 	.PopOptions { text-align: left; width:135px; display:inline-block; } 
@@ -33,10 +34,10 @@
 	.PopStatus { text-align:left; margin-bottom:15px; }
 		.PopStatus label { font-weight:bold; display: inline-block; font-weight: bold; text-align: right; width: 105px; }
 		.PopStatus span { }
-	.PopNav .Btns input { border:1px solid #999; background:#f8f8f8; cursor:pointer; }
-		.PopNav .Btns input:hover { background: #FFCC99; color: #002E4C; }
+	.Btns input { border:1px solid #999; background:#f8f8f8; cursor:pointer; }
+		.Btns input:hover { background: #FFCC99; color: #002E4C; }
 	.EV { border:1px solid #ccc; background:#eee; padding:10px; }
-		.EV .tags { height:108px; overflow:auto; border:1px solid #ccc; }
+		.EV .tags { height:108px; overflow:auto; border:1px solid #ccc; margin-bottom:10px; }
 		.EV .entry { text-align:left; }
 		.EV .key { display:inline-block; width:75px; text-align:right; text-transform:uppercase; }
 		.EV .value { display:inline-block; font-weight:bold; }
@@ -154,8 +155,20 @@
 				<asp:Panel ID="pnlFour" CssClass="four" runat="server">
 					<asp:Literal ID="ltlFour" runat="server"></asp:Literal>
 				</asp:Panel>
+                <asp:Panel ID="pnlFive" CssClass="five" runat="server">
+					<asp:Literal ID="ltlFive" runat="server"></asp:Literal>
+				</asp:Panel>
+                <asp:Panel ID="pnlSix" CssClass="six" runat="server">
+					<asp:Literal ID="ltlSix" runat="server"></asp:Literal>
+				</asp:Panel>
+                <asp:Panel ID="pnlSeven" CssClass="seven" runat="server">
+					<asp:Literal ID="ltlSeven" runat="server"></asp:Literal>
+				</asp:Panel>
+                <asp:Panel ID="pnlEight" CssClass="eight" runat="server">
+					<asp:Literal ID="ltlEight" runat="server"></asp:Literal>
+				</asp:Panel>
 			</div>
-			<div class="Buttons">
+			<div class="Btns">
 				<div class="btn">
 					<asp:Button ID="btnA" runat="server" Text="Red" OnClick="btn_Click" />
 				</div>
