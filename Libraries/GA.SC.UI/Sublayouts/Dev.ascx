@@ -15,14 +15,13 @@
 	.HelloWorld { display:none; width: 200px; display:inline-block; }
 	.Algo { width: 820px; background: none repeat scroll 0 0 #fff; border: 1px solid #ddd; padding: 10px; margin:0px auto 30px; }
 		.left { width: 400px; display: inline-block; vertical-align:top; }
-			.CurKaryo { font-size:16px; font-weight: bold; padding:5px 0px; background:#ddd; border:1px solid #bbb; border-bottom:0px;}
+			.CurKaryo { font-size:12px; font-weight: bold; padding:5px 0px; background:#ddd; border:1px solid #bbb; border-bottom:0px;}
 			.DNAList { font-size: 12px; height:300px; overflow:auto; border:1px solid #bbb; }
                 .count { display:inline-block; width:35px; text-align:right; }
                 .dna { display:inline-block; width:260px; text-align:center; }
                 .fitness { display:inline-block; width:48px; text-align:center;}
 		.right { width: 400px; display: inline-block; vertical-align:top; }
-			.one, .two, .three, .four,
-            .five, .six, .seven, .eight { border:1px solid #ccc; display:inline-block; margin:10px 5px; height:50px; font-size:22px; width:75px; background-color:#ccc; }
+			.box { border:1px solid #ccc; display:inline-block; margin:10px 5px; height:37px; font-size:17px; width:75px; background-color:#ccc; color:#fff; padding-top:13px; }
 			.btn { display:inline-block; }
 			.Display { height:150px; }
 			.Buttons input[type='submit'] { height:20px; }
@@ -143,28 +142,28 @@
 		<div class="Section">
 			<h2>Results</h2>
 			<div class="Display">
-				<asp:Panel ID="pnlOne" CssClass="one" runat="server">
+				<asp:Panel ID="pnlOne" CssClass="box" runat="server">
 					<asp:Literal ID="ltlOne" runat="server"></asp:Literal>
 				</asp:Panel>
-				<asp:Panel ID="pnlTwo" CssClass="two" runat="server">
+				<asp:Panel ID="pnlTwo" CssClass="box" runat="server">
 					<asp:Literal ID="ltlTwo" runat="server"></asp:Literal>
 				</asp:Panel>
-				<asp:Panel ID="pnlThree" CssClass="three" runat="server">
+				<asp:Panel ID="pnlThree" CssClass="box" runat="server">
 					<asp:Literal ID="ltlThree" runat="server"></asp:Literal>
 				</asp:Panel>
-				<asp:Panel ID="pnlFour" CssClass="four" runat="server">
+				<asp:Panel ID="pnlFour" CssClass="box" runat="server">
 					<asp:Literal ID="ltlFour" runat="server"></asp:Literal>
 				</asp:Panel>
-                <asp:Panel ID="pnlFive" CssClass="five" runat="server">
+                <asp:Panel ID="pnlFive" CssClass="box" runat="server">
 					<asp:Literal ID="ltlFive" runat="server"></asp:Literal>
 				</asp:Panel>
-                <asp:Panel ID="pnlSix" CssClass="six" runat="server">
+                <asp:Panel ID="pnlSix" CssClass="box" runat="server">
 					<asp:Literal ID="ltlSix" runat="server"></asp:Literal>
 				</asp:Panel>
-                <asp:Panel ID="pnlSeven" CssClass="seven" runat="server">
+                <asp:Panel ID="pnlSeven" CssClass="box" runat="server">
 					<asp:Literal ID="ltlSeven" runat="server"></asp:Literal>
 				</asp:Panel>
-                <asp:Panel ID="pnlEight" CssClass="eight" runat="server">
+                <asp:Panel ID="pnlEight" CssClass="box" runat="server">
 					<asp:Literal ID="ltlEight" runat="server"></asp:Literal>
 				</asp:Panel>
 			</div>

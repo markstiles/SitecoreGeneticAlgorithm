@@ -41,6 +41,7 @@ namespace GA.Lib.Population {
 				IKaryotype k = Manager.CreateKaryotype(mom, dad);
 				Karyotypes.Add(k);
 			}
+			Karyotypes = Karyotypes.OrderByDescending(a => a.Fitness).ToList();
 		}
 
 		/// <summary>
@@ -102,7 +103,7 @@ namespace GA.Lib.Population {
 				if (!uniqueSet.ContainsKey(uKey))
 					uniqueSet.Add(uKey, k);
 			}
-			return uniqueSet.Values.ToList();
+			return uniqueSet.Values.OrderByDescending(a => a.Fitness).ToList();
 		}
 
 		/// <summary>
