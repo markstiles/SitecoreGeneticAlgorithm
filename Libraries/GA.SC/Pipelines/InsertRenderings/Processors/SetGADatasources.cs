@@ -50,7 +50,7 @@ namespace GA.SC.Pipelines.InsertRenderings.Processors {
 				//number of genes corresponds to the number of placeholders to fill with display content
 				g.GeneLimit = c.Key;
 				for (int z = 0; z < tags.Count; z++) { //add all the tags to the genotype
-					TagGene t = new TagGene(tags[z].DisplayName, true);
+					TagGene t = new TagGene(tags[z].DisplayName, RandomUtil.NextBool());
 					g.Add(t);
 				}
 				if(!popman.Genotype.ContainsKey(c.Value))
