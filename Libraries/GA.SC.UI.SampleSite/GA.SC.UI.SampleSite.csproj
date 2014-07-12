@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4B002CAB-B579-4F49-A974-E5EF5F3ACC30}</ProjectGuid>
+    <ProjectGuid>{EF396B60-4A36-427C-999F-4619A08E3496}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GA.SC.UI</RootNamespace>
-    <AssemblyName>GA.SC.UI</AssemblyName>
+    <RootNamespace>GA.SC.UI.SampleSite</RootNamespace>
+    <AssemblyName>GA.SC.UI.SampleSite</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,14 +31,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Sitecore.Kernel">
-      <HintPath>..\..\..\..\genzyme\test-upgrade\Website\bin\Sitecore.Kernel.dll</HintPath>
+      <HintPath>..\..\..\testsite-sc-7.1\Website\bin\Sitecore.Kernel.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
-    <Reference Include="System.Web.Extensions" />
-    <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -46,43 +43,55 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Layouts\GAManager.aspx.cs">
-      <DependentUpon>GAManager.aspx</DependentUpon>
+    <Compile Include="Layouts\GAMaster.aspx.cs">
+      <DependentUpon>GAMaster.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Layouts\GAManager.aspx.designer.cs">
-      <DependentUpon>GAManager.aspx.cs</DependentUpon>
+    <Compile Include="Layouts\GAMaster.aspx.designer.cs">
+      <DependentUpon>GAMaster.aspx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sublayouts\GADrivenContent.ascx.cs">
+      <DependentUpon>GADrivenContent.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Sublayouts\GADrivenContent.ascx.designer.cs">
+      <DependentUpon>GADrivenContent.ascx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Sublayouts\GAPage.ascx.cs">
+      <DependentUpon>GAPage.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Sublayouts\GAPage.ascx.designer.cs">
+      <DependentUpon>GAPage.ascx.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GA.Lib\GA.Lib.csproj">
-      <Project>{37b116a7-668c-4d2d-aa46-3df822ef13da}</Project>
-      <Name>GA.Lib</Name>
-    </ProjectReference>
+    <Content Include="Layouts\GAMaster.aspx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <Content Include="Sublayouts\GADrivenContent.ascx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <Content Include="Sublayouts\GAPage.ascx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\GA.SC\GA.SC.csproj">
       <Project>{5e3e3376-4fc7-41b4-84e2-7f299dfb2201}</Project>
       <Name>GA.SC</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Layouts\GAManager.aspx" />
-    <Content Include="WebService\EventTracking.asmx" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Packages\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Config\GA.config">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="Config\GA.SC.UI.SampleSite.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>start xcopy  /S /Y "$(ProjectDir)Layouts\*.aspx" "$(SolutionDir)Website\sitecore modules\Shell\GA\layouts\"
+    <PostBuildEvent>start xcopy  /S /Y "$(ProjectDir)Layouts\*.aspx" "$(SolutionDir)Website\sitecore modules\Web\GASampleSite\layouts\"
+start xcopy  /S /Y "$(ProjectDir)Sublayouts\*.ascx" "$(SolutionDir)Website\sitecore modules\Web\GASampleSite\sublayouts\"
 start xcopy  /S /Y "$(ProjectDir)Config\*" "$(SolutionDir)Website\App_Config\Include\"
-start xcopy  /S /Y "$(ProjectDir)Packages\*" "$(SolutionDir)Data\packages\"
-start xcopy  /S /Y "$(ProjectDir)WebService\*.asmx" "$(SolutionDir)Website\sitecore modules\Web\GA\WebService\"</PostBuildEvent>
+</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

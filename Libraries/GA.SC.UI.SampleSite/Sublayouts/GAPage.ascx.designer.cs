@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace GA.SC.UI.Sublayouts {
+namespace GA.SC.UI.SampleSite.Sublayouts {
     
     
     public partial class GAPage {

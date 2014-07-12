@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Services;
 
-namespace GA.SC.UI.WebService {
+namespace GA.SC.WebService {
 	[WebService(Namespace = "http://www.diagnoseplatform.nl/services")]
 	[WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
 	[System.ComponentModel.ToolboxItem(false)]

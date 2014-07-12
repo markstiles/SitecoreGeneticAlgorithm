@@ -1,4 +1,4 @@
-﻿namespace GA.SC.UI.Sublayouts {
+﻿namespace GA.SC.UI.SampleSite.Sublayouts {
 	using System;
 
 	public partial class GAPage : System.Web.UI.UserControl {

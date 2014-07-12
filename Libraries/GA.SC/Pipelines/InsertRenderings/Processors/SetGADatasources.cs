@@ -43,7 +43,8 @@ namespace GA.SC.Pipelines.InsertRenderings.Processors {
 			popman.KaryotypeType = Type.GetType("GA.SC.PageKaryotype,GA.SC");
 
 			// get tags TODO change with search or api call
-			List<Item> tags = Sitecore.Context.Database.SelectItems("/sitecore/content/GAContentTags//*[@@templatename='Tag']").ToList();
+			Item tagBucket = GetItemFromID(Sitecore.Context.Site.Properties["tagFolder"]);
+			List<Item> tags = Sitecore.Context.Database.SelectItems(string.Format("{0}//*[@@templatename='Tag']",tagBucket.Paths.FullPath)).ToList();
 
 			foreach (KeyValuePair<int, string> c in Chromosomes) {
 				Genotype g = new Genotype();
@@ -94,7 +95,7 @@ namespace GA.SC.Pipelines.InsertRenderings.Processors {
 				string tid = tagMatches.First().ID.ToString();
 
 				// TODO move this to config or constants
-				Item cItem = Sitecore.Context.Database.GetItem("/sitecore/content/GAContent");
+				Item cItem = GetItemFromID(Sitecore.Context.Site.Properties["contentFolder"]); 
 				// TODO find a place to store this. It's not in Sitecore.FieldIDs
 				List<Item> contentMatches = cItem.Children.Where(a => a.Fields["Tags"].Value.Contains(tid)).ToList();
 				if(!contentMatches.Any())
@@ -105,6 +106,13 @@ namespace GA.SC.Pipelines.InsertRenderings.Processors {
 
 			//evolve
 			p.Evolve();
+		}
+
+		protected Item GetItemFromID(string idStr) {
+			if (!Sitecore.Data.ID.IsID(idStr))
+				return null;
+			Sitecore.Data.ID id = Sitecore.Data.ID.Parse(idStr);
+			return Sitecore.Context.Database.GetItem(id);
 		}
 
 		private List<string> PerformSearch() {

@@ -7,28 +7,19 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace GA.SC.UI.Sublayouts {
+namespace GA.SC.UI.Layouts {
     
     
-    public partial class Dev {
+    public partial class GAManager {
         
         /// <summary>
-        /// ltlGene control.
+        /// mainform control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ltlGene;
-        
-        /// <summary>
-        /// ltlOut control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ltlOut;
+        protected global::System.Web.UI.HtmlControls.HtmlForm mainform;
         
         /// <summary>
         /// txtCrossover control.

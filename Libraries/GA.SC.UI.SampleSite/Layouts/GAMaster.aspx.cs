@@ -1,4 +1,4 @@
-namespace GA.SC.UI.Layouts {
+namespace GA.SC.UI.SampleSite.Layouts {
 	using System;
 	using System.Linq;
 	using System.Collections.Generic;
@@ -13,10 +13,9 @@ namespace GA.SC.UI.Layouts {
 			List<KeyValuePair<string, string>> navItems = new List<KeyValuePair<string,string>>();
 			
 			Item h = Sitecore.Context.Database.GetItem(Sitecore.Context.Site.StartPath);
-			Item ap = h.Children.Where(a => a.Name == "GAPage").First();
-
-			lnkLogo.NavigateUrl = LinkManager.GetItemUrl(ap);
-			foreach (Item i in ap.Children) 
+			
+			lnkLogo.NavigateUrl = LinkManager.GetItemUrl(h);
+			foreach (Item i in h.Children) 
 				navItems.Add(new KeyValuePair<string, string>(LinkManager.GetItemUrl(i), i.DisplayName));
 
 			rptNav.DataSource = navItems;

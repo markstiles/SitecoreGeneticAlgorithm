@@ -1,5 +1,5 @@
 ﻿<%@ Page language="c#" AutoEventWireup="true" 
-	Inherits="GA.SC.UI.Layouts.GAMaster" 
+	Inherits="GA.SC.UI.SampleSite.Layouts.GAMaster" 
 	CodeBehind="GAMaster.aspx.cs" %>
 <%@ Register TagPrefix="sc" Namespace="Sitecore.Web.UI.WebControls" Assembly="Sitecore.Kernel" %>
 

@@ -1,6 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" 
 	CodeBehind="GAPage.ascx.cs" 
-	Inherits="GA.SC.UI.Sublayouts.GAPage" %>
+	Inherits="GA.SC.UI.SampleSite.Sublayouts.GAPage" %>
 <%@ Register TagPrefix="sc" Namespace="Sitecore.Web.UI.WebControls" Assembly="Sitecore.Kernel" %>
 
 <div class="GAPage">

@@ -1,8 +1,7 @@
-﻿namespace GA.SC.UI.Sublayouts {
+﻿namespace GA.SC.UI.SampleSite.Sublayouts {
 	using System;
 	using System.Collections.Generic;
 	using System.Web.UI.WebControls;
-	using GA.Lib.Population;
 	using GA.SC.Sublayouts;
 	using Sitecore.Data.Items;
 

@@ -7,27 +7,36 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace GA.SC.UI.Sublayouts {
+namespace GA.SC.UI.SampleSite.Layouts {
     
     
-    public partial class GADrivenContent {
+    public partial class GAMaster {
         
         /// <summary>
-        /// pnlOut control.
+        /// mainform control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlOut;
+        protected global::System.Web.UI.HtmlControls.HtmlForm mainform;
         
         /// <summary>
-        /// lnkBtn control.
+        /// lnkLogo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink lnkBtn;
+        protected global::System.Web.UI.WebControls.HyperLink lnkLogo;
+        
+        /// <summary>
+        /// rptNav control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater rptNav;
     }
 }

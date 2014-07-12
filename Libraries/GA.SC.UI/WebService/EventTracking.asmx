@@ -1,1 +1,1 @@
-﻿<%@ WebService Language="C#" Class="GA.SC.UI.WebService.EventTracking" %>
+﻿<%@ WebService Language="C#" Class="GA.SC.WebService.EventTracking" %>

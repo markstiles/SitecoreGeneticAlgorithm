@@ -12,8 +12,8 @@ using GA.Lib.Gene;
 using GA.Lib.Population;
 using GA.SC;
 
-namespace GA.SC.UI.Sublayouts {
-	public partial class Dev : System.Web.UI.UserControl {
+namespace GA.SC.UI.Layouts {
+	public partial class GAManager : Page {
 
 		/* 
 		 * populations can be used just like levels of navigation. create one at a top level and each 
@@ -26,8 +26,6 @@ namespace GA.SC.UI.Sublayouts {
 		 * not sure which is more advantageous; to set the dominance automatically or manually
 		 * 
 		 * */
-
-		private StringBuilder sbOut = new StringBuilder();
 
 		protected List<Literal> Placeholders;
 		protected List<Button> Buttons;
@@ -83,8 +81,6 @@ namespace GA.SC.UI.Sublayouts {
 				apo.TourneySize = int.Parse(txtTourney.Text);
 				apo.PopSize = int.Parse(txtPopSize.Text);
 			}
-
-			ltlOut.Text = sbOut.ToString();
 		}
 
 		protected void RunAlgo() {
@@ -119,22 +115,6 @@ namespace GA.SC.UI.Sublayouts {
 			//evolve
 			p.Evolve();
 		}
-
-		#region Log
-
-		protected void Log() {
-			Log(string.Empty);
-		}
-
-		protected void Log(string str) {
-			Log(str, new string[0]);
-		}
-
-		protected void Log(string str, params object[] args) {
-			sbOut.AppendLine("<br/>").AppendFormat(str, args);
-		}
-
-		#endregion Log
 
 		protected string OddEven(int i) {
 			return (i % 2 == 0) ? "odd" : "even";
