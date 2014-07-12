@@ -26,24 +26,26 @@ namespace GA.SC.Pipelines.InsertRenderings.Processors {
 			if (Sitecore.Context.Site == null)
 				return;
 
-			// get the count of renderings with the datasource set as GAManager // GAManager Template ID = "{9AF6BAB4-D980-4190-9B90-E2E9D97C0C99}"
+			ConfigUtil cutil = new ConfigUtil(Sitecore.Context.Site.Properties[ConfigUtil.SiteProperty]);
+
+			// get the count of renderings with the datasource set as GAManager 
 			List<KeyValuePair<int,RenderingReference>> rr = args.Renderings
 				.Select((value, index) => new { value, index })
-				.Where(a => a.value.Settings.DataSource.Equals("{9F8F8F2C-2980-4961-94A1-49A48209C2FD}"))
+				.Where(a => a.value.Settings.DataSource.Equals(cutil.DatasourceValue))
                 .Select(x => new KeyValuePair<int, RenderingReference>(x.index, x.value))
                 .ToList();
 			if (!rr.Any())
 				return; 
 
 			//setup chromosomes
-			Chromosomes.Add(new KeyValuePair<int, string>(rr.Count, "pageContent"));
+			Chromosomes.Add(new KeyValuePair<int, string>(rr.Count, cutil.ChromosomeName));
 
-			//setup population options TODO from config
-			popman.PopulationType = Type.GetType("GA.SC.SCPopulation,GA.SC");
-			popman.KaryotypeType = Type.GetType("GA.SC.PageKaryotype,GA.SC");
+			//setup population options
+			popman.PopulationType = cutil.PopulationType;
+			popman.KaryotypeType = cutil.KaryotypeType;
 
-			// get tags TODO change with search or api call
-			Item tagBucket = GetItemFromID(Sitecore.Context.Site.Properties["tagFolder"]);
+			// get tags - TODO change with content search or api call
+			Item tagBucket = GetItemFromID(cutil.TagFolder);
 			List<Item> tags = Sitecore.Context.Database.SelectItems(string.Format("{0}//*[@@templatename='Tag']",tagBucket.Paths.FullPath)).ToList();
 
 			foreach (KeyValuePair<int, string> c in Chromosomes) {
@@ -58,18 +60,14 @@ namespace GA.SC.Pipelines.InsertRenderings.Processors {
 					popman.Genotype.Add(c.Value, g);
 			}
 
-			// TODO pull from sitecore content or config
-			/*
-			apo.CrossoverRatio = float.Parse(txtCrossover.Text);
-			apo.ElitismRatio = float.Parse(txtElitism.Text);
-			apo.FitnessRatio = float.Parse(txtFitness.Text);
-			apo.MutationRatio = float.Parse(txtMutation.Text);
-			apo.TourneySize = int.Parse(txtTourney.Text);
-			apo.PopSize = int.Parse(txtPopSize.Text);
-			*/
-
-			/* TODO make sure you retrieve and display the same sublayout on postback or have some state management */
-
+			// pull from config
+			popman.CrossoverRatio = cutil.CrossoverRatio;
+			popman.ElitismRatio = cutil.ElitismRatio;
+			popman.FitnessRatio = cutil.FitnessRatio;
+			popman.MutationRatio = cutil.MutationRatio;
+			popman.TourneySize = cutil.TourneySize;
+			popman.PopSize = cutil.PopSize;
+			
 			//get or create the population
 			SCPopulation p = SCPopulation.GetPop(popman);
 
@@ -94,10 +92,10 @@ namespace GA.SC.Pipelines.InsertRenderings.Processors {
 
 				string tid = tagMatches.First().ID.ToString();
 
-				// TODO move this to config or constants
-				Item cItem = GetItemFromID(Sitecore.Context.Site.Properties["contentFolder"]); 
-				// TODO find a place to store this. It's not in Sitecore.FieldIDs
-				List<Item> contentMatches = cItem.Children.Where(a => a.Fields["Tags"].Value.Contains(tid)).ToList();
+				// get content with a tag selected 
+				// TODO replace this with a content search
+				Item cItem = GetItemFromID(cutil.ContentFolder); 
+				List<Item> contentMatches = cItem.Children.Where(a => a.Fields[cutil.ContentTagField].Value.Contains(tid)).ToList();
 				if(!contentMatches.Any())
 					continue;
 
@@ -116,18 +114,10 @@ namespace GA.SC.Pipelines.InsertRenderings.Processors {
 		}
 
 		private List<string> PerformSearch() {
-			//the fields are managed in:
-			//			/App_Config/includes/Sitecore.ContentSearch.Lucene.DefaultIndexConfiguration
-			//this index is managed in:
-			//			/App_Config/includes/Sitecore.ContentSearch.Lucene.Index.Master.config
-			//this settings for indexing in:
-			//			/App_Config/includes/Sitecore.ContentSearch.config
 			var index = ContentSearchManager.GetIndex("sitecore_master_index");
 			using (var context = index.CreateSearchContext(SearchSecurityOptions.EnableSecurityCheck)) {
 				var queryable = context.GetQueryable<StringBuilder>();
-
-				//need to send to list before the using outside the context
-				return new List<string>();// queryable.ToList();
+				return new List<string>();			
 			}
 		}
 	}

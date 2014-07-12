@@ -86,6 +86,9 @@
   <ItemGroup>
     <None Include="Config\GA.SC.UI.SampleSite.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Packages\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>start xcopy  /S /Y "$(ProjectDir)Layouts\*.aspx" "$(SolutionDir)Website\sitecore modules\Web\GASampleSite\layouts\"

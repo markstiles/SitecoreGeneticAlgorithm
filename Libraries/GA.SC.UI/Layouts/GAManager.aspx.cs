@@ -38,18 +38,21 @@ namespace GA.SC.UI.Layouts {
 		protected DefaultPopulationManager apo = new DefaultPopulationManager();
 
 		protected void Page_Load(object sender, EventArgs e) {
-
+			
 			//setup accessors
 			Placeholders = new List<Literal>() { ltlOne, ltlTwo, ltlThree, ltlFour, ltlFive, ltlSix, ltlSeven, ltlEight };
 			Panels = new List<Panel>() { pnlOne, pnlTwo, pnlThree, pnlFour, pnlFive, pnlSix, pnlSeven, pnlEight };
 			Buttons = new List<Button>() { btnA, btnB, btnC, btnD, btnE, btnF, btnG };
 			
+			// TODO make a drop down to select the ga name you want to view data on and default to its own config
+			ConfigUtil cutil = new ConfigUtil("gasamplesite");
+
 			//setup chromosomes
-			Chromosomes.Add(new KeyValuePair<int, string>(Placeholders.Count, "pageContent")); 
+			Chromosomes.Add(new KeyValuePair<int, string>(Placeholders.Count, cutil.ChromosomeName)); 
 			
 			//setup population options
-			apo.PopulationType = Type.GetType("GA.SC.SCPopulation,GA.SC");
-			apo.KaryotypeType = Type.GetType("GA.SC.PageKaryotype,GA.SC");
+			apo.PopulationType = cutil.PopulationType;
+			apo.KaryotypeType = cutil.KaryotypeType;
 			foreach (KeyValuePair<int, string> c in Chromosomes) {
 				Genotype g = new Genotype();
 				//number of genes corresponds to the number of placeholders to fill with display content
@@ -65,12 +68,12 @@ namespace GA.SC.UI.Layouts {
 			if (!IsPostBack) {
 
 				//default options
-				txtCrossover.Text = apo.CrossoverRatio.ToString();
-				txtElitism.Text = apo.ElitismRatio.ToString();
-				txtFitness.Text = apo.FitnessRatio.ToString();
-				txtMutation.Text = apo.MutationRatio.ToString();
-				txtTourney.Text = apo.TourneySize.ToString();
-				txtPopSize.Text = apo.PopSize.ToString();
+				txtCrossover.Text = cutil.CrossoverRatio.ToString();
+				txtElitism.Text = cutil.ElitismRatio.ToString();
+				txtFitness.Text = cutil.FitnessRatio.ToString();
+				txtMutation.Text = cutil.MutationRatio.ToString();
+				txtTourney.Text = cutil.TourneySize.ToString();
+				txtPopSize.Text = cutil.PopSize.ToString();
 
 				RunAlgo();
 			} else {
