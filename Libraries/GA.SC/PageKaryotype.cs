@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using GA.Lib.Chromosome;
 using GA.Lib.Gene;
 using GA.Lib.Population;
+using GA.SC.EV;
 
 namespace GA.SC {
 	public class PageKaryotype : BaseKaryotype {
@@ -24,9 +25,9 @@ namespace GA.SC {
 				double fitness = 0;
 				foreach (KeyValuePair<string, IChromosome> kvp in ExpressedHaploid){
 					foreach (IGene g in kvp.Value) {
-						if (EngagementValue.KnownValues.Any() && EngagementValue.KnownValues.ContainsKey(g.GeneID)) { //need to change how this gets stored.
-							List<EngagementValue> evl = EngagementValue.KnownValues[g.GeneID];
-							fitness += evl.Sum(a => a.CurrentValue());
+						if (ConfigUtil.Current.EVProvider.Values.Any() && ConfigUtil.Current.EVProvider.Values.ContainsKey(g.GeneID)) { //need to change how this gets stored.
+							List<IEngagementValue> evl = ConfigUtil.Current.EVProvider.Values[g.GeneID];
+							fitness += evl.Sum(a => ConfigUtil.Current.ValueModifier.CurrentValue(a));
 						}
 					}
 				}

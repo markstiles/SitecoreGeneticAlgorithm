@@ -4,22 +4,49 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using GA.SC.EV;
 using Sitecore.Configuration;
 
 namespace GA.SC {
 	public class ConfigUtil {
 
+		#region Fields 
+
 		public string GAName = string.Empty;
+
+		#endregion Fields
+
+		#region ctor
 
 		public ConfigUtil(string gaName) {
 			GAName = gaName;
 		}
+
+		#endregion ctor
+
+		#region Static Properties
 
 		public static XmlNode GARoot {
 			get {
 				return Factory.GetConfigNode("geneticalgorithms");
 			}
 		}
+
+		public static string SiteProperty {
+			get {
+				return GARoot.Attributes["siteProperty"].Value;
+			}
+		}
+
+		public static ConfigUtil Current {
+			get {
+				return new ConfigUtil(Sitecore.Context.Site.Properties[ConfigUtil.SiteProperty]);
+			}
+		}
+
+		#endregion Static Properties
+
+		#region Properties
 
 		public string GetGAAttribute(string prop) {
 			return GARoot[GAName].Attributes[prop].Value;
@@ -38,7 +65,7 @@ namespace GA.SC {
 				return Type.GetType(v);
 			}
 		}
-
+		
 		public string DatasourceValue {
 			get {
 				return GetGAAttribute("datasourceValue");
@@ -71,8 +98,7 @@ namespace GA.SC {
 
 		public float CrossoverRatio {
 			get {
-				string s = GetGAAttribute("crossoverRatio");
-				return float.Parse(s); 
+				return float.Parse(GetGAAttribute("crossoverRatio")); 
 			}
 		}
 
@@ -106,11 +132,29 @@ namespace GA.SC {
 			}
 		}
 
-		public static string SiteProperty {
+		public IEngagementValueProvider EVProvider {
 			get {
-				return GARoot.Attributes["siteProperty"].Value;
+				string v = GARoot[GAName].Attributes["evProviderType"].Value;
+				Type t = Type.GetType(v);
+				return (IEngagementValueProvider)Activator.CreateInstance(t);
 			}
 		}
+
+		public IValueModifier ValueModifier {
+			get {
+				XmlNode x = GARoot[GAName]["evModifier"];
+				string t = x.Attributes["type"].Value;
+				Type vmt = Type.GetType(t);
+				float m = float.Parse(x.Attributes["minRatio"].Value);
+				int d = int.Parse(x.Attributes["decimalPlaces"].Value);
+				TimespanAspect ta = (TimespanAspect)Enum.Parse(typeof(TimespanAspect), x.Attributes["timespanAspect"].Value);
+				int hl = int.Parse(x.Attributes["halfLife"].Value);
+				
+				return (IValueModifier)Activator.CreateInstance(vmt, m, d, ta, hl);
+			}
+		}
+
+		#endregion Properties
 	}
 }
 

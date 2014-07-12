@@ -11,21 +11,10 @@ using GA.Lib.Chromosome;
 using GA.Lib.Gene;
 using GA.Lib.Population;
 using GA.SC;
+using GA.SC.EV;
 
 namespace GA.SC.UI.Layouts {
 	public partial class GAManager : Page {
-
-		/* 
-		 * populations can be used just like levels of navigation. create one at a top level and each 
-		 * could have it's own population as subcategories. visually stored in a tree or bucket but just in a sense of 
-		 * giving depth to the category itself. for example you like shoes (top level chromosome) but you prefer sandals 
-		 * and sneakers (second level)
-		 * 
-		 * may want to change how the genotypelist works by collecting "Type" objects and having a default constructor that takes in an object
-		 * to be able to create new objects and set the datasource.
-		 * not sure which is more advantageous; to set the dominance automatically or manually
-		 * 
-		 * */
 
 		protected List<Literal> Placeholders;
 		protected List<Button> Buttons;
@@ -112,7 +101,7 @@ namespace GA.SC.UI.Layouts {
 			ltlUKaryos.Text = u.Count.ToString();
 
 			//list all engagement values stored
-			rptEV.DataSource = EngagementValue.KnownValues;
+			rptEV.DataSource = ConfigUtil.Current.EVProvider.Values;
 			rptEV.DataBind();
 
 			//evolve
@@ -133,16 +122,16 @@ namespace GA.SC.UI.Layouts {
 			//update clicks
 			Button b = (Button)sender;
 			string key = b.Text; // string.Format("ltl{0}-{1}", b.CssClass, b.Text);
-			if (!EngagementValue.KnownValues.ContainsKey(key))
-				EngagementValue.KnownValues.Add(key, new List<EngagementValue>());
-			EngagementValue.KnownValues[key].Add(new EngagementValue(1));
+			if (!ConfigUtil.Current.EVProvider.Values.ContainsKey(key))
+				ConfigUtil.Current.EVProvider.Values.Add(key, new List<IEngagementValue>());
+			ConfigUtil.Current.EVProvider.Values[key].Add(new EngagementValue(1));
 			
 			//run algo
 			RunAlgo();
 		}
 
 		protected void btnClearEvents_Click(object sender, EventArgs e) {
-			EngagementValue.KnownValues.Clear();
+			ConfigUtil.Current.EVProvider.Values.Clear();
 			RunAlgo();
 		}
 

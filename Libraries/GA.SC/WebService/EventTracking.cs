@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Services;
+using GA.SC.EV;
 
 namespace GA.SC.WebService {
 	[WebService(Namespace = "http://www.diagnoseplatform.nl/services")]
@@ -13,9 +14,9 @@ namespace GA.SC.WebService {
 	public class EventTracking : System.Web.Services.WebService {
 		[WebMethod]
 		public void TrackEvent(string TagClick) {
-			if (!EngagementValue.KnownValues.ContainsKey(TagClick))
-				EngagementValue.KnownValues.Add(TagClick, new List<EngagementValue>());
-			EngagementValue.KnownValues[TagClick].Add(new EngagementValue(1));
+			if (!ConfigUtil.Current.EVProvider.Values.ContainsKey(TagClick))
+				ConfigUtil.Current.EVProvider.Values.Add(TagClick, new List<IEngagementValue>());
+			ConfigUtil.Current.EVProvider.Values[TagClick].Add(new EngagementValue(1));
 		}
 	}
 }

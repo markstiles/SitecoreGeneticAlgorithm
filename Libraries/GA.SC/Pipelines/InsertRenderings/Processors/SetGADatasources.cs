@@ -26,26 +26,24 @@ namespace GA.SC.Pipelines.InsertRenderings.Processors {
 			if (Sitecore.Context.Site == null)
 				return;
 
-			ConfigUtil cutil = new ConfigUtil(Sitecore.Context.Site.Properties[ConfigUtil.SiteProperty]);
-
 			// get the count of renderings with the datasource set as GAManager 
 			List<KeyValuePair<int,RenderingReference>> rr = args.Renderings
 				.Select((value, index) => new { value, index })
-				.Where(a => a.value.Settings.DataSource.Equals(cutil.DatasourceValue))
+				.Where(a => a.value.Settings.DataSource.Equals(ConfigUtil.Current.DatasourceValue))
                 .Select(x => new KeyValuePair<int, RenderingReference>(x.index, x.value))
                 .ToList();
 			if (!rr.Any())
 				return; 
 
 			//setup chromosomes
-			Chromosomes.Add(new KeyValuePair<int, string>(rr.Count, cutil.ChromosomeName));
+			Chromosomes.Add(new KeyValuePair<int, string>(rr.Count, ConfigUtil.Current.ChromosomeName));
 
 			//setup population options
-			popman.PopulationType = cutil.PopulationType;
-			popman.KaryotypeType = cutil.KaryotypeType;
+			popman.PopulationType = ConfigUtil.Current.PopulationType;
+			popman.KaryotypeType = ConfigUtil.Current.KaryotypeType;
 
 			// get tags - TODO change with content search or api call
-			Item tagBucket = GetItemFromID(cutil.TagFolder);
+			Item tagBucket = GetItemFromID(ConfigUtil.Current.TagFolder);
 			List<Item> tags = Sitecore.Context.Database.SelectItems(string.Format("{0}//*[@@templatename='Tag']",tagBucket.Paths.FullPath)).ToList();
 
 			foreach (KeyValuePair<int, string> c in Chromosomes) {
@@ -61,12 +59,12 @@ namespace GA.SC.Pipelines.InsertRenderings.Processors {
 			}
 
 			// pull from config
-			popman.CrossoverRatio = cutil.CrossoverRatio;
-			popman.ElitismRatio = cutil.ElitismRatio;
-			popman.FitnessRatio = cutil.FitnessRatio;
-			popman.MutationRatio = cutil.MutationRatio;
-			popman.TourneySize = cutil.TourneySize;
-			popman.PopSize = cutil.PopSize;
+			popman.CrossoverRatio = ConfigUtil.Current.CrossoverRatio;
+			popman.ElitismRatio = ConfigUtil.Current.ElitismRatio;
+			popman.FitnessRatio = ConfigUtil.Current.FitnessRatio;
+			popman.MutationRatio = ConfigUtil.Current.MutationRatio;
+			popman.TourneySize = ConfigUtil.Current.TourneySize;
+			popman.PopSize = ConfigUtil.Current.PopSize;
 			
 			//get or create the population
 			SCPopulation p = SCPopulation.GetPop(popman);
@@ -94,8 +92,8 @@ namespace GA.SC.Pipelines.InsertRenderings.Processors {
 
 				// get content with a tag selected 
 				// TODO replace this with a content search
-				Item cItem = GetItemFromID(cutil.ContentFolder); 
-				List<Item> contentMatches = cItem.Children.Where(a => a.Fields[cutil.ContentTagField].Value.Contains(tid)).ToList();
+				Item cItem = GetItemFromID(ConfigUtil.Current.ContentFolder);
+				List<Item> contentMatches = cItem.Children.Where(a => a.Fields[ConfigUtil.Current.ContentTagField].Value.Contains(tid)).ToList();
 				if(!contentMatches.Any())
 					continue;
 
@@ -113,6 +111,7 @@ namespace GA.SC.Pipelines.InsertRenderings.Processors {
 			return Sitecore.Context.Database.GetItem(id);
 		}
 
+		// TODO fill out the content search or define one for each algorithm entry
 		private List<string> PerformSearch() {
 			var index = ContentSearchManager.GetIndex("sitecore_master_index");
 			using (var context = index.CreateSearchContext(SearchSecurityOptions.EnableSecurityCheck)) {
