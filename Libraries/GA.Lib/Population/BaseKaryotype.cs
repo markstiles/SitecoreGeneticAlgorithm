@@ -61,14 +61,14 @@ namespace GA.Lib.Population {
 		/// </summary>
 		public virtual void Mutate() {
 			//randomly select a chromosome from the master genotype list
-			string chromoKey = Manager.Genotype.Keys.ToList()[RandomUtil.Instance.Next(0, Manager.Genotype.Keys.Count)];
+			string chromoKey = Manager.Genotype.Keys.ToList()[RandomUtil.Instance.Next(Manager.Genotype.Keys.Count)];
 			List<IGene> rg = Manager.Genotype[chromoKey];
 			//randomly get a gene from that chromosome's genotype 
-			IGene g = rg[RandomUtil.Instance.Next(0, rg.Count)];
+			IGene g = rg[RandomUtil.Instance.Next(rg.Count)];
 			//choose a random Haploid to modify
 			IHaploid rh = (RandomUtil.NextBool()) ? MothersHaploid : FathersHaploid;
 			//choose the same chromosome from the genotype on the haploid but a random gene to replace it
-			rh[chromoKey][RandomUtil.Instance.Next(0, Manager.Genotype[chromoKey].GeneLimit)] = g;
+			rh[chromoKey][RandomUtil.Instance.Next(Manager.Genotype[chromoKey].GeneLimit)] = g;
 		}
 
 		/// <summary>
@@ -81,8 +81,8 @@ namespace GA.Lib.Population {
 			List<IHaploid> fh = (mate.Gender) ? Meiosis(this) : Meiosis(mate);
 
 			// randomly pick a haploid from each and create a new karyotype
-			IHaploid mom = mh[RandomUtil.Instance.Next(0, mh.Count)];
-			IHaploid dad = fh[RandomUtil.Instance.Next(0, fh.Count)];
+			IHaploid mom = mh[RandomUtil.Instance.Next(mh.Count)];
+			IHaploid dad = fh[RandomUtil.Instance.Next(fh.Count)];
 			IKaryotype newK = Manager.CreateKaryotype(mom, dad);
 			
 			return newK;

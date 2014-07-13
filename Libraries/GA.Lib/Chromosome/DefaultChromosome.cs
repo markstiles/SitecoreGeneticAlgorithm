@@ -26,7 +26,7 @@ namespace GA.Lib.Chromosome {
 
 		public virtual void FillRandomly(List<IGene> genepool, int count) {
 			for (int j = 0; j < count; j++) {
-				IGene g = genepool[RandomUtil.Instance.Next(0, genepool.Count)];
+				IGene g = genepool[RandomUtil.Instance.Next(genepool.Count)];
 				this.Add(g);
 			}
 		}

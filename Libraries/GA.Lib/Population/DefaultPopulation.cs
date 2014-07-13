@@ -78,7 +78,7 @@ namespace GA.Lib.Population {
 			List<IKaryotype> lk = (topFit < 1) // if all values have decayed below 1 then don't filter any options out
 				? u
 				: u.Where(a => a.Fitness >= (topFit * Manager.FitnessRatio)).ToList();
-			int newPos = RandomUtil.Instance.Next(0, lk.Count);
+			int newPos = RandomUtil.Instance.Next(lk.Count);
 			IKaryotype k = (lk.Any()) // if the filter worked too well just select the first item
 				? lk[newPos]
 				: Karyotypes.First();
@@ -114,11 +114,11 @@ namespace GA.Lib.Population {
 
 			//finds two randomly selected parents
 			for (int parentIndex = 0; parentIndex < 2; parentIndex++) {
-				parents.Add(Karyotypes[RandomUtil.Instance.Next(Karyotypes.Count - 1)]);
+				parents.Add(Karyotypes[RandomUtil.Instance.Next(Karyotypes.Count)]);
 
 				//it tries TourneySize times to randomly find a better parent
 				for (int tournyIndex = 0; tournyIndex < Manager.TourneySize; tournyIndex++) {
-					int randomIndex = RandomUtil.Instance.Next(Karyotypes.Count - 1);
+					int randomIndex = RandomUtil.Instance.Next(Karyotypes.Count);
 					if (Karyotypes[randomIndex].Fitness > parents[parentIndex].Fitness) // higher is more fit
 						parents[parentIndex] = Karyotypes[randomIndex];
 				}

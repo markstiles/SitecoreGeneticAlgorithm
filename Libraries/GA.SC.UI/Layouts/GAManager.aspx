@@ -28,7 +28,7 @@
 					.dna { display:inline-block; width:260px; text-align:center; }
 					.fitness { display:inline-block; width:48px; text-align:center;}
 			.right { width: 400px; display: inline-block; vertical-align:top; }
-				.box { border:1px solid #ccc; display:inline-block; margin:10px 5px; height:37px; font-size:17px; width:75px; background-color:#ccc; color:#fff; padding-top:13px; }
+				.box { text-align:center; border:1px solid #ccc; display:inline-block; margin:10px 5px; height:37px; font-size:17px; width:75px; background-color:#ccc; color:#fff; padding-top:13px; }
 				.btn { display:inline-block; }
 				.Display { height:150px; }
 				.Buttons input[type='submit'] { height:20px; }

@@ -14,7 +14,7 @@ namespace GA.Lib {
 		}
 
 		public static bool NextBool() {
-			return (RandomUtil.Instance.Next(0, 1) == 0);
+			return (RandomUtil.Instance.Next(0, 2) == 0);
 		}
 	}
 }

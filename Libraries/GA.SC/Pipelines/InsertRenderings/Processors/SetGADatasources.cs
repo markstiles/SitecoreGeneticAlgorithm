@@ -97,7 +97,7 @@ namespace GA.SC.Pipelines.InsertRenderings.Processors {
 				if(!contentMatches.Any())
 					continue;
 
-				r.Settings.DataSource = contentMatches[RandomUtil.Instance.Next(0, contentMatches.Count)].ID.ToString();
+				r.Settings.DataSource = contentMatches[RandomUtil.Instance.Next(contentMatches.Count)].ID.ToString();
 			}
 
 			//evolve
