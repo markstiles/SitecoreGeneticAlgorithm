@@ -12,6 +12,8 @@ using GA.Nucleus.Gene;
 using GA.Nucleus.Population;
 using GA.SC;
 using GA.SC.EV;
+using HtmlAgilityPack;
+using Sitecore.Data.Managers;
 
 namespace GA.SC.UI.Layouts {
 	public partial class GAManager : Page {
@@ -27,7 +29,9 @@ namespace GA.SC.UI.Layouts {
 		protected DefaultPopulationManager apo = new DefaultPopulationManager();
 
 		protected void Page_Load(object sender, EventArgs e) {
-			
+
+			LoadIcons();
+
 			//setup accessors
 			Placeholders = new List<Literal>() { ltlOne, ltlTwo, ltlThree, ltlFour, ltlFive, ltlSix, ltlSeven, ltlEight };
 			Panels = new List<Panel>() { pnlOne, pnlTwo, pnlThree, pnlFour, pnlFive, pnlSix, pnlSeven, pnlEight };
@@ -73,6 +77,19 @@ namespace GA.SC.UI.Layouts {
 				apo.TourneySize = int.Parse(txtTourney.Text);
 				apo.PopSize = int.Parse(txtPopSize.Text);
 			}
+		}
+
+		protected void LoadIcons() {
+			imgPopEngVal.ImageUrl = GetIcon("Network/16x16/earth.png", 16, 16);
+			imgPopInfo.ImageUrl = GetIcon("Network/32x32/environment.png", 16, 16);
+		}
+
+		public string GetIcon(string iconPath, int width, int height) {
+
+			HtmlAgilityPack.HtmlDocument htmlDoc = new HtmlAgilityPack.HtmlDocument();
+			htmlDoc.LoadHtml(ThemeManager.GetImage(iconPath, width, height));
+			HtmlNode img = htmlDoc.DocumentNode.FirstChild;
+			return img.Attributes["src"].Value;
 		}
 
 		protected void RunAlgo() {
