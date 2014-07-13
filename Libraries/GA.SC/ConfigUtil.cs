@@ -42,12 +42,16 @@ namespace GA.SC {
 		public static ConfigUtil Context {
 			get {
 				if(_Context == null)
-					_Context = new ConfigUtil(Sitecore.Context.Site.Properties[ConfigUtil.SiteProperty]);
+					_Context = CurrentSiteContext();
 				return _Context;
 			}
 			set {
 				_Context = value;
 			}
+		}
+
+		public static ConfigUtil CurrentSiteContext() {
+			return new ConfigUtil(Sitecore.Context.Site.Properties[ConfigUtil.SiteProperty]);
 		}
 
 		#endregion Static Properties
