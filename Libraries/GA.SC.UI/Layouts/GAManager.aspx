@@ -2,6 +2,7 @@
 	Inherits="GA.SC.UI.Layouts.GAManager"
 	CodeBehind="GAManager.aspx.cs" %>
 <%@ Import Namespace="GA.Lib.Population" %>
+<%@ Import Namespace="GA.SC.EV" %>
 <%@ Import Namespace="GA.SC" %>
 <%@ Register TagPrefix="sc" Namespace="Sitecore.Web.UI.WebControls" Assembly="Sitecore.Kernel" %>
 
@@ -126,10 +127,10 @@
 							<ItemTemplate>
 								<div class="entry <%# OddEven(Container.ItemIndex) %>">
 									<div class="key">
-										<%# ((KeyValuePair<string, List<EngagementValue>>)Container.DataItem).Key %> : 
+										<%# ((KeyValuePair<string, List<IEngagementValue>>)Container.DataItem).Key %> : 
 									</div>
 									<div class="value">
-										<%# ((KeyValuePair<string, List<EngagementValue>>)Container.DataItem).Value.Sum(a => a.CurrentValue()) %>
+										<%# ((KeyValuePair<string, List<IEngagementValue>>)Container.DataItem).Value.Sum(a => ConfigUtil.Current.ValueModifier.CurrentValue(a)) %>
 									</div>
 								</div>
 							</ItemTemplate>

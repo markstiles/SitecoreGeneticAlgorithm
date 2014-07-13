@@ -7,11 +7,9 @@ using System.Threading.Tasks;
 namespace GA.SC.EV {
 	public class DefaultEngagementValueProvider : IEngagementValueProvider {
 
-		private Dictionary<string, List<IEngagementValue>> _Values;
+		private static Dictionary<string, List<IEngagementValue>> _Values = new Dictionary<string, List<IEngagementValue>>();
 		public Dictionary<string, List<IEngagementValue>> Values {
 			get {
-				if (_Values == null)
-					_Values = new Dictionary<string, List<IEngagementValue>>();
 				return _Values;
 			}
 		}

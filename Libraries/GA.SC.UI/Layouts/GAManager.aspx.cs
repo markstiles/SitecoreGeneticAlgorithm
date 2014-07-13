@@ -26,6 +26,8 @@ namespace GA.SC.UI.Layouts {
 
 		protected DefaultPopulationManager apo = new DefaultPopulationManager();
 
+		protected ConfigUtil cutil; 
+
 		protected void Page_Load(object sender, EventArgs e) {
 			
 			//setup accessors
@@ -34,7 +36,7 @@ namespace GA.SC.UI.Layouts {
 			Buttons = new List<Button>() { btnA, btnB, btnC, btnD, btnE, btnF, btnG };
 			
 			// TODO make a drop down to select the ga name you want to view data on and default to its own config
-			ConfigUtil cutil = new ConfigUtil("gasamplesite");
+			cutil = new ConfigUtil("gamanager");
 
 			//setup chromosomes
 			Chromosomes.Add(new KeyValuePair<int, string>(Placeholders.Count, cutil.ChromosomeName)); 
@@ -101,7 +103,7 @@ namespace GA.SC.UI.Layouts {
 			ltlUKaryos.Text = u.Count.ToString();
 
 			//list all engagement values stored
-			rptEV.DataSource = ConfigUtil.Current.EVProvider.Values;
+			rptEV.DataSource = cutil.EVProvider.Values;
 			rptEV.DataBind();
 
 			//evolve
@@ -122,16 +124,16 @@ namespace GA.SC.UI.Layouts {
 			//update clicks
 			Button b = (Button)sender;
 			string key = b.Text; // string.Format("ltl{0}-{1}", b.CssClass, b.Text);
-			if (!ConfigUtil.Current.EVProvider.Values.ContainsKey(key))
-				ConfigUtil.Current.EVProvider.Values.Add(key, new List<IEngagementValue>());
-			ConfigUtil.Current.EVProvider.Values[key].Add(new EngagementValue(1));
+			if (!cutil.EVProvider.Values.ContainsKey(key))
+				cutil.EVProvider.Values.Add(key, new List<IEngagementValue>());
+			cutil.EVProvider.Values[key].Add(new EngagementValue(1));
 			
 			//run algo
 			RunAlgo();
 		}
 
 		protected void btnClearEvents_Click(object sender, EventArgs e) {
-			ConfigUtil.Current.EVProvider.Values.Clear();
+			cutil.EVProvider.Values.Clear();
 			RunAlgo();
 		}
 
