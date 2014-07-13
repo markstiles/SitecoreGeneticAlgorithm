@@ -49,7 +49,7 @@
 			.Btns input { border:1px solid #999; background:#f8f8f8; cursor:pointer; }
 				.Btns input:hover { background: #FFCC99; color: #002E4C; }
 		.Results { width:50%; display:inline-block; vertical-align:top; border-right:2px solid #ccc; padding-right:15px; margin-right:15px; }
-		.EV { display:inline-block; width:250px; }
+		.EV { display:inline-block; width:125px; }
 			.EV .tags { height:108px; overflow:auto; border:1px solid #ccc; margin-bottom:10px; }
 			.EV .entry { text-align:left; }
 			.EV .key { display:inline-block; width:75px; text-align:right; text-transform:uppercase; }
