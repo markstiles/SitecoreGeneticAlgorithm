@@ -72,12 +72,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GA.Lib\GA.Lib.csproj">
+    <ProjectReference Include="..\GA.Nucleus\GA.Nucleus.csproj">
       <Project>{37b116a7-668c-4d2d-aa46-3df822ef13da}</Project>
-      <Name>GA.Lib</Name>
+      <Name>GA.Nucleus</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

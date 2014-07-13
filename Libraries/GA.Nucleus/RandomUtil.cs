@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GA.Lib {
+namespace GA.Nucleus {
 	public sealed class RandomUtil {
 
 		private static Random _rand = new Random(Environment.TickCount);

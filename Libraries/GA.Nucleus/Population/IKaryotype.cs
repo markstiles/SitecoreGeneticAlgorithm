@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using GA.Lib.Chromosome;
-using GA.Lib.Gene;
+using GA.Nucleus.Chromosome;
+using GA.Nucleus.Gene;
 
-namespace GA.Lib.Population {
+namespace GA.Nucleus.Population {
 	public interface IKaryotype : IComparable<IKaryotype> {
 
 		#region Properties

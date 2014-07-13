@@ -5,8 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using GA.Lib;
-using GA.Lib.Gene;
+using GA.Nucleus;
+using GA.Nucleus.Gene;
 
 namespace GA.SC {
 	/// <summary>

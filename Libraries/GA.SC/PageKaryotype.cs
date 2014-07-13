@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 using System.Web.UI.WebControls;
-using GA.Lib.Chromosome;
-using GA.Lib.Gene;
-using GA.Lib.Population;
+using GA.Nucleus.Chromosome;
+using GA.Nucleus.Gene;
+using GA.Nucleus.Population;
 using GA.SC.EV;
 
 namespace GA.SC {

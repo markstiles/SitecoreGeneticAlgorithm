@@ -56,9 +56,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GA.Lib\GA.Lib.csproj">
+    <ProjectReference Include="..\GA.Nucleus\GA.Nucleus.csproj">
       <Project>{37b116a7-668c-4d2d-aa46-3df822ef13da}</Project>
-      <Name>GA.Lib</Name>
+      <Name>GA.Nucleus</Name>
     </ProjectReference>
     <ProjectReference Include="..\GA.SC\GA.SC.csproj">
       <Project>{5e3e3376-4fc7-41b4-84e2-7f299dfb2201}</Project>

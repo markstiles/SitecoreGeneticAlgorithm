@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("GA.Lib")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("GA.Nucleus")]
+[assembly: AssemblyDescription("nu·cle·us noun: nucleus; plural noun: nuclei; the central and most important part of an object, movement, or group, forming the basis for its activity and growth.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("GA.Lib")]
+[assembly: AssemblyProduct("GA.Nucleus")]
 [assembly: AssemblyCopyright("Copyright ©  2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

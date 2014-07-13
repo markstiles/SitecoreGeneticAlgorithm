@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GA.Lib.Chromosome {
+namespace GA.Nucleus.Chromosome {
 	public class DefaultHaploid : Dictionary<string, IChromosome>, IHaploid {
 
 		#region ctor

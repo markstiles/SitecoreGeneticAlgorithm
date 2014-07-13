@@ -6,10 +6,10 @@ using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using GA.Lib;
-using GA.Lib.Chromosome;
-using GA.Lib.Gene;
-using GA.Lib.Population;
+using GA.Nucleus;
+using GA.Nucleus.Chromosome;
+using GA.Nucleus.Gene;
+using GA.Nucleus.Population;
 using GA.SC;
 using GA.SC.EV;
 

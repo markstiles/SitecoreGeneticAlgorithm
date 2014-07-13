@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using GA.Lib.Chromosome;
+using GA.Nucleus.Chromosome;
 
-namespace GA.Lib.Population {
+namespace GA.Nucleus.Population {
 	public interface IPopulation {
 		
 		#region Properties

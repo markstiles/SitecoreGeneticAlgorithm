@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GA.Lib.Extensions {
+namespace GA.Nucleus.Extensions {
 	public static class SystemExtensions {
 		/// <summary>
 		/// 

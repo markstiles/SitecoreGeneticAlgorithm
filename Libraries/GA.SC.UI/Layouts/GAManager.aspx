@@ -1,7 +1,7 @@
 ﻿<%@ Page language="c#" AutoEventWireup="true" 
 	Inherits="GA.SC.UI.Layouts.GAManager"
 	CodeBehind="GAManager.aspx.cs" %>
-<%@ Import Namespace="GA.Lib.Population" %>
+<%@ Import Namespace="GA.Nucleus.Population" %>
 <%@ Import Namespace="GA.SC.EV" %>
 <%@ Import Namespace="GA.SC" %>
 <%@ Register TagPrefix="sc" Namespace="Sitecore.Web.UI.WebControls" Assembly="Sitecore.Kernel" %>

@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using GA.Lib.Gene;
-using GA.Lib.Population;
+using GA.Nucleus.Gene;
+using GA.Nucleus.Population;
 
-namespace GA.Lib.Chromosome {
+namespace GA.Nucleus.Chromosome {
 	public interface IChromosome : IList<IGene> {
 
 		#region Methods

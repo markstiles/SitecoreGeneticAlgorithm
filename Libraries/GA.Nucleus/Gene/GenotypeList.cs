@@ -4,6 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GA.Lib.Gene {
+namespace GA.Nucleus.Gene {
 	public class GenotypeList : Dictionary<string, Genotype> { }
 }

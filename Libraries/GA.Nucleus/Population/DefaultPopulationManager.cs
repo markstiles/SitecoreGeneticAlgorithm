@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using GA.Lib.Chromosome;
-using GA.Lib.Gene;
-using GA.Lib.Population;
+using GA.Nucleus.Chromosome;
+using GA.Nucleus.Gene;
+using GA.Nucleus.Population;
 
-namespace GA.Lib.Population {
+namespace GA.Nucleus.Population {
 	public class DefaultPopulationManager : IPopulationManager {
 
 		#region Properties
