@@ -26,8 +26,6 @@ namespace GA.SC.UI.Layouts {
 
 		protected DefaultPopulationManager apo = new DefaultPopulationManager();
 
-		protected ConfigUtil cutil; 
-
 		protected void Page_Load(object sender, EventArgs e) {
 			
 			//setup accessors
@@ -36,14 +34,14 @@ namespace GA.SC.UI.Layouts {
 			Buttons = new List<Button>() { btnA, btnB, btnC, btnD, btnE, btnF, btnG };
 			
 			// TODO make a drop down to select the ga name you want to view data on and default to its own config
-			cutil = new ConfigUtil("gamanager");
+			ConfigUtil.Context = new ConfigUtil("gamanager");
 
 			//setup chromosomes
-			Chromosomes.Add(new KeyValuePair<int, string>(Placeholders.Count, cutil.ChromosomeName)); 
+			Chromosomes.Add(new KeyValuePair<int, string>(Placeholders.Count, ConfigUtil.Context.ChromosomeName)); 
 			
 			//setup population options
-			apo.PopulationType = cutil.PopulationType;
-			apo.KaryotypeType = cutil.KaryotypeType;
+			apo.PopulationType = ConfigUtil.Context.PopulationType;
+			apo.KaryotypeType = ConfigUtil.Context.KaryotypeType;
 			foreach (KeyValuePair<int, string> c in Chromosomes) {
 				Genotype g = new Genotype();
 				//number of genes corresponds to the number of placeholders to fill with display content
@@ -59,12 +57,12 @@ namespace GA.SC.UI.Layouts {
 			if (!IsPostBack) {
 
 				//default options
-				txtCrossover.Text = cutil.CrossoverRatio.ToString();
-				txtElitism.Text = cutil.ElitismRatio.ToString();
-				txtFitness.Text = cutil.FitnessRatio.ToString();
-				txtMutation.Text = cutil.MutationRatio.ToString();
-				txtTourney.Text = cutil.TourneySize.ToString();
-				txtPopSize.Text = cutil.PopSize.ToString();
+				txtCrossover.Text = ConfigUtil.Context.CrossoverRatio.ToString();
+				txtElitism.Text = ConfigUtil.Context.ElitismRatio.ToString();
+				txtFitness.Text = ConfigUtil.Context.FitnessRatio.ToString();
+				txtMutation.Text = ConfigUtil.Context.MutationRatio.ToString();
+				txtTourney.Text = ConfigUtil.Context.TourneySize.ToString();
+				txtPopSize.Text = ConfigUtil.Context.PopSize.ToString();
 
 				RunAlgo();
 			} else {
@@ -103,7 +101,7 @@ namespace GA.SC.UI.Layouts {
 			ltlUKaryos.Text = u.Count.ToString();
 
 			//list all engagement values stored
-			rptEV.DataSource = cutil.EVProvider.Values;
+			rptEV.DataSource = ConfigUtil.Context.EVProvider.Values;
 			rptEV.DataBind();
 
 			//evolve
@@ -124,16 +122,16 @@ namespace GA.SC.UI.Layouts {
 			//update clicks
 			Button b = (Button)sender;
 			string key = b.Text; // string.Format("ltl{0}-{1}", b.CssClass, b.Text);
-			if (!cutil.EVProvider.Values.ContainsKey(key))
-				cutil.EVProvider.Values.Add(key, new List<IEngagementValue>());
-			cutil.EVProvider.Values[key].Add(new EngagementValue(1));
+			if (!ConfigUtil.Context.EVProvider.Values.ContainsKey(key))
+				ConfigUtil.Context.EVProvider.Values.Add(key, new List<IEngagementValue>());
+			ConfigUtil.Context.EVProvider.Values[key].Add(new EngagementValue(1));
 			
 			//run algo
 			RunAlgo();
 		}
 
 		protected void btnClearEvents_Click(object sender, EventArgs e) {
-			cutil.EVProvider.Values.Clear();
+			ConfigUtil.Context.EVProvider.Values.Clear();
 			RunAlgo();
 		}
 

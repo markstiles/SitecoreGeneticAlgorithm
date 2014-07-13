@@ -14,6 +14,8 @@ namespace GA.SC.UI.SampleSite.Layouts {
 			
 			Item h = Sitecore.Context.Database.GetItem(Sitecore.Context.Site.StartPath);
 			
+			ltlContextSite.Text = string.Format("'{0}'", Sitecore.Context.Site.Name);
+
 			lnkLogo.NavigateUrl = LinkManager.GetItemUrl(h);
 			foreach (Item i in h.Children) 
 				navItems.Add(new KeyValuePair<string, string>(LinkManager.GetItemUrl(i), i.DisplayName));

@@ -29,21 +29,21 @@ namespace GA.SC.Pipelines.InsertRenderings.Processors {
 			// get the count of renderings with the datasource set as GAManager 
 			List<KeyValuePair<int,RenderingReference>> rr = args.Renderings
 				.Select((value, index) => new { value, index })
-				.Where(a => a.value.Settings.DataSource.Equals(ConfigUtil.Current.DatasourceValue))
+				.Where(a => a.value.Settings.DataSource.Equals(ConfigUtil.Context.DatasourceValue))
                 .Select(x => new KeyValuePair<int, RenderingReference>(x.index, x.value))
                 .ToList();
 			if (!rr.Any())
 				return; 
 
 			//setup chromosomes
-			Chromosomes.Add(new KeyValuePair<int, string>(rr.Count, ConfigUtil.Current.ChromosomeName));
+			Chromosomes.Add(new KeyValuePair<int, string>(rr.Count, ConfigUtil.Context.ChromosomeName));
 
 			//setup population options
-			popman.PopulationType = ConfigUtil.Current.PopulationType;
-			popman.KaryotypeType = ConfigUtil.Current.KaryotypeType;
+			popman.PopulationType = ConfigUtil.Context.PopulationType;
+			popman.KaryotypeType = ConfigUtil.Context.KaryotypeType;
 
 			// get tags - TODO change with content search or api call
-			Item tagBucket = GetItemFromID(ConfigUtil.Current.TagFolder);
+			Item tagBucket = GetItemFromID(ConfigUtil.Context.TagFolder);
 			List<Item> tags = Sitecore.Context.Database.SelectItems(string.Format("{0}//*[@@templatename='Tag']",tagBucket.Paths.FullPath)).ToList();
 
 			foreach (KeyValuePair<int, string> c in Chromosomes) {
@@ -59,12 +59,12 @@ namespace GA.SC.Pipelines.InsertRenderings.Processors {
 			}
 
 			// pull from config
-			popman.CrossoverRatio = ConfigUtil.Current.CrossoverRatio;
-			popman.ElitismRatio = ConfigUtil.Current.ElitismRatio;
-			popman.FitnessRatio = ConfigUtil.Current.FitnessRatio;
-			popman.MutationRatio = ConfigUtil.Current.MutationRatio;
-			popman.TourneySize = ConfigUtil.Current.TourneySize;
-			popman.PopSize = ConfigUtil.Current.PopSize;
+			popman.CrossoverRatio = ConfigUtil.Context.CrossoverRatio;
+			popman.ElitismRatio = ConfigUtil.Context.ElitismRatio;
+			popman.FitnessRatio = ConfigUtil.Context.FitnessRatio;
+			popman.MutationRatio = ConfigUtil.Context.MutationRatio;
+			popman.TourneySize = ConfigUtil.Context.TourneySize;
+			popman.PopSize = ConfigUtil.Context.PopSize;
 			
 			//get or create the population
 			SCPopulation p = SCPopulation.GetPop(popman);
@@ -92,8 +92,8 @@ namespace GA.SC.Pipelines.InsertRenderings.Processors {
 
 				// get content with a tag selected 
 				// TODO replace this with a content search
-				Item cItem = GetItemFromID(ConfigUtil.Current.ContentFolder);
-				List<Item> contentMatches = cItem.Children.Where(a => a.Fields[ConfigUtil.Current.ContentTagField].Value.Contains(tid)).ToList();
+				Item cItem = GetItemFromID(ConfigUtil.Context.ContentFolder);
+				List<Item> contentMatches = cItem.Children.Where(a => a.Fields[ConfigUtil.Context.ContentTagField].Value.Contains(tid)).ToList();
 				if(!contentMatches.Any())
 					continue;
 

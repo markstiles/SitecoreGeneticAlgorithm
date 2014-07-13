@@ -25,9 +25,9 @@ namespace GA.SC {
 				double fitness = 0;
 				foreach (KeyValuePair<string, IChromosome> kvp in ExpressedHaploid){
 					foreach (IGene g in kvp.Value) {
-						if (ConfigUtil.Current.EVProvider.Values.Any() && ConfigUtil.Current.EVProvider.Values.ContainsKey(g.GeneID)) { //need to change how this gets stored.
-							List<IEngagementValue> evl = ConfigUtil.Current.EVProvider.Values[g.GeneID];
-							fitness += evl.Sum(a => ConfigUtil.Current.ValueModifier.CurrentValue(a));
+						if (ConfigUtil.Context.EVProvider.Values.Any() && ConfigUtil.Context.EVProvider.Values.ContainsKey(g.GeneID)) { //need to change how this gets stored.
+							List<IEngagementValue> evl = ConfigUtil.Context.EVProvider.Values[g.GeneID];
+							fitness += evl.Sum(a => ConfigUtil.Context.ValueModifier.CurrentValue(a));
 						}
 					}
 				}

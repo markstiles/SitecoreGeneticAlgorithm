@@ -38,9 +38,15 @@ namespace GA.SC {
 			}
 		}
 
-		public static ConfigUtil Current {
+		private static ConfigUtil _Context;
+		public static ConfigUtil Context {
 			get {
-				return new ConfigUtil(Sitecore.Context.Site.Properties[ConfigUtil.SiteProperty]);
+				if(_Context == null)
+					_Context = new ConfigUtil(Sitecore.Context.Site.Properties[ConfigUtil.SiteProperty]);
+				return _Context;
+			}
+			set {
+				_Context = value;
 			}
 		}
 

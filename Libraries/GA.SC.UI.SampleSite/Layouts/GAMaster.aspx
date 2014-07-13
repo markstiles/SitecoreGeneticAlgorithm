@@ -40,6 +40,7 @@
 	</style>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> 
     <script>
+		var contextSite = <asp:Literal ID="ltlContextSite" runat="server"/>;
         var $j = jQuery.noConflict();
         $j(document).ready(function () {
             $j(".GAContent a, .nav a").click(function (e) {
@@ -49,7 +50,7 @@
                 $j.ajax({
                     type: "POST",
                     url: "/sitecore modules/Web/GA/WebService/EventTracking.asmx/TrackEvent",
-                    data: "{ 'TagClick':'" + tagName + "'}",
+                    data: "{ 'TagClick':'" + tagName + "', 'Site':'" + contextSite + "'}",
                     contentType: "application/json",
                     dataType: "json",
                     success: function (data, status) {
