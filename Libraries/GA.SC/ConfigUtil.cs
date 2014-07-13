@@ -54,27 +54,9 @@ namespace GA.SC {
 
 		#region Properties
 
-		public string GetGAAttribute(string prop) {
-			return GARoot[GAName].Attributes[prop].Value;
-		}
-
-		public Type PopulationType {
+		public string ChromosomeName {
 			get {
-				string v = GetGAAttribute("populationType");
-				return Type.GetType(v);
-			}
-		}
-
-		public Type KaryotypeType {
-			get {
-				string v = GetGAAttribute("karyotypeType");
-				return Type.GetType(v);
-			}
-		}
-		
-		public string DatasourceValue {
-			get {
-				return GetGAAttribute("datasourceValue");
+				return GetGAAttribute("chromosomeName");
 			}
 		}
 
@@ -83,28 +65,22 @@ namespace GA.SC {
 				return GetGAAttribute("contentFolder");
 			}
 		}
-		
+
 		public string ContentTagField {
 			get {
 				return GetGAAttribute("contentTagField");
 			}
 		}
 		
-		public string TagFolder {
-			get {
-				return GetGAAttribute("tagFolder");
-			}
-		}
-
-		public string ChromosomeName {
-			get {
-				return GetGAAttribute("chromosomeName"); 
-			}
-		}
-
 		public float CrossoverRatio {
 			get {
-				return float.Parse(GetGAAttribute("crossoverRatio")); 
+				return float.Parse(GetGAAttribute("crossoverRatio"));
+			}
+		}
+
+		public string DatasourceValue {
+			get {
+				return GetGAAttribute("datasourceValue");
 			}
 		}
 
@@ -114,9 +90,24 @@ namespace GA.SC {
 			}
 		}
 
+		public IEngagementValueProvider EVProvider {
+			get {
+				string v = GARoot[GAName].Attributes["evProviderType"].Value;
+				Type t = Type.GetType(v);
+				return (IEngagementValueProvider)Activator.CreateInstance(t);
+			}
+		}
+
 		public float FitnessRatio {
 			get {
 				return float.Parse(GetGAAttribute("fitnessRatio"));
+			}
+		}
+
+		public Type KaryotypeType {
+			get {
+				string v = GetGAAttribute("karyotypeType");
+				return Type.GetType(v);
 			}
 		}
 
@@ -132,17 +123,22 @@ namespace GA.SC {
 			}
 		}
 
-		public int TourneySize {
+		public Type PopulationType {
 			get {
-				return int.Parse(GetGAAttribute("tourneySize"));
+				string v = GetGAAttribute("populationType");
+				return Type.GetType(v);
 			}
 		}
 
-		public IEngagementValueProvider EVProvider {
+		public string TagFolder {
 			get {
-				string v = GARoot[GAName].Attributes["evProviderType"].Value;
-				Type t = Type.GetType(v);
-				return (IEngagementValueProvider)Activator.CreateInstance(t);
+				return GetGAAttribute("tagFolder");
+			}
+		}
+		
+		public int TourneySize {
+			get {
+				return int.Parse(GetGAAttribute("tourneySize"));
 			}
 		}
 
@@ -161,6 +157,14 @@ namespace GA.SC {
 		}
 
 		#endregion Properties
+
+		#region Methods 
+		
+		public string GetGAAttribute(string prop) {
+			return GARoot[GAName].Attributes[prop].Value;
+		}
+
+		#endregion Methods
 	}
 }
 
