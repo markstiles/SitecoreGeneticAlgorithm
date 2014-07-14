@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{37B116A7-668C-4D2D-AA46-3DF822EF13DA}</ProjectGuid>
+    <ProjectGuid>{9680CA8B-1D46-4CE1-ADCF-BA770DE489A8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>GA.Lib</RootNamespace>

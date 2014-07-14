@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4B002CAB-B579-4F49-A974-E5EF5F3ACC30}</ProjectGuid>
+    <ProjectGuid>{247C7013-83AB-457E-BA9F-0BAB3821DABF}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>GA.SC.UI</RootNamespace>
@@ -61,7 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GA.Nucleus\GA.Nucleus.csproj">
-      <Project>{37b116a7-668c-4d2d-aa46-3df822ef13da}</Project>
+      <Project>{9680ca8b-1d46-4ce1-adcf-ba770de489a8}</Project>
       <Name>GA.Nucleus</Name>
     </ProjectReference>
     <ProjectReference Include="..\GA.SC\GA.SC.csproj">

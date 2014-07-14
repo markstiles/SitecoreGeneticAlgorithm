@@ -17,8 +17,11 @@ namespace GA.SC.UI.SampleSite.Layouts {
 			ltlContextSite.Text = string.Format("'{0}'", Sitecore.Context.Site.Name);
 
 			lnkLogo.NavigateUrl = LinkManager.GetItemUrl(h);
-			foreach (Item i in h.Children) 
-				navItems.Add(new KeyValuePair<string, string>(LinkManager.GetItemUrl(i), i.DisplayName));
+			foreach (Item i in h.Children) {
+				List<string> tags = TagUtil.GetTags(i);
+				string tag = (tags.Any()) ? tags.First() : string.Empty;
+				navItems.Add(new KeyValuePair<string, string>(LinkManager.GetItemUrl(i), tag));
+			}
 
 			rptNav.DataSource = navItems;
 			rptNav.DataBind();

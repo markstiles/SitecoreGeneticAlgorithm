@@ -45,7 +45,7 @@
         $j(document).ready(function () {
             $j(".GAContent a, .nav a").click(function (e) {
                 e.preventDefault();
-                var tagName = $j(this).text();
+                var tagName = $j(this).attr("tag");
                 var href = $j(this).attr("href");
                 $j.ajax({
                     type: "POST",
@@ -74,7 +74,7 @@
 					<asp:Repeater ID="rptNav" runat="server">
 						<HeaderTemplate><ul></HeaderTemplate>
 						<ItemTemplate>
-							<li><a href="<%# ((KeyValuePair<string, string>)Container.DataItem).Key %>"><%# ((KeyValuePair<string, string>)Container.DataItem).Value %></a></li>
+							<li><a tag="<%# ((KeyValuePair<string, string>)Container.DataItem).Value %>" href="<%# ((KeyValuePair<string, string>)Container.DataItem).Key %>"><%# ((KeyValuePair<string, string>)Container.DataItem).Value %></a></li>
 						</ItemTemplate>
 						<FooterTemplate></ul></FooterTemplate>
 					</asp:Repeater>
