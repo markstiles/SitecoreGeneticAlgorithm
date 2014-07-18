@@ -108,6 +108,12 @@ namespace GA.SC {
 			}
 		}
 
+		public float FitnessThreshold {
+			get {
+				return float.Parse(GetGAAttribute("fitnessThreshold"));
+			}
+		}
+
 		public Type KaryotypeType {
 			get {
 				string v = GetGAAttribute("karyotypeType");

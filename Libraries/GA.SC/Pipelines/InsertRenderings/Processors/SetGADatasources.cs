@@ -65,6 +65,7 @@ namespace GA.SC.Pipelines.InsertRenderings.Processors {
 			popman.MutationRatio = ConfigUtil.Context.MutationRatio;
 			popman.TourneySize = ConfigUtil.Context.TourneySize;
 			popman.PopSize = ConfigUtil.Context.PopSize;
+			popman.FitnessThreshold = ConfigUtil.Context.FitnessThreshold;
 			
 			//get or create the population
 			SCPopulation p = SCPopulation.GetPop(popman);

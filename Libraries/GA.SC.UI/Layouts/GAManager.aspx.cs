@@ -67,6 +67,7 @@ namespace GA.SC.UI.Layouts {
 				txtMutation.Text = ConfigUtil.Context.MutationRatio.ToString();
 				txtTourney.Text = ConfigUtil.Context.TourneySize.ToString();
 				txtPopSize.Text = ConfigUtil.Context.PopSize.ToString();
+				txtThreshold.Text = ConfigUtil.Context.FitnessThreshold.ToString();
 
 				RunAlgo();
 			} else {
@@ -76,6 +77,7 @@ namespace GA.SC.UI.Layouts {
 				apo.MutationRatio = float.Parse(txtMutation.Text);
 				apo.TourneySize = int.Parse(txtTourney.Text);
 				apo.PopSize = int.Parse(txtPopSize.Text);
+				apo.FitnessThreshold = float.Parse(txtThreshold.Text);
 			}
 		}
 

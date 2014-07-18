@@ -86,6 +86,10 @@
 								<label title="the percentage of the highest fitness value that's acceptable in another karyotype as a candidate for selection.">Fitness Ratio (?)</label>
 								<asp:TextBox ID="txtFitness" runat="server"></asp:TextBox>
 							</div>
+                            <div class="formRow">
+								<label title="the fitness value required for the algorithm to begin selecting based on the fittest karyotypes instead of randomly selecting a karyotype.">Fitness Threshold (?)</label>
+								<asp:TextBox ID="txtThreshold" runat="server"></asp:TextBox>
+							</div>
 							<div class="formRow">
 								<label title="probability that a karyotype will mutate.">Mutation Ratio (?)</label>
 								<asp:TextBox ID="txtMutation" runat="server"></asp:TextBox>

@@ -75,7 +75,7 @@ namespace GA.Nucleus.Population {
 		public virtual IKaryotype ChooseFitKaryotype() {
 			double topFit = Karyotypes.First().Fitness;
 			List<IKaryotype> u = GetUniqueKaryotypes();
-			List<IKaryotype> lk = (topFit < 1) // if all values have decayed below 1 then don't filter any options out
+			List<IKaryotype> lk = (topFit < Manager.FitnessThreshold) // if all values have decayed below the threshold then don't filter any options out
 				? u
 				: u.Where(a => a.Fitness >= (topFit * Manager.FitnessRatio)).ToList();
 			int newPos = RandomUtil.Instance.Next(lk.Count);

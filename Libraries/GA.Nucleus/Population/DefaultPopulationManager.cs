@@ -39,6 +39,17 @@ namespace GA.Nucleus.Population {
 				_FitnessRatio = value;
 			}
 		}
+
+		private float _FitnessThreshold = 1.0f;
+		public float FitnessThreshold {
+			get {
+				return _FitnessThreshold;
+			}
+			set {
+				_FitnessThreshold = value;
+			}
+		}
+
 		private float _MutationRatio = .1f;
 		public float MutationRatio {
 			get {
