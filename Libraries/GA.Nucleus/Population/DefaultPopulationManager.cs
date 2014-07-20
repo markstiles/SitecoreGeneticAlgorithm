@@ -21,7 +21,7 @@ namespace GA.Nucleus.Population {
 				_CrossoverRatio = value;
 			}
 		}
-		private float _ElitismRatio = .9f;
+		private float _ElitismRatio = .1f;
 		public float ElitismRatio {
 			get {
 				return _ElitismRatio;

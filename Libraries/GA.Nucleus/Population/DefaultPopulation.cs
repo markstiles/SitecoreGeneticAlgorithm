@@ -48,24 +48,23 @@ namespace GA.Nucleus.Population {
 		/// updates the elite portion by mating the most fit and mutate randomly
 		/// </summary>
 		public virtual void Evolve() {
-			List<IKaryotype> evolvedSet = new List<IKaryotype>(Karyotypes);
 
 			//get a position in the number of karyotes based on crossover
 			int elitePos = (int)Math.Round(Karyotypes.Count * Manager.ElitismRatio);
-			
-			for (int i = elitePos; i < Karyotypes.Count; i++) { // loop through and replace or mutate elites
-				//possibly mate or mutate but not both
-				if (IfCrossover()) { 
-					List<IKaryotype> parents = SelectParents();
-					evolvedSet[i] = parents.First().Mate(parents.Last()); //replace an elite
 
-					if (IfMutate()) 
-						evolvedSet[i].Mutate();
-				} else if (IfMutate()) { 
-					evolvedSet[i].Mutate();
+			for (int i = elitePos; i < Karyotypes.Count; i++) { // loop through and replace or mutate non-elites
+				//possibly mate or mutate but not both
+				if (IfCrossover()) {
+					List<IKaryotype> parents = SelectParents();
+					Karyotypes[i] = parents.First().Mate(parents.Last()); //replace an elite
+
+					if (IfMutate())
+						Karyotypes[i].Mutate();
+				} else if (IfMutate()) {
+					Karyotypes[i].Mutate();
 				}
 			}
-			Karyotypes = evolvedSet.OrderByDescending(a => a.Fitness).ToList();
+			Karyotypes = Karyotypes.OrderByDescending(a => a.Fitness).ToList();
 		}
 		
 		/// <summary>
@@ -112,16 +111,19 @@ namespace GA.Nucleus.Population {
 		protected virtual List<IKaryotype> SelectParents() {
 			List<IKaryotype> parents = new List<IKaryotype>(2);
 
+			bool pGender = true;
 			//finds two randomly selected parents
-			for (int parentIndex = 0; parentIndex < 2; parentIndex++) {
-				parents.Add(Karyotypes[RandomUtil.Instance.Next(Karyotypes.Count)]);
-
+			for (int p = 0; p < 2; p++) {
+				List<IKaryotype> kars = Karyotypes.Where(k => k.Gender == pGender).ToList();
+				parents.Add(kars[RandomUtil.Instance.Next(kars.Count)]);
+				
 				//it tries TourneySize times to randomly find a better parent
 				for (int tournyIndex = 0; tournyIndex < Manager.TourneySize; tournyIndex++) {
 					int randomIndex = RandomUtil.Instance.Next(Karyotypes.Count);
-					if (Karyotypes[randomIndex].Fitness > parents[parentIndex].Fitness) // higher is more fit
-						parents[parentIndex] = Karyotypes[randomIndex];
+					if (Karyotypes[randomIndex].Fitness > parents[p].Fitness) // higher is more fit
+						parents[p] = Karyotypes[randomIndex];
 				}
+				pGender = parents[p].Gender;
 			}
 
 			return parents;
