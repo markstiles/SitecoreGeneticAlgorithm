@@ -27,7 +27,8 @@ namespace GA.SC {
 					foreach (IGene g in kvp.Value) {
 						if (ConfigUtil.Context.EVProvider.Values.Any() && ConfigUtil.Context.EVProvider.Values.ContainsKey(g.GeneID)) { //need to change how this gets stored.
 							List<IEngagementValue> evl = ConfigUtil.Context.EVProvider.Values[g.GeneID];
-							fitness += evl.Sum(a => ConfigUtil.Context.ValueModifier.CurrentValue(a));
+							//fitness += evl.Sum(a => ConfigUtil.Context.ValueModifier.CurrentValue(a));
+							fitness += evl.Sum(a => a.Value);
 						}
 					}
 				}

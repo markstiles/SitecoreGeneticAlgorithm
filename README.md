@@ -1,4 +1,4 @@
-EvoAlgos
+Sitecore Genetic Algorithm
 ========
 
-Evolutionary (Genetic) Algorithms
+Genetic Algorithm specifically designed for Sitecore

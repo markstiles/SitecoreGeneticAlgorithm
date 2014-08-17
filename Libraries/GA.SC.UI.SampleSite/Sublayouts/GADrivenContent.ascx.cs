@@ -10,7 +10,6 @@
 	public partial class GADrivenContent : BaseSublayout {
 
 		private void Page_Load(object sender, EventArgs e) {
-			string content = DataSourceItem["Content"];
 			List<string> tags = TagUtil.GetTags(DataSourceItem);
 			if(!tags.Any())
 				return;
