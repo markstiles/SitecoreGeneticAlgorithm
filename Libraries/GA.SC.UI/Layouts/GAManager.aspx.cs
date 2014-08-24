@@ -106,11 +106,11 @@ namespace GA.SC.UI.Layouts {
 
 			//choose best
 			CurrentKaryotype = p.ChooseFitKaryotype();
-			ltlKaryotype.Text = string.Format("{0}-{1}", CurrentKaryotype.ExpressedHaploid.DNASequence(), CurrentKaryotype.Fitness);
+			ltlKaryotype.Text = string.Format("{0}-{1}", CurrentKaryotype.Phenotype.DNASequence(), CurrentKaryotype.Fitness);
 
 			//wire up renderings with results
 			for (int z = 0; z < Placeholders.Count; z++) {
-				string gid = CurrentKaryotype.ExpressedHaploid[Chromosomes[0].Value][z].GeneID;
+				string gid = CurrentKaryotype.Phenotype[Chromosomes[0].Value][z].GeneID;
 				Placeholders[z].Text = gid;
 				Panels[z].Attributes["style"] = string.Format("background-color:{0};", gid);
 			}

@@ -18,7 +18,7 @@ namespace GA.Nucleus.Population {
 		IHaploid MothersHaploid { get; set; }
 		IHaploid FathersHaploid { get; set; }
 
-		IHaploid ExpressedHaploid { get; } // compares the dominance settings
+		IHaploid Phenotype { get; } // compares the dominance settings
 
 		double Fitness { get; }
 

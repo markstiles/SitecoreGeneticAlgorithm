@@ -84,7 +84,7 @@ namespace GA.SC.Pipelines.InsertRenderings.Processors {
 					continue;
 
 				//wire up renderings with results 
-				string tagName = CurrentKaryotype.ExpressedHaploid[Chromosomes[0].Value][i].GeneID;
+				string tagName = CurrentKaryotype.Phenotype[Chromosomes[0].Value][i].GeneID;
 				IEnumerable<Item> tagMatches = tags.Where(a => a.DisplayName.Equals(tagName));
 				if (!tagMatches.Any())
 					continue;

@@ -15,11 +15,11 @@ namespace GA.Nucleus.Population {
 		public bool Gender { get; set; } 
 		public IHaploid MothersHaploid { get; set; }
 		public IHaploid FathersHaploid { get; set; }
-		private IHaploid _ExpressedHaploid;
-		public IHaploid ExpressedHaploid {
+		private IHaploid _Phenotype;
+		public IHaploid Phenotype {
 			get {
-				if (_ExpressedHaploid == null) {
-					_ExpressedHaploid = Manager.CreateHaploid();
+				if (_Phenotype == null) {
+					_Phenotype = Manager.CreateHaploid();
 					foreach (string key in MothersHaploid.Keys) {
 						IChromosome mc = MothersHaploid[key];
 						IChromosome fc = FathersHaploid[key];
@@ -33,10 +33,10 @@ namespace GA.Nucleus.Population {
 							else
 								newC.Insert(i, (RandomUtil.NextBool()) ? mc[i] : fc[i]); // or just choose one at random
 						}
-						_ExpressedHaploid.Add(key, newC);
+						_Phenotype.Add(key, newC);
 					}
 				}
-				return _ExpressedHaploid;
+				return _Phenotype;
 			}
 		}
 		public abstract double Fitness { get; }

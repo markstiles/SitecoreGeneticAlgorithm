@@ -8,7 +8,7 @@ using System.Web.UI;
 using Sitecore.Data.Items;
 using Sitecore.Web.UI.WebControls;
 
-namespace GA.SC.Sublayouts {
+namespace GA.SC.UI.SampleSite.Sublayouts {
 	public class BaseSublayout : System.Web.UI.UserControl {
 		private Item _DataSourceItem;
 		public Item DataSourceItem {

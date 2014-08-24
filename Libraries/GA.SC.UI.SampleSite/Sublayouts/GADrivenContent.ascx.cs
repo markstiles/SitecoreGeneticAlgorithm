@@ -3,7 +3,6 @@
 	using System.Linq;
 	using System.Collections.Generic;
 	using System.Web.UI.WebControls;
-	using GA.SC.Sublayouts;
 	using Sitecore.Data.Fields;
 	using Sitecore.Data.Items;
 

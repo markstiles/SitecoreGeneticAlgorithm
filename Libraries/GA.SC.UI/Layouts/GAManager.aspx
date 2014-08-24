@@ -205,7 +205,7 @@
 							<ItemTemplate>
 								<div class="<%# OddEven(Container.ItemIndex) %>">
 									<div class="count"><%# Container.ItemIndex + 1 %>:</div> 
-									<div class="dna"><%# ((IKaryotype)Container.DataItem).ExpressedHaploid.DNASequence() %></div>
+									<div class="dna"><%# ((IKaryotype)Container.DataItem).Phenotype.DNASequence() %></div>
 									<div class="fitness"><%# ((IKaryotype)Container.DataItem).Fitness %></div>
 								</div>
 							</ItemTemplate>

@@ -23,7 +23,7 @@ namespace GA.SC {
 		public override double Fitness {
 			get {
 				double fitness = 0;
-				foreach (KeyValuePair<string, IChromosome> kvp in ExpressedHaploid){
+				foreach (KeyValuePair<string, IChromosome> kvp in Phenotype){
 					foreach (IGene g in kvp.Value) {
 						if (ConfigUtil.Context.EVProvider.Values.Any() && ConfigUtil.Context.EVProvider.Values.ContainsKey(g.GeneID)) { //need to change how this gets stored.
 							List<IEngagementValue> evl = ConfigUtil.Context.EVProvider.Values[g.GeneID];
