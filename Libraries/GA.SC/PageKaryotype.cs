@@ -22,17 +22,51 @@ namespace GA.SC {
 
 		public override double Fitness {
 			get {
+				
+				Dictionary<string, double> tagsInGenome = new Dictionary<string, double>();
+				double geneSum = 0;
 				double fitness = 0;
 				foreach (KeyValuePair<string, IChromosome> kvp in Phenotype){
 					foreach (IGene g in kvp.Value) {
-						if (ConfigUtil.Context.EVProvider.Values.Any() && ConfigUtil.Context.EVProvider.Values.ContainsKey(g.GeneID)) { //need to change how this gets stored.
-							List<IEngagementValue> evl = ConfigUtil.Context.EVProvider.Values[g.GeneID];
-							//fitness += evl.Sum(a => ConfigUtil.Context.ValueModifier.CurrentValue(a));
-							fitness += evl.Sum(a => a.Value);
+						if (!tagsInGenome.ContainsKey(g.GeneID)) {
+							tagsInGenome.Add(g.GeneID, 1);
+						} else {
+							tagsInGenome[g.GeneID]++;
+						}
+						geneSum += 1;
+
+						if (ConfigUtil.Context.EVProvider.Values.Any() && ConfigUtil.Context.EVProvider.Values.ContainsKey(g.GeneID)) { 
+							fitness += ConfigUtil.Context.EVProvider.Values[g.GeneID].Sum(a => a.Value);
 						}
 					}
 				}
-				return Math.Round(fitness, 3);
+
+				Dictionary<string, double> tagValues = new Dictionary<string, double>();
+				double tagSum = 0;
+				foreach (KeyValuePair<string, List<IEngagementValue>> kvp in ConfigUtil.Context.EVProvider.Values) {
+					double partSum = kvp.Value.Sum(a => a.Value);
+					tagValues.Add(kvp.Key, partSum);
+					tagSum += partSum;
+				}
+
+				double deltaSum = 0;
+				foreach (KeyValuePair<string, double> kvp in tagValues) {
+					double tagPercent = kvp.Value/tagSum;
+					double genePercent = (tagsInGenome.ContainsKey(kvp.Key))
+						? tagsInGenome[kvp.Key] / geneSum
+						: 0;
+					
+					deltaSum += Math.Abs(tagPercent - genePercent);
+				}
+
+				double deltaMod = 1 - (deltaSum / tagValues.Count);
+				double newFitness = deltaMod * fitness;
+
+				//then multiply the fitness by the % of tags clicked it contains then again by the amount per tag
+				//take the genes and run to a dictionary with a count
+				//ConfigUtil.Context.EVProvider.Values
+
+				return Math.Round(newFitness, ConfigUtil.Context.ValueModifier.DecimalPlaces);
 			}
 		}
 
