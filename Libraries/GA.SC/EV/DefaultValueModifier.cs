@@ -16,16 +16,48 @@ namespace GA.SC.EV {
 		/// make the min value a percentage of start value 
 		/// could be the inverse of the number of clicks to make a tag remain at a full engagement value
 		/// </summary>
-		private double MinRatio = 0.1; 
-		private int DecimalPlaces = 3;
+		private double _MinRatio = 0.1;
+		public double MinRatio {
+			get {
+				return _MinRatio;
+			}
+			set {
+				_MinRatio = value;
+			}
+		}
+		private int _DecimalPlaces = 3;
+		public int DecimalPlaces {
+			get {
+				return _DecimalPlaces;
+			}
+			set {
+				_DecimalPlaces = value;
+			}
+		}
 		/// <summary>
 		/// what time frame should the half life be based on
 		/// </summary>
-		private TimespanAspect HalfLifeType = TimespanAspect.Seconds;
+		private TimespanAspect _HalfLifeType = TimespanAspect.Seconds;
+		public TimespanAspect HalfLifeType {
+			get {
+				return _HalfLifeType;
+			}
+			set {
+				_HalfLifeType = value;
+			}
+		}
 		/// <summary>
 		/// half life in terms of the HalfLifeType. IE. HalfLifeType = TimespanAspect.Seconds and HalfLife = 2 means a 2 second half life
 		/// </summary>
-		private int HalfLife = 2;
+		private int _HalfLife = 2;
+		public int HalfLife {
+			get {
+				return _HalfLife;
+			}
+			set {
+				_HalfLife = value;
+			}
+		}
 
 		#endregion Fields
 

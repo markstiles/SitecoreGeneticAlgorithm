@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace GA.SC.EV {
 	public interface IValueModifier {
+		double MinRatio { get; }
+		int DecimalPlaces { get; }
+		TimespanAspect HalfLifeType { get; }
+		int HalfLife { get; }
 		double CurrentValue(IEngagementValue ev);
 	}
 }
