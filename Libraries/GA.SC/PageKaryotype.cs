@@ -62,11 +62,7 @@ namespace GA.SC {
 				double deltaMod = 1 - (deltaSum / tagValues.Count);
 				double newFitness = deltaMod * fitness;
 
-				//then multiply the fitness by the % of tags clicked it contains then again by the amount per tag
-				//take the genes and run to a dictionary with a count
-				//ConfigUtil.Context.EVProvider.Values
-
-				return Math.Round(newFitness, ConfigUtil.Context.ValueModifier.DecimalPlaces);
+				return Math.Round((double.IsNaN(newFitness)) ? 0 : newFitness, ConfigUtil.Context.ValueModifier.DecimalPlaces);
 			}
 		}
 
