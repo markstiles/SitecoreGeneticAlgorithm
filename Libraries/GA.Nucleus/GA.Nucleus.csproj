@@ -7,8 +7,8 @@
     <ProjectGuid>{9680CA8B-1D46-4CE1-ADCF-BA770DE489A8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GA.Lib</RootNamespace>
-    <AssemblyName>GA.Lib</AssemblyName>
+    <RootNamespace>GA.Nucleus</RootNamespace>
+    <AssemblyName>GA.Nucleus</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
