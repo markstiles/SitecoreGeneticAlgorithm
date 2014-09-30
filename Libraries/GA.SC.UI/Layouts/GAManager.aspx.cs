@@ -78,6 +78,7 @@ namespace GA.SC.UI.Layouts {
 				apo.TourneySize = int.Parse(txtTourney.Text);
 				apo.PopSize = int.Parse(txtPopSize.Text);
 				apo.FitnessThreshold = float.Parse(txtThreshold.Text);
+				apo.FitnessSort = ConfigUtil.Context.FitnessSort;
 			}
 		}
 

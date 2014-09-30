@@ -47,6 +47,7 @@
     <Compile Include="Gene\Genotype.cs" />
     <Compile Include="Population\BaseKaryotype.cs" />
     <Compile Include="Population\DefaultPopulation.cs" />
+    <Compile Include="Population\FitnessSortType.cs" />
     <Compile Include="Population\IKaryotype.cs" />
     <Compile Include="Population\IPopulation.cs" />
     <Compile Include="Population\IPopulationManager.cs" />

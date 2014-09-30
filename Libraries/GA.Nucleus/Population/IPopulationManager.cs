@@ -17,7 +17,8 @@ namespace GA.Nucleus.Population {
 		float MutationRatio { get; set; } // probability for mutatating
 		int PopSize { get; set; } // number of chromosomes to create
 		int TourneySize { get; set; }
-		float FitnessThreshold { get; set; } 
+		float FitnessThreshold { get; set; }
+		FitnessSortType FitnessSort { get; set; } 
 
 		Type KaryotypeType { get; set; }
 		Type HaploidType { get; set; }

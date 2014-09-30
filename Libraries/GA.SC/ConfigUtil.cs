@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using GA.SC.EV;
 using Sitecore.Configuration;
+using GA.Nucleus.Population;
 
 namespace GA.SC {
 	public class ConfigUtil {
@@ -111,6 +112,12 @@ namespace GA.SC {
 		public float FitnessThreshold {
 			get {
 				return float.Parse(GetGAAttribute("fitnessThreshold"));
+			}
+		}
+
+		public FitnessSortType FitnessSort {
+			get {
+				return (FitnessSortType)Enum.Parse(typeof(FitnessSortType), GetGAAttribute("fitnessSort"));
 			}
 		}
 

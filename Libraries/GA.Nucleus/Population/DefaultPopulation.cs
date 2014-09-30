@@ -41,7 +41,9 @@ namespace GA.Nucleus.Population {
 				IKaryotype k = Manager.CreateKaryotype(mom, dad);
 				Karyotypes.Add(k);
 			}
-			Karyotypes = Karyotypes.OrderByDescending(a => a.Fitness).ToList();
+			Karyotypes = (Manager.FitnessSort.Equals(FitnessSortType.DESC)) 
+				? Karyotypes.OrderByDescending(a => a.Fitness).ToList() 
+				: Karyotypes.OrderBy(a => a.Fitness).ToList();
 		}
 
 		/// <summary>
@@ -64,7 +66,10 @@ namespace GA.Nucleus.Population {
 					Karyotypes[i].Mutate();
 				}
 			}
-			Karyotypes = Karyotypes.OrderByDescending(a => a.Fitness).ToList();
+			
+			Karyotypes = (Manager.FitnessSort.Equals(FitnessSortType.DESC)) 
+				? Karyotypes.OrderByDescending(a => a.Fitness).ToList() 
+				: Karyotypes.OrderBy(a => a.Fitness).ToList();
 		}
 		
 		/// <summary>
@@ -76,7 +81,9 @@ namespace GA.Nucleus.Population {
 			List<IKaryotype> u = GetUniqueKaryotypes();
 			List<IKaryotype> lk = (topFit < Manager.FitnessThreshold) // if all values have decayed below the threshold then don't filter any options out
 				? u
-				: u.Where(a => a.Fitness >= (topFit * Manager.FitnessRatio)).ToList();
+				: (Manager.FitnessSort.Equals(FitnessSortType.DESC)) 
+					? u.Where(a => a.Fitness >= (topFit * Manager.FitnessRatio)).ToList()
+					: u.Where(a => a.Fitness <= (topFit * Manager.FitnessRatio)).ToList();
 			int newPos = RandomUtil.Instance.Next(lk.Count);
 			IKaryotype k = (lk.Any()) // if the filter worked too well just select the first item
 				? lk[newPos]
@@ -102,7 +109,10 @@ namespace GA.Nucleus.Population {
 				if (!uniqueSet.ContainsKey(uKey))
 					uniqueSet.Add(uKey, k);
 			}
-			return uniqueSet.Values.OrderByDescending(a => a.Fitness).ToList();
+
+			return (Manager.FitnessSort.Equals(FitnessSortType.DESC)) 
+				? uniqueSet.Values.OrderByDescending(a => a.Fitness).ToList()
+				: uniqueSet.Values.OrderBy(a => a.Fitness).ToList();
 		}
 
 		/// <summary>

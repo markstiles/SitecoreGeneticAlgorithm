@@ -50,6 +50,16 @@ namespace GA.Nucleus.Population {
 			}
 		}
 
+		private FitnessSortType _FitnessSort = FitnessSortType.DESC;
+		public FitnessSortType FitnessSort {
+			get {
+				return _FitnessSort ;
+			}
+			set {
+				_FitnessSort = value;
+			}
+		}
+		
 		private float _MutationRatio = .1f;
 		public float MutationRatio {
 			get {

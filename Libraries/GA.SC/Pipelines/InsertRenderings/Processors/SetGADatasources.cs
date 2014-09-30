@@ -38,10 +38,6 @@ namespace GA.SC.Pipelines.InsertRenderings.Processors {
 			//setup chromosomes
 			Chromosomes.Add(new KeyValuePair<int, string>(rr.Count, ConfigUtil.Context.ChromosomeName));
 
-			//setup population options
-			popman.PopulationType = ConfigUtil.Context.PopulationType;
-			popman.KaryotypeType = ConfigUtil.Context.KaryotypeType;
-
 			// get tags - TODO change with content search or api call
 			Item tagBucket = GetItemFromID(ConfigUtil.Context.TagFolder);
 			List<Item> tags = Sitecore.Context.Database.SelectItems(string.Format("{0}//*[@@templatename='Tag']",tagBucket.Paths.FullPath)).ToList();
@@ -58,14 +54,17 @@ namespace GA.SC.Pipelines.InsertRenderings.Processors {
 					popman.Genotype.Add(c.Value, g);
 			}
 
-			// pull from config
+			//setup population options
 			popman.CrossoverRatio = ConfigUtil.Context.CrossoverRatio;
 			popman.ElitismRatio = ConfigUtil.Context.ElitismRatio;
 			popman.FitnessRatio = ConfigUtil.Context.FitnessRatio;
-			popman.MutationRatio = ConfigUtil.Context.MutationRatio;
-			popman.TourneySize = ConfigUtil.Context.TourneySize;
-			popman.PopSize = ConfigUtil.Context.PopSize;
 			popman.FitnessThreshold = ConfigUtil.Context.FitnessThreshold;
+			popman.FitnessSort = ConfigUtil.Context.FitnessSort;
+			popman.KaryotypeType = ConfigUtil.Context.KaryotypeType;
+			popman.MutationRatio = ConfigUtil.Context.MutationRatio;
+			popman.PopSize = ConfigUtil.Context.PopSize;
+			popman.PopulationType = ConfigUtil.Context.PopulationType;
+			popman.TourneySize = ConfigUtil.Context.TourneySize;
 			
 			//get or create the population
 			SCPopulation p = SCPopulation.GetPop(popman);
