@@ -12,7 +12,8 @@ namespace GA.Nucleus.Population {
 		#region Properties 
 
 		public IPopulationManager Manager { get; set; }
-		public bool Gender { get; set; } 
+		public bool Gender { get; set; }
+		public int Age { get; set; }
 		public IHaploid MothersHaploid { get; set; }
 		public IHaploid FathersHaploid { get; set; }
 		private IHaploid _Phenotype;
@@ -50,6 +51,7 @@ namespace GA.Nucleus.Population {
 			MothersHaploid = mom;
 			FathersHaploid = dad;
 			Gender = RandomUtil.NextBool(); // 50/50 chance
+			Age = 0;
 		}
 
 		#endregion ctor

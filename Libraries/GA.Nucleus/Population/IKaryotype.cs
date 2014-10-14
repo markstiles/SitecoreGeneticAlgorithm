@@ -14,7 +14,7 @@ namespace GA.Nucleus.Population {
 		IPopulationManager Manager { get; set; }
 
 		bool Gender { get; set; } // true = mother, false = father
-
+		int Age { get; set; }
 		IHaploid MothersHaploid { get; set; }
 		IHaploid FathersHaploid { get; set; }
 

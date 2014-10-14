@@ -182,7 +182,7 @@
 											<%# ((KeyValuePair<string, List<IEngagementValue>>)Container.DataItem).Key %> : 
 										</div>
 										<div class="value">
-											<%# ((KeyValuePair<string, List<IEngagementValue>>)Container.DataItem).Value.Sum(a => ConfigUtil.Context.ValueModifier.CurrentValue(a)) %>
+											<%# ((KeyValuePair<string, List<IEngagementValue>>)Container.DataItem).Value.Sum(a => a.Value) %>
 										</div>
 									</div>
 								</ItemTemplate>

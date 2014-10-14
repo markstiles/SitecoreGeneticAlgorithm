@@ -79,11 +79,12 @@ namespace GA.Nucleus.Population {
 		public virtual IKaryotype ChooseFitKaryotype() {
 			double topFit = Karyotypes.First().Fitness;
 			List<IKaryotype> u = GetUniqueKaryotypes();
+			double fitRange = topFit * Manager.FitnessRatio;
 			List<IKaryotype> lk = (topFit < Manager.FitnessThreshold) // if all values have decayed below the threshold then don't filter any options out
 				? u
 				: (Manager.FitnessSort.Equals(FitnessSortType.DESC)) 
-					? u.Where(a => a.Fitness >= (topFit * Manager.FitnessRatio)).ToList()
-					: u.Where(a => a.Fitness <= (topFit * Manager.FitnessRatio)).ToList();
+					? u.Where(a => a.Fitness >= fitRange).ToList()
+					: u.Where(a => a.Fitness <= fitRange).ToList();
 			int newPos = RandomUtil.Instance.Next(lk.Count);
 			IKaryotype k = (lk.Any()) // if the filter worked too well just select the first item
 				? lk[newPos]
