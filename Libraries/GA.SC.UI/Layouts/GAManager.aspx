@@ -75,7 +75,7 @@
 						<h3>Population Numbers</h3>
 						<div class="PopOptions">	
 							<div class="formRow">
-								<label title="the probability you'll mate (and possibly mutate) instead of just mutating.">Crossover Ratio (?)</label>
+								<label title="the probability you'll mate.">Crossover Ratio (?)</label>
 								<asp:TextBox ID="txtCrossover" runat="server"></asp:TextBox>
 							</div>	
 							<div class="formRow">

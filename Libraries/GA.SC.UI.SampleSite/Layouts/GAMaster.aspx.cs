@@ -7,6 +7,7 @@ namespace GA.SC.UI.SampleSite.Layouts {
 	using Sitecore.Data.Items;
 	using Sitecore.Links;
 	using GA.Nucleus.Population;
+	using GA.SC.EV;
 
 	public partial class GAMaster : Page {
 		private void Page_Load(object sender, System.EventArgs e) {
@@ -45,11 +46,9 @@ namespace GA.SC.UI.SampleSite.Layouts {
 			ltlMutation.Text = man.MutationRatio.ToString();
 			ltlTourney.Text = man.TourneySize.ToString();
 			ltlPopSize.Text = man.PopSize.ToString();
-			rptEV.DataSource = ConfigUtil.Context.EVProvider.Values;
+			rptEV.DataSource = ConfigUtil.Context.EVProvider.RelevantValues;
 			rptEV.DataBind();
-			ltlKaryotype.Text = "?";
 			List<IKaryotype> u = p.GetUniqueKaryotypes();
-			ltlKaryos.Text = p.Karyotypes.Count.ToString();
 			ltlUKaryos.Text = u.Count.ToString();
 			rptDNAList.DataSource = u;
 			rptDNAList.DataBind(); 

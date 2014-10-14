@@ -53,7 +53,7 @@ namespace GA.SC {
 				//track the total value over all tags so you determine what percentage of the whole any given tag is.
 				Dictionary<string, double> tagValues = new Dictionary<string, double>();
 				double tagSum = 0;
-				foreach (KeyValuePair<string, List<IEngagementValue>> kvp in ConfigUtil.Context.EVProvider.Values) {
+				foreach (KeyValuePair<string, List<IEngagementValue>> kvp in ConfigUtil.Context.EVProvider.RelevantValues) {
 					double partSum = kvp.Value.Sum(a => a.Value);
 					tagValues.Add(kvp.Key, partSum);
 					tagSum += partSum;

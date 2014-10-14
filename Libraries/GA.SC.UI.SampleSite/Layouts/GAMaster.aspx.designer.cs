@@ -121,24 +121,6 @@ namespace GA.SC.UI.SampleSite.Layouts {
         protected global::System.Web.UI.WebControls.Literal ltlPopSize;
         
         /// <summary>
-        /// ltlKaryos control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ltlKaryos;
-        
-        /// <summary>
-        /// ltlUKaryos control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ltlUKaryos;
-        
-        /// <summary>
         /// rptEV control.
         /// </summary>
         /// <remarks>
@@ -148,13 +130,13 @@ namespace GA.SC.UI.SampleSite.Layouts {
         protected global::System.Web.UI.WebControls.Repeater rptEV;
         
         /// <summary>
-        /// ltlKaryotype control.
+        /// ltlUKaryos control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ltlKaryotype;
+        protected global::System.Web.UI.WebControls.Literal ltlUKaryos;
         
         /// <summary>
         /// rptDNAList control.

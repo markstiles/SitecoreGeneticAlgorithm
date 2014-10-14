@@ -16,7 +16,8 @@
 			lnkBtn.Attributes.Add("style", string.Format("background-color:{0};", tag));
 			lnkBtn.Text = "&nbsp;";
 			lnkBtn.NavigateUrl = string.Format("/{0}.aspx", tag);
-			lnkBtn.Attributes.Add("tag",tag); 
+			lnkBtn.Attributes.Add("tag",tag);
+			lnkBtn.Attributes.Add("value", "1");
 		}
 	}
 }

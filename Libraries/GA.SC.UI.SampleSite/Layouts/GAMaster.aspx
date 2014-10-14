@@ -48,13 +48,14 @@
 		.col1 { width: 200px; padding-top:35px; }
 		.col2 { width: 650px; }
 		.PopOptions { margin-bottom:10px; } 
-				.PopOptions label { display:inline-block; width:125px; text-align:right; margin-right:5px;}
+			.PopOptions label { display:inline-block; width:125px; text-align:right; margin-right:5px;}
+			.PopOptions span { font-weight: bold; }
 		.DNAList { font-size: 12px; margin:5px auto; height:373px; overflow:auto; border:1px solid #bbb; }
 			.count { display:inline-block; width:9%; }
 			.dna { display:inline-block; width:74%; text-align:center; }
 			.fitness { display:inline-block; width:15%; text-align:right;}
-		.EV { display:inline-block; width:155px; }
-			.EV .tags { height:108px; overflow:auto; border:1px solid #ccc; margin-bottom:10px; }
+		.EV { display:inline-block; width:165px; }
+			.EV .tags { height:183px; overflow:auto; border:1px solid #ccc; margin-bottom:5px; }
 			.EV .entry { text-align:left; }
 			.EV .key { display:inline-block; width:75px; text-align:right; text-transform:uppercase; }
 			.EV .value { display:inline-block; font-weight:bold; }
@@ -72,10 +73,11 @@
                 e.preventDefault();
                 var tagName = $j(this).attr("tag");
                 var href = $j(this).attr("href");
+                var value = $j(this).attr("value");
                 $j.ajax({
                     type: "POST",
                     url: "/sitecore modules/Web/GA/WebService/EventTracking.asmx/TrackEvent",
-                    data: "{ 'TagClick':'" + tagName + "', 'Site':'" + contextSite + "'}",
+                    data: "{ 'TagClick':'" + tagName + "', 'Site':'" + contextSite + "', 'Value':'" + value + "'}",
                     contentType: "application/json",
                     dataType: "json",
                     success: function (data, status) {
@@ -85,7 +87,12 @@
                 });
             });
             $j(".infoBox .tab").click(function(e){
-            	$j(".infoBox .monitor").toggle();
+            	var mon = $j(".infoBox .monitor");
+            	if(mon.is( ":hidden" )){
+            		mon.slideDown();
+            	} else {
+            		mon.slideUp();
+            	}
             });
         });
     </script>
@@ -102,7 +109,7 @@
 					<asp:Repeater ID="rptNav" runat="server">
 						<HeaderTemplate><ul></HeaderTemplate>
 						<ItemTemplate>
-							<li><a tag="<%# ((KeyValuePair<string, string>)Container.DataItem).Value %>" href="<%# ((KeyValuePair<string, string>)Container.DataItem).Key %>"><%# ((KeyValuePair<string, string>)Container.DataItem).Value %></a></li>
+							<li><a value="1" tag="<%# ((KeyValuePair<string, string>)Container.DataItem).Value %>" href="<%# ((KeyValuePair<string, string>)Container.DataItem).Key %>"><%# ((KeyValuePair<string, string>)Container.DataItem).Value %></a></li>
 						</ItemTemplate>
 						<FooterTemplate></ul></FooterTemplate>
 					</asp:Repeater>
@@ -131,50 +138,37 @@
 					<h3>Population Numbers</h3>
 					<div class="PopOptions">	
 						<div class="formRow">
-							<label title="the probability you'll mate (and possibly mutate) instead of just mutating.">Crossover Ratio (?) : </label>
-							<asp:Literal ID="ltlCrossover" runat="server"></asp:Literal>
+							<label title="The probability you'll mate.">Crossover Ratio (?) : </label>
+							<span><asp:Literal ID="ltlCrossover" runat="server"></asp:Literal></span>
 						</div>	
 						<div class="formRow">
-							<label title="the percentage of the population that doesn't change each generation.">Elitism Ratio (?) : </label>
-							<asp:Literal ID="ltlElitism" runat="server"></asp:Literal>
+							<label title="The percentage of the population that doesn't change each generation.">Elitism Ratio (?) : </label>
+							<span><asp:Literal ID="ltlElitism" runat="server"></asp:Literal></span>
 						</div>
 						<div class="formRow">
-							<label title="the percentage of the highest fitness value that's acceptable in another karyotype as a candidate for selection.">Fitness Ratio (?) : </label>
-							<asp:Literal ID="ltlFitness" runat="server"></asp:Literal>
+							<label title="The percentage of the highest fitness value that's acceptable in another karyotype as a candidate for selection.">Fitness Ratio (?) : </label>
+							<span><asp:Literal ID="ltlFitness" runat="server"></asp:Literal></span>
 						</div>
 						<div class="formRow">
-							<label title="if the list is ascending or descending">Fitness Sorting (?) : </label>
-							<asp:Literal ID="ltlFitSort" runat="server"></asp:Literal>
+							<label title="If the list is ascending or descending">Fitness Sorting (?) : </label>
+							<span><asp:Literal ID="ltlFitSort" runat="server"></asp:Literal></span>
 						</div>
 						<div class="formRow">
-							<label title="the fitness value required for the algorithm to begin selecting based on the fittest karyotypes instead of randomly selecting a karyotype.">Fitness Threshold (?) : </label>
-							<asp:Literal ID="ltlThreshold" runat="server"></asp:Literal>
+							<label title="The fitness value required for the algorithm to begin selecting based on the fittest karyotypes instead of randomly selecting a karyotype.">Fitness Threshold (?) : </label>
+							<span><asp:Literal ID="ltlThreshold" runat="server"></asp:Literal></span>
 						</div>
 						<div class="formRow">
-							<label title="probability that a karyotype will mutate.">Mutation Ratio (?) : </label>
-							<asp:Literal ID="ltlMutation" runat="server"></asp:Literal>
+							<label title="Probability that a karyotype will mutate.">Mutation Ratio (?) : </label>
+							<span><asp:Literal ID="ltlMutation" runat="server"></asp:Literal></span>
 						</div>
 						<div class="formRow">
-							<label title="number of times to try to randomly find a better parent from the one randomly selected.">Tournament Size (?) : </label>
-							<asp:Literal ID="ltlTourney" runat="server"></asp:Literal>
+							<label title="Number of times to try to randomly find a better parent from the one randomly selected.">Tournament Size (?) : </label>
+							<span><asp:Literal ID="ltlTourney" runat="server"></asp:Literal></span>
 						</div>
 						<div class="formRow">
-							<label title="number of karyotypes to create in your population.">Population Size (?) : </label>
-							<asp:Literal ID="ltlPopSize" runat="server"></asp:Literal>
+							<label title="Number of karyotypes to create in your population.">Population Size (?) : </label>
+							<span><asp:Literal ID="ltlPopSize" runat="server"></asp:Literal></span>
 						</div>
-					</div>
-					<h3>Population Status</h3>
-					<div class="PopStatus">
-						<label>Karyotype Count is:</label> 
-						<span>
-							<asp:Literal ID="ltlKaryos" runat="server"></asp:Literal>
-						</span>
-						<br/>
-						<label>Unique Karyotypes:</label> 
-						<span>
-							<asp:Literal ID="ltlUKaryos" runat="server"></asp:Literal>
-						</span>
-						<br/>
 					</div>
 					<h3>Click Values</h3>
 					<div class="EV">
@@ -197,8 +191,11 @@
 				<div class="col2">
 					<h3>Population Makeup</h3>
 					<div class="Controls">
-						<div class="CurKaryo">
-							<asp:Literal ID="ltlKaryotype" runat="server" />
+						<div>
+							<label>Unique Karyotypes:</label> 
+							<span>
+								<asp:Literal ID="ltlUKaryos" runat="server"></asp:Literal>
+							</span>
 						</div>
 						<div class="DNAList">
 							<asp:Repeater ID="rptDNAList" runat="server">

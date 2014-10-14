@@ -14,14 +14,17 @@ namespace GA.SC.WebService {
 	[System.Web.Script.Services.ScriptService]
 	public class EventTracking : System.Web.Services.WebService {
 		[WebMethod]
-		public void TrackEvent(string TagClick, string Site) {
+		public void TrackEvent(string TagClick, string Site, string Value) {
 			SiteContext sc = Sitecore.Configuration.Factory.GetSite(Site);
 			if(sc == null)
 				throw new NullReferenceException(string.Format("The Site '{0}' provided doesn't exist", Site));
+			double value = 1;
+			if(!double.TryParse(Value, out value)) 
+				value = 1;
 			ConfigUtil cu = new ConfigUtil(sc.Properties[ConfigUtil.SiteProperty]);
 			if (!cu.EVProvider.Values.ContainsKey(TagClick))
 				cu.EVProvider.Values.Add(TagClick, new List<IEngagementValue>());
-			cu.EVProvider.Values[TagClick].Add(new EngagementValue(1));
+			cu.EVProvider.Values[TagClick].Add(new EngagementValue(value));
 		}
 	}
 }
