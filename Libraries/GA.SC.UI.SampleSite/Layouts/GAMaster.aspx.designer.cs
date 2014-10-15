@@ -49,6 +49,24 @@ namespace GA.SC.UI.SampleSite.Layouts {
         protected global::System.Web.UI.WebControls.Repeater rptNav;
         
         /// <summary>
+        /// btnClearClicks control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnClearClicks;
+        
+        /// <summary>
+        /// btnRestart control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnRestart;
+        
+        /// <summary>
         /// ltlCrossover control.
         /// </summary>
         /// <remarks>
@@ -119,6 +137,15 @@ namespace GA.SC.UI.SampleSite.Layouts {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal ltlPopSize;
+        
+        /// <summary>
+        /// rptChromos control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater rptChromos;
         
         /// <summary>
         /// rptEV control.

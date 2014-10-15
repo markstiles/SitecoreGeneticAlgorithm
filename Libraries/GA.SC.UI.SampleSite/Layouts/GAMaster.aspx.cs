@@ -8,6 +8,8 @@ namespace GA.SC.UI.SampleSite.Layouts {
 	using Sitecore.Links;
 	using GA.Nucleus.Population;
 	using GA.SC.EV;
+	using System.Web.UI.WebControls;
+	using GA.Nucleus.Gene;
 
 	public partial class GAMaster : Page {
 		private void Page_Load(object sender, System.EventArgs e) {
@@ -51,7 +53,29 @@ namespace GA.SC.UI.SampleSite.Layouts {
 			List<IKaryotype> u = p.GetUniqueKaryotypes();
 			ltlUKaryos.Text = u.Count.ToString();
 			rptDNAList.DataSource = u;
-			rptDNAList.DataBind(); 
+			rptDNAList.DataBind();
+
+			rptChromos.DataSource = man.Genotype;
+			rptChromos.DataBind();
+		}
+
+		protected void rptChromos_ItemDataBound(object sender, RepeaterItemEventArgs e) {
+			if (e.Item.ItemType != ListItemType.Item && e.Item.ItemType != ListItemType.AlternatingItem) return;
+
+			KeyValuePair<string, Genotype> g = (KeyValuePair<string, Genotype>)e.Item.DataItem;
+			Repeater rptGenes = (Repeater)e.Item.FindControl("rptGenes");
+			rptGenes.DataSource = g.Value;
+			rptGenes.DataBind();
+		}
+
+		protected void btnClearClicks_Click(object sender, EventArgs e) {
+			ConfigUtil.Context.EVProvider.Values.Clear();
+			Response.Redirect(Request.RawUrl);
+		}
+
+		protected void btnRestart_Click(object sender, EventArgs e) {
+			SCPopulation.RestartPop(SCPopulation.GetPop(null).Manager);
+			Response.Redirect(Request.RawUrl);
 		}
 	}
 }

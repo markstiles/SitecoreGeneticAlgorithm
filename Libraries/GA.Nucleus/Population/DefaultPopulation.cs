@@ -53,12 +53,16 @@ namespace GA.Nucleus.Population {
 
 			//get a position in the number of karyotes based on crossover
 			int elitePos = (int)Math.Round(Karyotypes.Count * Manager.ElitismRatio);
-
+			List<IKaryotype> kList = Karyotypes;
+				
 			for (int i = elitePos; i < Karyotypes.Count; i++) { // loop through and replace or mutate non-elites
+
+				IKaryotype p1 = Karyotypes[i];
 				//possibly mate or mutate but not both
 				if (IfCrossover()) {
-					List<IKaryotype> parents = SelectParents();
-					Karyotypes[i] = parents.First().Mate(parents.Last()); //replace an elite
+					IKaryotype p2 = SelectMate(p1, i, kList);
+					if(p2 != null) // only occurs when there are no mates of opposing gender. probably in small elite pools
+						Karyotypes[i] = p1.Mate(p2); 
 
 					if (IfMutate())
 						Karyotypes[i].Mutate();
@@ -119,25 +123,18 @@ namespace GA.Nucleus.Population {
 		/// <summary>
 		/// Selects two chromosomes randomly and tries to improve odds by comparing it's fitness to other chromosomes also randomly selected
 		/// </summary>
-		protected virtual List<IKaryotype> SelectParents() {
-			List<IKaryotype> parents = new List<IKaryotype>(2);
+		protected virtual IKaryotype SelectMate(IKaryotype k1, int station, List<IKaryotype> kList) {
 
-			bool pGender = true;
-			//finds two randomly selected parents
-			for (int p = 0; p < 2; p++) {
-				List<IKaryotype> kars = Karyotypes.Where(k => k.Gender == pGender).ToList();
-				parents.Add(kars[RandomUtil.Instance.Next(kars.Count)]);
-				
-				//it tries TourneySize times to randomly find a better parent
-				for (int tournyIndex = 0; tournyIndex < Manager.TourneySize; tournyIndex++) {
-					int randomIndex = RandomUtil.Instance.Next(Karyotypes.Count);
-					if (Karyotypes[randomIndex].Fitness > parents[p].Fitness) // higher is more fit
-						parents[p] = Karyotypes[randomIndex];
-				}
-				pGender = parents[p].Gender;
-			}
-
-			return parents;
+			int mobility = 4;
+			int upMob = station - mobility;
+			upMob = (upMob < 0) ? 0 : upMob;
+			List<IKaryotype> kars = Karyotypes.Skip(upMob).Take(mobility * 2).Where(k => k.Gender != k1.Gender).ToList();
+			if (!kars.Any())
+				return null;
+			
+			IKaryotype k2 = kars[RandomUtil.Instance.Next(kars.Count)];
+			
+			return k2;
 		}
 
 		/// <summary>

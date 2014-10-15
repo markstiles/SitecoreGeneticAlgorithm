@@ -29,7 +29,7 @@ namespace GA.Nucleus.Population {
 						for (int i = 0; i < Manager.Genotype[key].GeneLimit; i++) {
 							if (mc[i].IsDominant && !fc[i].IsDominant) // use mother if it's the only dominant one
 								newC.Insert(i, mc[i]);
-							if (!mc[i].IsDominant && fc[i].IsDominant) // use father if it's' the only dominant one
+							else if (!mc[i].IsDominant && fc[i].IsDominant) // use father if it's' the only dominant one
 								newC.Insert(i, fc[i]);
 							else
 								newC.Insert(i, (RandomUtil.NextBool()) ? mc[i] : fc[i]); // or just choose one at random
