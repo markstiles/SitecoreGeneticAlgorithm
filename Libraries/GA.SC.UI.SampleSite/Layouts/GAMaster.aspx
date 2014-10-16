@@ -79,6 +79,10 @@
 		var contextSite = <asp:Literal ID="ltlContextSite" runat="server"/>;
         var $j = jQuery.noConflict();
         $j(document).ready(function () {
+
+        	if(window.location.hash.indexOf("#monitor") != -1)
+        		$j(".infoBox .monitor").show();
+
             $j(".GAContent a, .nav a").click(function (e) {
                 e.preventDefault();
                 var tagName = $j(this).attr("tag");
@@ -100,8 +104,10 @@
             	var mon = $j(".infoBox .monitor");
             	if(mon.is( ":hidden" )){
             		mon.slideDown();
+            		window.location.hash = "#monitor";
             	} else {
             		mon.slideUp();
+            		window.location.hash = "";
             	}
             });
         });
