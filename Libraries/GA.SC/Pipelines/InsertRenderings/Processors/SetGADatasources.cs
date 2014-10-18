@@ -40,14 +40,14 @@ namespace GA.SC.Pipelines.InsertRenderings.Processors {
 
 			// get tags - TODO change with content search or api call
 			Item tagBucket = GetItemFromID(ConfigUtil.Context.TagFolder);
-			List<Item> tags = Sitecore.Context.Database.SelectItems(string.Format("{0}//*[@@templatename='Tag']",tagBucket.Paths.FullPath)).ToList();
+			List<Item> tags = Sitecore.Context.Database.SelectItems(string.Format("{0}//*",tagBucket.Paths.FullPath)).ToList();
 
 			foreach (KeyValuePair<int, string> c in Chromosomes) {
 				Genotype g = new Genotype();
 				//number of genes corresponds to the number of placeholders to fill with display content
 				g.GeneLimit = c.Key;
 				for (int z = 0; z < tags.Count; z++) { //add all the tags to the genotype
-					TagGene t = new TagGene(tags[z].DisplayName, RandomUtil.NextBool());
+					TagGene t = new TagGene(tags[z].ID.ToString(), RandomUtil.NextBool());
 					g.Add(t);
 				}
 				if(!popman.Genotype.ContainsKey(c.Value))
@@ -83,11 +83,12 @@ namespace GA.SC.Pipelines.InsertRenderings.Processors {
 					continue;
 
 				//wire up renderings with results 
-				string tagName = CurrentKaryotype.Phenotype[Chromosomes[0].Value][i].GeneID;
-				IEnumerable<Item> tagMatches = tags.Where(a => a.DisplayName.Equals(tagName));
+				string tagID = CurrentKaryotype.Phenotype[Chromosomes[0].Value][i].GeneID;
+				IEnumerable<Item> tagMatches = tags.Where(a => a.ID.ToString().Equals(tagID));
 				if (!tagMatches.Any())
 					continue;
 
+				//tag id
 				string tid = tagMatches.First().ID.ToString();
 
 				// get content with a tag selected 
@@ -97,6 +98,7 @@ namespace GA.SC.Pipelines.InsertRenderings.Processors {
 				if(!contentMatches.Any())
 					continue;
 
+				//from all possible show a random one
 				r.Settings.DataSource = contentMatches[RandomUtil.Instance.Next(contentMatches.Count)].ID.ToString();
 			}
 

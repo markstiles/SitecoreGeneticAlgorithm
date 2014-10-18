@@ -61,6 +61,13 @@
     <Compile Include="Sublayouts\GADrivenContent.ascx.designer.cs">
       <DependentUpon>GADrivenContent.ascx.cs</DependentUpon>
     </Compile>
+    <Compile Include="Sublayouts\GAMonitor.ascx.cs">
+      <DependentUpon>GAMonitor.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Sublayouts\GAMonitor.ascx.designer.cs">
+      <DependentUpon>GAMonitor.ascx.cs</DependentUpon>
+    </Compile>
     <Compile Include="Sublayouts\GAPage.ascx.cs">
       <DependentUpon>GAPage.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -77,11 +84,18 @@
     <Content Include="Sublayouts\GADrivenContent.ascx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
+    <Content Include="Sublayouts\GAMonitor.ascx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
     <Content Include="Sublayouts\GAPage.ascx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\GA.Nucleus\GA.Nucleus.csproj">
+      <Project>{37b116a7-668c-4d2d-aa46-3df822ef13da}</Project>
+      <Name>GA.Nucleus</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GA.SC\GA.SC.csproj">
       <Project>{5e3e3376-4fc7-41b4-84e2-7f299dfb2201}</Project>
       <Name>GA.SC</Name>

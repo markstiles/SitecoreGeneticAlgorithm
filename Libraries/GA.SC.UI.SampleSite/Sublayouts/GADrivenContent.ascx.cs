@@ -13,9 +13,13 @@
 			if(!tags.Any())
 				return;
 			string tag = tags.First();
-			lnkBtn.Attributes.Add("style", string.Format("background-color:{0};", tag));
+			Sitecore.Data.ID i = null;
+			string tagName = (Sitecore.Data.ID.TryParse(tag, out i))
+				? Sitecore.Context.Database.GetItem(i).DisplayName
+				: string.Empty;
+			lnkBtn.Attributes.Add("style", string.Format("background-color:{0};", tagName));
 			lnkBtn.Text = "&nbsp;";
-			lnkBtn.NavigateUrl = string.Format("/{0}.aspx", tag);
+			lnkBtn.NavigateUrl = string.Format("/{0}.aspx", tagName);
 			lnkBtn.Attributes.Add("tag",tag);
 			lnkBtn.Attributes.Add("value", "1");
 		}
