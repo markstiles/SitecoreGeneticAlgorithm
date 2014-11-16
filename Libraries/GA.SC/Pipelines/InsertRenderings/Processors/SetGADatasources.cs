@@ -22,8 +22,8 @@ namespace GA.SC.Pipelines.InsertRenderings.Processors {
  
 		public void Process(InsertRenderingsArgs args) {
 			Assert.ArgumentNotNull(args, "args");
-			
-			if (Sitecore.Context.Site == null)
+
+			if (Sitecore.Context.Site == null || string.IsNullOrEmpty(Sitecore.Context.Site.Properties[ConfigUtil.SiteProperty]))
 				return;
 
 			// get the count of renderings with the datasource set as GAManager 
