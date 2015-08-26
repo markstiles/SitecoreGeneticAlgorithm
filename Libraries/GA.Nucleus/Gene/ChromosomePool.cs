@@ -5,5 +5,5 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace GA.Nucleus.Gene {
-	public class GenotypeList : Dictionary<string, Genotype> { }
+	public class ChromosomePool : Dictionary<string, GenePool> { }
 }

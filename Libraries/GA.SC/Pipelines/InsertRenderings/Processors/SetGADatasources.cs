@@ -23,6 +23,9 @@ namespace GA.SC.Pipelines.InsertRenderings.Processors {
 		public void Process(InsertRenderingsArgs args) {
 			Assert.ArgumentNotNull(args, "args");
 
+            if (!Sitecore.Context.PageMode.IsNormal)
+                return;
+
 			if (Sitecore.Context.Site == null || string.IsNullOrEmpty(Sitecore.Context.Site.Properties[ConfigUtil.SiteProperty]))
 				return;
 
@@ -43,15 +46,15 @@ namespace GA.SC.Pipelines.InsertRenderings.Processors {
 			List<Item> tags = Sitecore.Context.Database.SelectItems(string.Format("{0}//*",tagBucket.Paths.FullPath)).ToList();
 
 			foreach (KeyValuePair<int, string> c in Chromosomes) {
-				Genotype g = new Genotype();
+                GenePool g = new GenePool();
 				//number of genes corresponds to the number of placeholders to fill with display content
 				g.GeneLimit = c.Key;
 				for (int z = 0; z < tags.Count; z++) { //add all the tags to the genotype
 					TagGene t = new TagGene(tags[z].ID.ToString(), RandomUtil.NextBool());
 					g.Add(t);
 				}
-				if(!popman.Genotype.ContainsKey(c.Value))
-					popman.Genotype.Add(c.Value, g);
+				if(!popman.ChromosomePool.ContainsKey(c.Value))
+                    popman.ChromosomePool.Add(c.Value, g);
 			}
 
 			//setup population options

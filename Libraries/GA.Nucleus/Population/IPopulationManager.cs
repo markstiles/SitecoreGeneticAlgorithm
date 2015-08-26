@@ -24,7 +24,7 @@ namespace GA.Nucleus.Population {
 		Type HaploidType { get; set; }
 		Type ChromosomeType { get; set; }
 
-		GenotypeList Genotype { get; set; }
+		ChromosomePool ChromosomePool { get; set; }
 
 		#endregion Properties
 

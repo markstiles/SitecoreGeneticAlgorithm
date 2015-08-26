@@ -134,13 +134,13 @@ namespace GA.Nucleus.Population {
 			}
 		}
 
-		private GenotypeList _Genotype = new GenotypeList();
-		public GenotypeList Genotype {
+        private ChromosomePool _ChromosomePool = new ChromosomePool();
+        public ChromosomePool ChromosomePool {
 			get {
-				return _Genotype;
+                return _ChromosomePool;
 			}
 			set {
-				_Genotype = value;
+                _ChromosomePool = value;
 			}
 		}
 

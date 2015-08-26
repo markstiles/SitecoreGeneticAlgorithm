@@ -106,8 +106,8 @@
 				<asp:Repeater ID="rptChromos" runat="server" OnItemDataBound="rptChromos_ItemDataBound">
 					<ItemTemplate>
 						<div class="chromo">
-							<label class="title"><%# ((KeyValuePair<string, Genotype>)Container.DataItem).Key %> - Length : <%# ((KeyValuePair<string, Genotype>)Container.DataItem).Value.GeneLimit %></label>
-							<label><%# ((KeyValuePair<string, Genotype>)Container.DataItem).Value.Count %> Genes</label>
+							<label class="title"><%# ((KeyValuePair<string, GenePool>)Container.DataItem).Key %> - Length : <%# ((KeyValuePair<string, GenePool>)Container.DataItem).Value.GeneLimit %></label>
+							<label><%# ((KeyValuePair<string, GenePool>)Container.DataItem).Value.Count %> Genes</label>
 							<div class="genes">
 								<asp:Repeater ID="rptGenes" runat="server">
 									<ItemTemplate>

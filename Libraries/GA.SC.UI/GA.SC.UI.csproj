@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{247C7013-83AB-457E-BA9F-0BAB3821DABF}</ProjectGuid>
+    <ProjectGuid>{4B002CAB-B579-4F49-A974-E5EF5F3ACC30}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>GA.SC.UI</RootNamespace>
@@ -34,8 +34,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\testsite-sc-7.1\Website\bin\HtmlAgilityPack.dll</HintPath>
     </Reference>
-    <Reference Include="Sitecore.Kernel">
-      <HintPath>..\..\..\..\genzyme\test-upgrade\Website\bin\Sitecore.Kernel.dll</HintPath>
+    <Reference Include="Sitecore.Kernel, Version=7.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\sc80rev150812\Website\bin\Sitecore.Kernel.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />

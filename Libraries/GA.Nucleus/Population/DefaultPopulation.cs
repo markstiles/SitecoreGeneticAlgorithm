@@ -34,7 +34,7 @@ namespace GA.Nucleus.Population {
 				IHaploid mom = Manager.CreateHaploid();
 				IHaploid dad = Manager.CreateHaploid();
 				//add in the random population of chromosomes for each type in the genotype to each haploid
-				foreach (KeyValuePair<string, Genotype> kvp in Manager.Genotype) {
+                foreach (KeyValuePair<string, GenePool> kvp in Manager.ChromosomePool) {
 					mom.Add(kvp.Key, GetRandomChromosome(kvp.Key));
 					dad.Add(kvp.Key, GetRandomChromosome(kvp.Key));
 				}
@@ -103,7 +103,7 @@ namespace GA.Nucleus.Population {
 
 		protected IChromosome GetRandomChromosome(string chromosomeName){
 			IChromosome c = Manager.CreateChromosome();
-			c.FillRandomly(Manager.Genotype[chromosomeName], Manager.Genotype[chromosomeName].GeneLimit);
+            c.FillRandomly(Manager.ChromosomePool[chromosomeName], Manager.ChromosomePool[chromosomeName].GeneLimit);
 			return c;	
 		}
 

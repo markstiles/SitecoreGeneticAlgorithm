@@ -39,14 +39,14 @@
 			rptDNAList.DataSource = u;
 			rptDNAList.DataBind();
 
-			rptChromos.DataSource = man.Genotype;
+			rptChromos.DataSource = man.ChromosomePool;
 			rptChromos.DataBind();
 		}
 
 		protected void rptChromos_ItemDataBound(object sender, RepeaterItemEventArgs e) {
 			if (e.Item.ItemType != ListItemType.Item && e.Item.ItemType != ListItemType.AlternatingItem) return;
 
-			KeyValuePair<string, Genotype> g = (KeyValuePair<string, Genotype>)e.Item.DataItem;
+            KeyValuePair<string, GenePool> g = (KeyValuePair<string, GenePool>)e.Item.DataItem;
 			Repeater rptGenes = (Repeater)e.Item.FindControl("rptGenes");
 			rptGenes.DataSource = g.Value;
 			rptGenes.DataBind();

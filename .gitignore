@@ -19,3 +19,7 @@ Libraries/GA.SC.UI.SampleSite/obj/
 Libraries/GA.SC.Tests/obj/
 Libraries/GA.Nucleus/bin/
 Libraries/GA.Nucleus/obj/
+Libraries/GA.SC.UI.SampleSite/GA.SC.UI.SampleSite.csproj.user
+Libraries/GA.SC.UI/GA.SC.UI.csproj.user
+Libraries/GA.Nucleus/GA.Nucleus.csproj.user
+Libraries/GA.Nucleus/GA.Lib.v11.suo
