@@ -12,6 +12,8 @@ using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
 using Sitecore.Layouts;
 using Sitecore.Pipelines.InsertRenderings;
+using Sitecore.Security.Domains;
+using Sitecore.Configuration;
 
 namespace GA.SC.Pipelines.InsertRenderings.Processors {
 	public class SetGADatasources {
@@ -23,7 +25,8 @@ namespace GA.SC.Pipelines.InsertRenderings.Processors {
 		public void Process(InsertRenderingsArgs args) {
 			Assert.ArgumentNotNull(args, "args");
 
-            if (!Sitecore.Context.PageMode.IsNormal)
+            Domain d = Factory.GetDomain("sitecore");
+            if (Sitecore.Context.Domain.Equals(d))
                 return;
 
 			if (Sitecore.Context.Site == null || string.IsNullOrEmpty(Sitecore.Context.Site.Properties[ConfigUtil.SiteProperty]))
