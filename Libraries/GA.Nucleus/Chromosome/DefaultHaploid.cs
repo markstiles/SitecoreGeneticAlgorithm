@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GA.Nucleus.Gene;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,13 +17,14 @@ namespace GA.Nucleus.Chromosome {
 		#region IHaploid
 
 		public string DNASequence() {
-			StringBuilder sb = new StringBuilder();
-			foreach (IChromosome c in this.Values) {
-				if (sb.Length > 0)
-					sb.Append("-");
-				sb.Append(c.GeneSequence());
-			}
-			return sb.ToString();
+            StringBuilder sbChromo = new StringBuilder();
+            foreach (KeyValuePair<string, IChromosome> chromoPair in this) {
+                if (sbChromo.Length > 0)
+                    sbChromo.Append(",");
+                sbChromo.AppendFormat("{{{0}:[{1}]}}", chromoPair.Key, chromoPair.Value.GeneSequence());
+            }
+
+            return string.Format("{{sequence:[{0}]}}", sbChromo.ToString());
 		}
 
 		#endregion IHaploid

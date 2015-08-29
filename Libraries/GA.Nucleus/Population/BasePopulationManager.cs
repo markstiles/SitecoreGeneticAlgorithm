@@ -8,7 +8,7 @@ using GA.Nucleus.Gene;
 using GA.Nucleus.Population;
 
 namespace GA.Nucleus.Population {
-	public class DefaultPopulationManager : IPopulationManager {
+	public abstract class BasePopulationManager : IPopulationManager {
 
 		#region Properties
 
@@ -108,7 +108,7 @@ namespace GA.Nucleus.Population {
 		public Type KaryotypeType {
 			get {
 				if (_KaryotypeType == null)
-					throw new NullReferenceException("You must provide a Type object for the KaryotypeType property in the DefaultPopulationManager. The KaryotypeType should implements the IKaryotype interface.");
+                    throw new NullReferenceException("You must provide a Type object for the KaryotypeType property in the BasePopulationManager. The KaryotypeType should implements the IKaryotype interface.");
 				return _KaryotypeType;
 			}
 			set {
@@ -134,22 +134,28 @@ namespace GA.Nucleus.Population {
 			}
 		}
 
-        private ChromosomePool _ChromosomePool = new ChromosomePool();
-        public ChromosomePool ChromosomePool {
-			get {
-                return _ChromosomePool;
-			}
-			set {
-                _ChromosomePool = value;
-			}
-		}
+        public abstract ChromosomePool ChromosomePool { get; set; }
+
+        private IPopulation _Population;
+        public virtual IPopulation Population {
+            get {
+                if(_Population == null)
+                    _Population = CreatePopulation();
+                return _Population;
+            }
+            set {
+                _Population = value;
+            }
+        }
 
 		#endregion Properties
 
 		#region Methods
 
 		public IPopulation CreatePopulation() {
-			return (IPopulation)Activator.CreateInstance(PopulationType, this);
+			IPopulation p = (IPopulation)Activator.CreateInstance(PopulationType);
+            p.InitializePopulation(this);
+            return p;
 		}
 
 		public IKaryotype CreateKaryotype(IHaploid mom, IHaploid dad) {

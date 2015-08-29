@@ -20,7 +20,8 @@ namespace GA.Nucleus.Population {
 		void InitializePopulation(IPopulationManager ipo);
 		void Evolve();
 		IKaryotype ChooseFitKaryotype();
-		
+        List<IKaryotype> GetUniqueKaryotypes(); 
+
 		#endregion Methods
 	}
 }

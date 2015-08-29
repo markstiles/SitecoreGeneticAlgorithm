@@ -18,10 +18,13 @@ namespace GA.Nucleus.Chromosome {
 		#region IChromosome
 
 		public virtual string GeneSequence() {
-			StringBuilder sb = new StringBuilder();
-			foreach (IGene g in this)
-				sb.Append(g.GeneID);
-			return sb.ToString();
+            StringBuilder sbGenes = new StringBuilder();
+            foreach (IGene g in this) {
+                if (sbGenes.Length > 0)
+                    sbGenes.Append(",");
+                sbGenes.Append(g.GeneName);
+            }
+            return sbGenes.ToString();
 		}
 
 		public virtual void FillRandomly(List<IGene> genepool, int count) {

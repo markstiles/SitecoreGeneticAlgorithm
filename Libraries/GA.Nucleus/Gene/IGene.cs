@@ -10,6 +10,7 @@ namespace GA.Nucleus.Gene {
 		#region Properties
 
 		string GeneID { get; }
+        string GeneName { get; }
 		bool IsDominant { get; set; }
 
 		#endregion Properties

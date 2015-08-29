@@ -51,11 +51,11 @@
     <Compile Include="Population\IKaryotype.cs" />
     <Compile Include="Population\IPopulation.cs" />
     <Compile Include="Population\IPopulationManager.cs" />
-    <Compile Include="Population\DefaultPopulationManager.cs" />
+    <Compile Include="Population\BasePopulationManager.cs" />
     <Compile Include="Chromosome\IChromosome.cs" />
     <Compile Include="Gene\IGene.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Gene\ChromosomePool.cs" />
+    <Compile Include="Chromosome\ChromosomePool.cs" />
     <Compile Include="RandomUtil.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

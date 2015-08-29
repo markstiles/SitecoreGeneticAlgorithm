@@ -4,7 +4,7 @@
 <%@ Register TagPrefix="sc" Namespace="Sitecore.Web.UI.WebControls" Assembly="Sitecore.Kernel" %>
 <%@ Import Namespace="GA.Nucleus.Population" %>
 <%@ Import Namespace="GA.Nucleus.Gene" %>
-<%@ Import Namespace="GA.SC.EV" %>
+<%@ Import Namespace="GA.SC.UI.SampleSite.EV" %>
 <%@ Import Namespace="GA.SC" %>
 
 <style>
@@ -112,7 +112,7 @@
 								<asp:Repeater ID="rptGenes" runat="server">
 									<ItemTemplate>
 										<div class="gene <%# OddEven(Container.ItemIndex) %>">
-											<%# GetItemName(((IGene)Container.DataItem).GeneID) %>
+											<%# ((IGene)Container.DataItem).GeneName %>
 										</div>
 									</ItemTemplate>
 								</asp:Repeater>
@@ -153,7 +153,9 @@
 						<ItemTemplate>
 							<div class="<%# OddEven(Container.ItemIndex) %>">
 								<div class="count"><%# Container.ItemIndex + 1 %>:</div> 
-								<div class="dna"><%# GetSequence(((IKaryotype)Container.DataItem)) %></div>
+								<div class="dna">
+                                    <%# ((IKaryotype)Container.DataItem).GetSequence() %>
+								</div>
 								<div class="fitness"><%# ((IKaryotype)Container.DataItem).Fitness %></div>
 								<div class="gender"><%# (((IKaryotype)Container.DataItem).Gender) ? "M" : "F" %></div>
 							</div>

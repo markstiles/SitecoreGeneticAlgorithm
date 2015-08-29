@@ -18,13 +18,16 @@ namespace GA.Nucleus.Population {
 		int PopSize { get; set; } // number of chromosomes to create
 		int TourneySize { get; set; }
 		float FitnessThreshold { get; set; }
-		FitnessSortType FitnessSort { get; set; } 
+		FitnessSortType FitnessSort { get; set; }
 
+        Type PopulationType { get; set; }
 		Type KaryotypeType { get; set; }
 		Type HaploidType { get; set; }
 		Type ChromosomeType { get; set; }
 
 		ChromosomePool ChromosomePool { get; set; }
+
+        IPopulation Population { get; set; }
 
 		#endregion Properties
 

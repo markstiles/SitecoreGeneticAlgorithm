@@ -9,7 +9,7 @@ using Sitecore.Data.Items;
 namespace GA.SC.UI.SampleSite {
 	public static class TagUtil {
 		public static List<string> GetTags(Item i) {
-			List<string> tags = (from string val in ((DelimitedField)i.Fields[ConfigUtil.Context.ContentTagField]).Items
+			List<string> tags = (from string val in ((DelimitedField)i.Fields[Statics.ContentTagField]).Items
 								 select val).ToList();
 			if (tags == null || !tags.Any())
 				return new List<string>();

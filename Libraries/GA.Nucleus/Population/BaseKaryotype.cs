@@ -28,7 +28,7 @@ namespace GA.Nucleus.Population {
 					IChromosome fc = FathersHaploid[key];
 					IChromosome newC = Manager.CreateChromosome();
 					//compare each gene in MothersHaploid and FathersHaploid for dominance
-					for (int i = 0; i < Manager.ChromosomePool[key].GeneLimit; i++) {
+					for (int i = 0; i < mc.Count; i++) {
 						if (mc[i].IsDominant && !fc[i].IsDominant) // use mother if it's the only dominant one
 							newC.Insert(i, mc[i]);
 						else if (!mc[i].IsDominant && fc[i].IsDominant) // use father if it's' the only dominant one
@@ -65,13 +65,13 @@ namespace GA.Nucleus.Population {
 		public virtual void Mutate() {
 			//randomly select a chromosome from the master genotype list
             string chromoKey = Manager.ChromosomePool.Keys.ToList()[RandomUtil.Instance.Next(Manager.ChromosomePool.Keys.Count)];
-            List<IGene> rg = Manager.ChromosomePool[chromoKey];
+            GenePool rg = Manager.ChromosomePool[chromoKey];
 			//randomly get a gene from that chromosome's genotype 
 			IGene g = rg[RandomUtil.Instance.Next(rg.Count)];
 			//choose a random Haploid to modify
 			IHaploid rh = (RandomUtil.NextBool()) ? MothersHaploid : FathersHaploid;
 			//choose the same chromosome from the genotype on the haploid but a random gene to replace it
-            rh[chromoKey][RandomUtil.Instance.Next(Manager.ChromosomePool[chromoKey].GeneLimit)] = g;
+            rh[chromoKey][RandomUtil.Instance.Next(rh[chromoKey].Count)] = g;
 		}
 
 		/// <summary>
@@ -126,7 +126,7 @@ namespace GA.Nucleus.Population {
 				IChromosome f2c = f2[key];
 				IChromosome m2c = m2[key];
 
-                for (int i = 0; i < Manager.ChromosomePool[key].GeneLimit; i++) { // randomly choose to switch genes
+                for (int i = 0; i < f1c.Count; i++) { // randomly choose to switch genes
 					Crossover(f1c, m1c, i);
 					Crossover(f2c, m2c, i);
 				}

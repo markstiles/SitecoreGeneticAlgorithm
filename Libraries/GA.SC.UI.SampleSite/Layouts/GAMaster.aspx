@@ -54,7 +54,7 @@
                 var value = $j(this).attr("value");
                 $j.ajax({
                     type: "POST",
-                    url: "/sitecore modules/Web/GA/WebService/EventTracking.asmx/TrackEvent",
+                    url: "/sitecore modules/Web/GASampleSite/webservice/EventTracking.asmx/TrackEvent",
                     data: "{ 'TagClick':'" + tagName + "', 'Site':'" + contextSite + "', 'Value':'" + value + "'}",
                     contentType: "application/json",
                     dataType: "json",

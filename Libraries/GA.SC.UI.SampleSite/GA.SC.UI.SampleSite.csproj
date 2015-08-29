@@ -30,13 +30,25 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Sitecore.ContentSearch, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\sc80rev150812\Website\bin\Sitecore.ContentSearch.dll</HintPath>
+    </Reference>
+    <Reference Include="Sitecore.ContentSearch.Linq, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\sc80rev150812\Website\bin\Sitecore.ContentSearch.Linq.dll</HintPath>
+    </Reference>
     <Reference Include="Sitecore.Kernel, Version=7.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\sc80rev150812\Website\bin\Sitecore.Kernel.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -44,6 +56,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EV\DefaultEngagementValueProvider.cs" />
+    <Compile Include="EV\DefaultValueModifier.cs" />
+    <Compile Include="EV\EngagementValue.cs" />
+    <Compile Include="EV\IEngagementValue.cs" />
+    <Compile Include="EV\IEngagementValueProvider.cs" />
+    <Compile Include="EV\IValueModifier.cs" />
+    <Compile Include="Gene\TagGene.cs" />
     <Compile Include="Layouts\GAMaster.aspx.cs">
       <DependentUpon>GAMaster.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -51,7 +70,11 @@
     <Compile Include="Layouts\GAMaster.aspx.designer.cs">
       <DependentUpon>GAMaster.aspx.cs</DependentUpon>
     </Compile>
+    <Compile Include="Pipelines\InsertRenderings\Processors\SetSampleSiteGADatasources.cs" />
+    <Compile Include="Population\PageKaryotype.cs" />
+    <Compile Include="Population\SamplePopulationManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WebService\Statics.cs" />
     <Compile Include="Sublayouts\BaseSublayout.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -77,6 +100,9 @@
       <DependentUpon>GAPage.ascx.cs</DependentUpon>
     </Compile>
     <Compile Include="TagUtil.cs" />
+    <Compile Include="WebService\EventTracking.cs">
+      <SubType>Component</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Layouts\GAMaster.aspx">
@@ -91,15 +117,12 @@
     <Content Include="Sublayouts\GAPage.ascx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
+    <Content Include="WebService\EventTracking.asmx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GA.Nucleus\GA.Nucleus.csproj">
       <Project>{37b116a7-668c-4d2d-aa46-3df822ef13da}</Project>
       <Name>GA.Nucleus</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\GA.SC\GA.SC.csproj">
-      <Project>{5e3e3376-4fc7-41b4-84e2-7f299dfb2201}</Project>
-      <Name>GA.SC</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -112,10 +135,12 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>start xcopy  /S /Y "$(ProjectDir)Layouts\*.aspx" "$(SolutionDir)Website\sitecore modules\Web\GASampleSite\layouts\"
+    <PostBuildEvent>start xcopy  /S /Y "$(ProjectDir)Config\*" "$(SolutionDir)Website\App_Config\Include\"
+start xcopy  /S /Y "$(ProjectDir)Layouts\*.aspx" "$(SolutionDir)Website\sitecore modules\Web\GASampleSite\layouts\"
+start xcopy  /S /Y "$(ProjectDir)Packages\*" "$(SolutionDir)Data\packages\"
 start xcopy  /S /Y "$(ProjectDir)Sublayouts\*.ascx" "$(SolutionDir)Website\sitecore modules\Web\GASampleSite\sublayouts\"
-start xcopy  /S /Y "$(ProjectDir)Config\*" "$(SolutionDir)Website\App_Config\Include\"
-start xcopy  /S /Y "$(ProjectDir)Packages\*" "$(SolutionDir)Data\packages\"</PostBuildEvent>
+start xcopy  /S /Y "$(ProjectDir)WebService\*.asmx" "$(SolutionDir)Website\sitecore modules\Web\GASampleSite\webservice\"
+</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
