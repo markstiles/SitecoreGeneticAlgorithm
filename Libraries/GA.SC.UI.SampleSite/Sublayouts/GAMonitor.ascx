@@ -154,7 +154,7 @@
 							<div class="<%# OddEven(Container.ItemIndex) %>">
 								<div class="count"><%# Container.ItemIndex + 1 %>:</div> 
 								<div class="dna">
-                                    <%# ((IKaryotype)Container.DataItem).GetSequence() %>
+                                    <%# ((IKaryotype)Container.DataItem).Phenotype.DNASequence() %>
 								</div>
 								<div class="fitness"><%# ((IKaryotype)Container.DataItem).Fitness %></div>
 								<div class="gender"><%# (((IKaryotype)Container.DataItem).Gender) ? "M" : "F" %></div>

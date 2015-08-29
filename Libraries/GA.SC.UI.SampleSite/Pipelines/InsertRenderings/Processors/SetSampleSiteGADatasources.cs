@@ -87,14 +87,5 @@ namespace GA.SC.UI.SampleSite.Pipelines.InsertRenderings.Processors {
 			Sitecore.Data.ID id = Sitecore.Data.ID.Parse(idStr);
 			return Sitecore.Context.Database.GetItem(id);
 		}
-
-		// TODO fill out the content search or define one for each algorithm entry
-		private List<string> PerformSearch() {
-			var index = ContentSearchManager.GetIndex("sitecore_master_index");
-			using (var context = index.CreateSearchContext(SearchSecurityOptions.EnableSecurityCheck)) {
-				var queryable = context.GetQueryable<StringBuilder>();
-				return new List<string>();			
-			}
-		}
 	}
 }
