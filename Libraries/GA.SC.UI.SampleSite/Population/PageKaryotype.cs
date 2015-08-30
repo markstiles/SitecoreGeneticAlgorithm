@@ -55,7 +55,7 @@ namespace GA.SC.UI.SampleSite.Population {
 				//track the total value over all tags so you determine what percentage of the whole any given tag is.
 				Dictionary<string, double> tagValues = new Dictionary<string, double>();
 				double tagSum = 0;
-				foreach (KeyValuePair<string, List<IEngagementValue>> kvp in EVProvider.RelevantValues) {
+				foreach (KeyValuePair<string, List<IValue>> kvp in EVProvider.RelevantValues) {
 					double partSum = kvp.Value.Sum(a => a.Value);
 					tagValues.Add(kvp.Key, partSum);
 					tagSum += partSum;

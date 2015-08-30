@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GA.SC.UI.SampleSite.EV {
 	
-	public class EngagementValue : IEngagementValue {
+	public class EngagementValue : IValue {
 
 		#region Properties 
 		

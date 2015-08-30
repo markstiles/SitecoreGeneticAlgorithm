@@ -110,7 +110,7 @@ namespace GA.Nucleus.Population {
 		public List<IKaryotype> GetUniqueKaryotypes() {
 			Dictionary<string, IKaryotype> uniqueSet = new Dictionary<string, IKaryotype>();
 			foreach (IKaryotype k in Karyotypes) {
-				string uKey = k.Phenotype.DNASequence();
+                string uKey = k.Phenotype.ChromosomeSequence();
 				if (!uniqueSet.ContainsKey(uKey))
 					uniqueSet.Add(uKey, k);
 			}

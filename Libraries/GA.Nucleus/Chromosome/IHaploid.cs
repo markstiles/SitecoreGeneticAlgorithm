@@ -9,7 +9,7 @@ namespace GA.Nucleus.Chromosome {
 
 		#region Methods
 
-		string DNASequence();
+		string ChromosomeSequence();
 
 		#endregion Methods
 	}

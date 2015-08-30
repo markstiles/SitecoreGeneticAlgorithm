@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace GA.SC.UI.SampleSite.EV {
-	public interface IEngagementValue {
+	public interface IValue {
 		
 		double Value { get; set; }
 		DateTime LastUpdated { get; }

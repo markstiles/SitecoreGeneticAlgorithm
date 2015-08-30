@@ -23,7 +23,7 @@ namespace GA.SC.UI.SampleSite.WebService {
 				value = 1;
             IEngagementValueProvider evp = new DefaultEngagementValueProvider();
             if (!evp.Values.ContainsKey(TagClick))
-				evp.Values.Add(TagClick, new List<IEngagementValue>());
+				evp.Values.Add(TagClick, new List<IValue>());
 			evp.Values[TagClick].Add(new EngagementValue(value));
 		}
 	}

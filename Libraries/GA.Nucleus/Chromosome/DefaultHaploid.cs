@@ -16,15 +16,15 @@ namespace GA.Nucleus.Chromosome {
 
 		#region IHaploid
 
-		public string DNASequence() {
+        public string ChromosomeSequence() {
             StringBuilder sbChromo = new StringBuilder();
             foreach (KeyValuePair<string, IChromosome> chromoPair in this) {
                 if (sbChromo.Length > 0)
                     sbChromo.Append(",");
-                sbChromo.AppendFormat("{{{0}:[{1}]}}", chromoPair.Key, chromoPair.Value.GeneSequence());
+                sbChromo.AppendFormat("{{\"{0}\":[{1}]}}", chromoPair.Key, chromoPair.Value.GeneSequence());
             }
 
-            return string.Format("{{sequence:[{0}]}}", sbChromo.ToString());
+            return string.Format("{{\"sequence\":[{0}]}}", sbChromo.ToString());
 		}
 
 		#endregion IHaploid

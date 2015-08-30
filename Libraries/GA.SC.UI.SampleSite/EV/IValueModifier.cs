@@ -10,6 +10,6 @@ namespace GA.SC.UI.SampleSite.EV {
 		int DecimalPlaces { get; }
 		TimespanAspect HalfLifeType { get; }
 		int HalfLife { get; }
-		double CurrentValue(IEngagementValue ev);
+		double CurrentValue(IValue ev);
 	}
 }

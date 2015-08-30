@@ -22,7 +22,7 @@ namespace GA.Nucleus.Chromosome {
             foreach (IGene g in this) {
                 if (sbGenes.Length > 0)
                     sbGenes.Append(",");
-                sbGenes.Append(g.GeneName);
+                sbGenes.AppendFormat("\"{0}\"", g.GeneName);
             }
             return sbGenes.ToString();
 		}
@@ -35,14 +35,5 @@ namespace GA.Nucleus.Chromosome {
 		}
 
 		#endregion IChromosome
-
-		#region Methods
-		
-		public void AddRange(IEnumerable<KeyValuePair<string, IGene>> g) {
-			foreach (KeyValuePair<string, IGene> kvp in g)
-				this.Add(kvp.Value);
-		}
-
-		#endregion Methods
 	}
 }

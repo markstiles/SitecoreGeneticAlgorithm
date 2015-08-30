@@ -65,7 +65,7 @@ namespace GA.SC.UI.SampleSite.EV {
 		/// returns the Value decayed over time
 		/// </summary>
 		/// <returns></returns>
-		public double CurrentValue(IEngagementValue ev) {
+		public double CurrentValue(IValue ev) {
 
 			//can select from days, hours, minutes, seconds and milliseconds
 
