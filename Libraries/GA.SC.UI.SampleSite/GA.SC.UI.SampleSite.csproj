@@ -59,9 +59,9 @@
     <Compile Include="EV\DefaultEngagementValueProvider.cs" />
     <Compile Include="EV\DefaultValueModifier.cs" />
     <Compile Include="EV\EngagementValue.cs" />
-    <Compile Include="EV\IEngagementValue.cs" />
-    <Compile Include="EV\IEngagementValueProvider.cs" />
+    <Compile Include="EV\IValue.cs" />
     <Compile Include="EV\IValueModifier.cs" />
+    <Compile Include="EV\IValueProvider.cs" />
     <Compile Include="Gene\TagGene.cs" />
     <Compile Include="Layouts\GAMaster.aspx.cs">
       <DependentUpon>GAMaster.aspx</DependentUpon>
@@ -74,7 +74,7 @@
     <Compile Include="Population\PageKaryotype.cs" />
     <Compile Include="Population\SamplePopulationManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WebService\Statics.cs" />
+    <Compile Include="Statics.cs" />
     <Compile Include="Sublayouts\BaseSublayout.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>

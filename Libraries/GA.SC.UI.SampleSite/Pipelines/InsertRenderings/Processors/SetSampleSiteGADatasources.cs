@@ -38,10 +38,10 @@ namespace GA.SC.UI.SampleSite.Pipelines.InsertRenderings.Processors {
 				return;
 
             IPopulationManager popman = Statics.GetPopulationManager(sc);
-            IPopulation p = popman.Population;
+            IPopulation p = popman.GetPopulation();
             
 			//choose best
-            IKaryotype CurrentKaryotype = p.ChooseFitKaryotype();
+            IKaryotype CurrentKaryotype = p.ChooseFitKaryotype(popman.FitnessRatio, popman.FitnessThreshold, popman.FitnessSort);
 
             Item tagBucket = GetItemFromID(Statics.TagFolder);
             List<Item> tags = Sitecore.Context.Database.SelectItems(string.Format("{0}//*", tagBucket.Paths.FullPath)).ToList();
@@ -78,7 +78,8 @@ namespace GA.SC.UI.SampleSite.Pipelines.InsertRenderings.Processors {
 			}
 
 			//evolve
-			p.Evolve();
+			p.Evolve(popman);
+            popman.SetPopulation(p);
 		}
 
 		protected Item GetItemFromID(string idStr) {

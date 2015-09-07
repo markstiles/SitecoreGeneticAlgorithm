@@ -63,21 +63,20 @@ namespace GA.SC.UI.SampleSite.Population {
             }
         }
 
-        public override IPopulation Population {
-            get {
-                if (HttpContext.Current.Session[PopKey] != null)
-                    return (IPopulation)HttpContext.Current.Session[PopKey];
+        #region Methods
 
-                IPopulation p = CreatePopulation();
-                HttpContext.Current.Session[PopKey] = p;
-                return p;
-            }
-            set {
-                HttpContext.Current.Session[PopKey] = value;
-            }
+        public override IPopulation GetPopulation() {
+            if (HttpContext.Current.Session[PopKey] != null)
+                return (IPopulation)HttpContext.Current.Session[PopKey];
+
+            IPopulation p = CreatePopulation();
+            HttpContext.Current.Session[PopKey] = p;
+            return p;
         }
 
-        #region Methods
+        public override void SetPopulation(IPopulation p) {
+            HttpContext.Current.Session[PopKey] = p;
+        }
 
         public string GetGAAttribute(string prop) {
             return GARoot[GAName].Attributes[prop].Value;

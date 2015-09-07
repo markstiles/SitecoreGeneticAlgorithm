@@ -32,9 +32,9 @@ namespace GA.Nucleus.Chromosome {
 		#region ICloneable
 
 		public object Clone() {
-			IHaploid cloner = new DefaultHaploid();
+			IHaploid cloner = (IHaploid)Activator.CreateInstance(this.GetType());
 			foreach (KeyValuePair<string, IChromosome> kvp in this)
-				cloner.Add(kvp.Key, kvp.Value);
+				cloner.Add(kvp.Key, (IChromosome)kvp.Value.Clone());
 			return cloner;
 		}
 

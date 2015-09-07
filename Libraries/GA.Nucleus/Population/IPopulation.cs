@@ -10,7 +10,6 @@ namespace GA.Nucleus.Population {
 		
 		#region Properties
 
-		IPopulationManager Manager { get; set; }
 		List<IKaryotype> Karyotypes { get; set; }
 
 		#endregion Properties
@@ -18,9 +17,9 @@ namespace GA.Nucleus.Population {
 		#region Methods 
 
 		void InitializePopulation(IPopulationManager ipo);
-		void Evolve();
-		IKaryotype ChooseFitKaryotype();
-        List<IKaryotype> GetUniqueKaryotypes(); 
+        void Evolve(IPopulationManager ipo);
+        IKaryotype ChooseFitKaryotype(double fitnessRatio, double fitnessThreshold, FitnessSortType fst);
+        List<IKaryotype> GetUniqueKaryotypes(FitnessSortType fst); 
 
 		#endregion Methods
 	}

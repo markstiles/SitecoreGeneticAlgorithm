@@ -11,7 +11,6 @@ namespace GA.Nucleus.Population {
 
 		#region Properties 
 
-		public IPopulationManager Manager { get; set; }
 		public bool Gender { get; set; }
 		public int Age { get; set; }
 		public IHaploid MothersHaploid { get; set; }
@@ -22,11 +21,11 @@ namespace GA.Nucleus.Population {
 				if (_Phenotype != null)
                     return _Phenotype;
 
-				_Phenotype = Manager.CreateHaploid();
+				_Phenotype = (IHaploid)Activator.CreateInstance(MothersHaploid.GetType());
 				foreach (string key in MothersHaploid.Keys) {
 					IChromosome mc = MothersHaploid[key];
 					IChromosome fc = FathersHaploid[key];
-					IChromosome newC = Manager.CreateChromosome();
+					IChromosome newC = (IChromosome)Activator.CreateInstance(mc.GetType());
 					//compare each gene in MothersHaploid and FathersHaploid for dominance
 					for (int i = 0; i < mc.Count; i++) {
 						if (mc[i].IsDominant && !fc[i].IsDominant) // use mother if it's the only dominant one
@@ -41,14 +40,12 @@ namespace GA.Nucleus.Population {
 				return _Phenotype;
 			}
 		}
-		public abstract double Fitness { get; }
-
+		
 		#endregion Properties 
 
 		#region ctor
 
-		public BaseKaryotype(IPopulationManager ipo, IHaploid mom, IHaploid dad) {
-			Manager = ipo;
+		public BaseKaryotype(IHaploid mom, IHaploid dad) {
 			MothersHaploid = mom;
 			FathersHaploid = dad;
 			Gender = RandomUtil.NextBool(); // 50/50 chance
@@ -62,10 +59,10 @@ namespace GA.Nucleus.Population {
 		/// <summary>
 		/// changes a random character in the gene to a random character
 		/// </summary>
-		public virtual void Mutate() {
+		public virtual void Mutate(IPopulationManager ipo) {
 			//randomly select a chromosome from the master genotype list
-            string chromoKey = Manager.ChromosomePool.Keys.ToList()[RandomUtil.Instance.Next(Manager.ChromosomePool.Keys.Count)];
-            GenePool rg = Manager.ChromosomePool[chromoKey];
+            string chromoKey = ipo.ChromosomePool.Keys.ToList()[RandomUtil.Instance.Next(ipo.ChromosomePool.Keys.Count)];
+            GenePool rg = ipo.ChromosomePool[chromoKey];
 			//randomly get a gene from that chromosome's genotype 
 			IGene g = rg[RandomUtil.Instance.Next(rg.Count)];
 			//choose a random Haploid to modify
@@ -77,7 +74,7 @@ namespace GA.Nucleus.Population {
 		/// <summary>
 		/// take the genes from this and a mate and split them in half and swap them
 		/// </summary>
-		public virtual IKaryotype Mate(IKaryotype mate) {
+		public virtual IKaryotype Mate(IPopulationManager ipo, IKaryotype mate) {
 
 			// run meiosis for each to generate some seedlings
 			List<IHaploid> mh = (mate.Gender) ? Meiosis(mate) : Meiosis(this);
@@ -86,7 +83,7 @@ namespace GA.Nucleus.Population {
 			// randomly pick a haploid from each and create a new karyotype
 			IHaploid mom = mh[RandomUtil.Instance.Next(mh.Count)];
 			IHaploid dad = fh[RandomUtil.Instance.Next(fh.Count)];
-			IKaryotype newK = Manager.CreateKaryotype(mom, dad);
+            IKaryotype newK = ipo.CreateKaryotype(mom, dad);
 			
 			return newK;
 		}
@@ -96,12 +93,14 @@ namespace GA.Nucleus.Population {
 		#region IComparable
 
 		public int CompareTo(IKaryotype other) {
-			return Fitness.CompareTo(other.Fitness);
+			return Fitness().CompareTo(other.Fitness());
 		}
 
 		#endregion IComparable
 
 		#region Methods
+
+        public abstract double Fitness();
 
 		/// <summary>
 		/// creates a duplication then crossover of existing haploids to make seeds for the next generation

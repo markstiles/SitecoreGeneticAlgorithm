@@ -35,5 +35,22 @@ namespace GA.Nucleus.Chromosome {
 		}
 
 		#endregion IChromosome
+
+        #region ICloneable
+
+        public object Clone() {
+            IChromosome cloner = (IChromosome)Activator.CreateInstance(this.GetType());
+            foreach (IGene g in this) {
+                IGene newG = (IGene)Activator.CreateInstance(g.GetType());
+                newG.GeneID = newG.GeneID;
+                newG.GeneName = g.GeneName;
+                newG.IsDominant = g.IsDominant;
+                cloner.Add(newG);
+            }
+            return cloner;
+        }
+
+        #endregion ICloneable
+
 	}
 }

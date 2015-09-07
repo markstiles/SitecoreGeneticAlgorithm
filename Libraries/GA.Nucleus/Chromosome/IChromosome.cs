@@ -7,7 +7,7 @@ using GA.Nucleus.Gene;
 using GA.Nucleus.Population;
 
 namespace GA.Nucleus.Chromosome {
-	public interface IChromosome : IList<IGene> {
+    public interface IChromosome : IList<IGene>, ICloneable {
 
 		#region Methods
 

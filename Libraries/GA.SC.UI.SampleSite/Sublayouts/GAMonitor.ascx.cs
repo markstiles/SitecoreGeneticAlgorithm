@@ -41,7 +41,7 @@
         }
 
         protected void btnRestart_Click(object sender, EventArgs e) {
-            popman.Population = popman.CreatePopulation();
+            popman.SetPopulation(popman.CreatePopulation());
             Response.Redirect(Request.RawUrl);
         }
 
@@ -55,8 +55,18 @@
 
             popman = Statics.GetPopulationManager(Sitecore.Context.Site);
 
-            IPopulation p = popman.Population;
-            List<IKaryotype> u = p.GetUniqueKaryotypes();
+            IPopulation p = popman.GetPopulation();
+
+            ltlCrossover.Text = popman.CrossoverRatio.ToString();
+            ltlElitism.Text = popman.ElitismRatio.ToString();
+            ltlFitness.Text = popman.FitnessRatio.ToString();
+            ltlFitSort.Text = popman.FitnessSort.ToString();
+            ltlThreshold.Text = popman.FitnessThreshold.ToString();
+            ltlMutation.Text = popman.MutationRatio.ToString();
+            ltlTourney.Text = popman.TourneySize.ToString();
+            ltlPopSize.Text = popman.PopSize.ToString();
+
+            List<IKaryotype> u = p.GetUniqueKaryotypes(popman.FitnessSort);
             
             ltlUKaryos.Text = u.Count.ToString();
 			

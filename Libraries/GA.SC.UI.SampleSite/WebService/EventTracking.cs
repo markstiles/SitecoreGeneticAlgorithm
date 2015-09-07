@@ -21,7 +21,7 @@ namespace GA.SC.UI.SampleSite.WebService {
 			double value = 1;
 			if(!double.TryParse(Value, out value)) 
 				value = 1;
-            IEngagementValueProvider evp = new DefaultEngagementValueProvider();
+            IValueProvider evp = new DefaultEngagementValueProvider();
             if (!evp.Values.ContainsKey(TagClick))
 				evp.Values.Add(TagClick, new List<IValue>());
 			evp.Values[TagClick].Add(new EngagementValue(value));

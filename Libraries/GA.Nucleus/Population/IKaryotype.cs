@@ -11,8 +11,6 @@ namespace GA.Nucleus.Population {
 
 		#region Properties
 
-		IPopulationManager Manager { get; set; }
-
 		bool Gender { get; set; } // true = mother, false = father
 		int Age { get; set; }
 		IHaploid MothersHaploid { get; set; }
@@ -20,14 +18,13 @@ namespace GA.Nucleus.Population {
 
 		IHaploid Phenotype { get; } // compares the dominance settings
 
-		double Fitness { get; }
-
 		#endregion Properties
 
 		#region Methods
 
-		IKaryotype Mate(IKaryotype mate);
-		void Mutate();
+        IKaryotype Mate(IPopulationManager ipo, IKaryotype mate);
+		void Mutate(IPopulationManager ipo);
+        double Fitness();
 
 		#endregion Methods
 	}

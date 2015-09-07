@@ -136,21 +136,13 @@ namespace GA.Nucleus.Population {
 
         public abstract ChromosomePool ChromosomePool { get; set; }
 
-        private IPopulation _Population;
-        public virtual IPopulation Population {
-            get {
-                if(_Population == null)
-                    _Population = CreatePopulation();
-                return _Population;
-            }
-            set {
-                _Population = value;
-            }
-        }
-
 		#endregion Properties
 
 		#region Methods
+
+        public abstract IPopulation GetPopulation();
+
+        public abstract void SetPopulation(IPopulation p);
 
 		public IPopulation CreatePopulation() {
 			IPopulation p = (IPopulation)Activator.CreateInstance(PopulationType);
@@ -159,7 +151,7 @@ namespace GA.Nucleus.Population {
 		}
 
 		public IKaryotype CreateKaryotype(IHaploid mom, IHaploid dad) {
-			return (IKaryotype)Activator.CreateInstance(KaryotypeType, this, mom, dad);
+			return (IKaryotype)Activator.CreateInstance(KaryotypeType, mom, dad);
 		}
 
 		public IHaploid CreateHaploid() {

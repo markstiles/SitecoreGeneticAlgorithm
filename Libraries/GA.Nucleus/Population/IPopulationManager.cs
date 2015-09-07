@@ -27,11 +27,13 @@ namespace GA.Nucleus.Population {
 
 		ChromosomePool ChromosomePool { get; set; }
 
-        IPopulation Population { get; set; }
-
 		#endregion Properties
 
 		#region Methods
+
+        IPopulation GetPopulation();
+
+        void SetPopulation(IPopulation p);
 
 		IPopulation CreatePopulation();
 

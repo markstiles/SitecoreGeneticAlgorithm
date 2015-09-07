@@ -41,7 +41,7 @@
 	.even { background:#fff; }
 </style>
 <script type="text/javascript">
-	$j(document).ready(function () {
+    $j(document).ready(function () {
         if(window.location.hash.indexOf("#monitor") != -1)
         	$j(".infoBox .monitor").show();
 
@@ -128,10 +128,10 @@
 						<ItemTemplate>
 							<div class="entry <%# OddEven(Container.ItemIndex) %>">
 								<div class="key">
-									<%# GetItemName(((KeyValuePair<string, List<IEngagementValue>>)Container.DataItem).Key) %> : 
+									<%# GetItemName(((KeyValuePair<string, List<IValue>>)Container.DataItem).Key) %> : 
 								</div>
 								<div class="value">
-									<%# ((KeyValuePair<string, List<IEngagementValue>>)Container.DataItem).Value.Sum(a => a.Value) %>
+									<%# ((KeyValuePair<string, List<IValue>>)Container.DataItem).Value.Sum(a => a.Value) %>
 								</div>
 							</div>
 						</ItemTemplate>
@@ -156,7 +156,7 @@
 								<div class="dna">
                                     <%# ((IKaryotype)Container.DataItem).Phenotype.ChromosomeSequence() %>
 								</div>
-								<div class="fitness"><%# ((IKaryotype)Container.DataItem).Fitness %></div>
+								<div class="fitness"><%# ((IKaryotype)Container.DataItem).Fitness() %></div>
 								<div class="gender"><%# (((IKaryotype)Container.DataItem).Gender) ? "M" : "F" %></div>
 							</div>
 						</ItemTemplate>

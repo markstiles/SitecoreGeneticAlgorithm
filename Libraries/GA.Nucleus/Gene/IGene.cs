@@ -9,8 +9,8 @@ namespace GA.Nucleus.Gene {
 
 		#region Properties
 
-		string GeneID { get; }
-        string GeneName { get; }
+        string GeneID { get; set; }
+        string GeneName { get; set; }
 		bool IsDominant { get; set; }
 
 		#endregion Properties
