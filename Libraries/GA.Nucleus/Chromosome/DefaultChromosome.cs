@@ -42,7 +42,7 @@ namespace GA.Nucleus.Chromosome {
             IChromosome cloner = (IChromosome)Activator.CreateInstance(this.GetType());
             foreach (IGene g in this) {
                 IGene newG = (IGene)Activator.CreateInstance(g.GetType());
-                newG.GeneID = newG.GeneID;
+                newG.GeneID = g.GeneID;
                 newG.GeneName = g.GeneName;
                 newG.IsDominant = g.IsDominant;
                 cloner.Add(newG);
