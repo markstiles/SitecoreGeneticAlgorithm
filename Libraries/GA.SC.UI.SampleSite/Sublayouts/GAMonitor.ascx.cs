@@ -11,7 +11,6 @@
 	using System.Text;
     using GA.SC.UI.SampleSite.EV;
     using Sitecore.Configuration;
-    using GA.SC.UI.SampleSite.Population;
     using GA.Nucleus.Chromosome;
 
 	public partial class GAMonitor : UserControl {
