@@ -1,1 +1,0 @@
-﻿<%@ WebService Language="C#" Class="GA.SC.WebService.EventTracking" %>
