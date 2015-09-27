@@ -1,0 +1,65 @@
+----item----
+version: 1
+id: {73C3969C-A64E-4CDD-A101-2729C1F481FC}
+database: master
+path: /sitecore/content/GASampleSite/Home/Red
+parent: {911731A3-7444-4946-9E5B-5F2364FD8764}
+name: Red
+master: {00000000-0000-0000-0000-000000000000}
+template: {070D8AA4-2A13-44AA-B93A-CD67F970F6E1}
+templatekey: Page
+
+----version----
+language: en
+version: 1
+revision: 4cdb593a-66d4-4dc5-8e0b-5be8940de427
+
+----field----
+field: {7C0BB5A4-32BE-4073-993C-6E5CEAFFD089}
+name: Title
+key: title
+content-length: 8
+
+Red Page
+----field----
+field: {C70BBE1C-29E5-4A69-AB17-ECB477C9ED97}
+name: Content
+key: content
+content-length: 1162
+
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis urna sem. Nam blandit felis lorem, ut hendrerit nunc convallis id. Praesent convallis felis vel elit auctor ullamcorper. Morbi tincidunt, sem ac rhoncus interdum, mauris eros mollis diam, in facilisis risus diam vitae nisi. Suspendisse in magna iaculis tellus tristique aliquam ut eu risus. Aenean consequat iaculis mauris vel ullamcorper. Duis ligula leo, auctor id pretium non, lobortis sed lorem. Nullam elementum elit lorem, a sagittis libero facilisis vel. In tincidunt sit amet orci ac cursus.</p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis urna sem. Nam blandit felis lorem, ut hendrerit nunc convallis id. Praesent convallis felis vel elit auctor ullamcorper. Morbi tincidunt, sem ac rhoncus interdum, mauris eros mollis diam, in facilisis risus diam vitae nisi. Suspendisse in magna iaculis tellus tristique aliquam ut eu risus. Aenean consequat iaculis mauris vel ullamcorper. Duis ligula leo, auctor id pretium non, lobortis sed lorem. Nullam elementum elit lorem, a sagittis libero facilisis vel. In tincidunt sit amet orci ac cursus.</p>
+----field----
+field: {F77821D0-E35C-4B91-888F-C41D20125FA2}
+name: Tags
+key: tags
+content-length: 38
+
+{A65FB2DC-E606-4279-A52B-5A08EB6AC995}
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 15
+
+20140708T101921
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+4cdb593a-66d4-4dc5-8e0b-5be8940de427
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 34
+
+20140712T130347:635407670274422544
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin

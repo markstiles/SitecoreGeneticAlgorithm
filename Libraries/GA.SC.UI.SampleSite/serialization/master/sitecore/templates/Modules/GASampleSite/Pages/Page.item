@@ -1,0 +1,72 @@
+----item----
+version: 1
+id: {070D8AA4-2A13-44AA-B93A-CD67F970F6E1}
+database: master
+path: /sitecore/templates/Modules/GASampleSite/Pages/Page
+parent: {81F26B83-0776-4A19-85AB-803F89664BFD}
+name: Page
+master: {00000000-0000-0000-0000-000000000000}
+template: {AB86861A-6030-46C5-B394-E8F99E8B87DB}
+templatekey: Template
+
+----field----
+field: {12C33F3F-86C5-43A5-AEB4-5598CEC45116}
+name: __Base template
+key: __base template
+content-length: 77
+
+{1930BBEB-7805-471A-A3BE-4858AC7CF696}|{BFFB3930-EAF5-4F20-8D82-27CB706061A3}
+----field----
+field: {F7D48A55-2158-4F02-9356-756654404F73}
+name: __Standard values
+key: __standard values
+content-length: 38
+
+{F1634558-E4C3-431F-B04D-2CFF52D8E0CD}
+----field----
+field: {06D5295C-ED2F-4A54-9BF2-26228D113318}
+name: __Icon
+key: __icon
+content-length: 31
+
+Applications/16x16/document.png
+----version----
+language: en
+version: 1
+revision: d780e4d1-dca0-4a73-97a8-587495c59ada
+
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 15
+
+20140706T090057
+----field----
+field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
+name: __Created by
+key: __created by
+content-length: 14
+
+sitecore\admin
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+d780e4d1-dca0-4a73-97a8-587495c59ada
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 34
+
+20140712T130137:635407668976628314
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin

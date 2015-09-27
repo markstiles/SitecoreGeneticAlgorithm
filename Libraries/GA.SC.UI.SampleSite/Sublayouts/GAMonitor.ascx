@@ -8,35 +8,37 @@
 <%@ Import Namespace="GA.SC" %>
 
 <style>
-	.infoBox { position:absolute; top:0px; left:50px; }
+	h3 { background-color:#474747; color:#fff; height:40px; line-height:40px; padding:0 15px; margin:0px; border-top:5px solid #dc291e; }
+        h3 label { color:#fff; font-weight:normal; }
+    .infoBox { position:absolute; top:0px; left:50px; color:#000; }
 		.infoBox .tab { position:absolute; bottom:-38px; top:-6px; cursor:pointer; height:19px; background:#fff; box-shadow:4px 3px 4px -2px #777; font-weight:bold; padding:16px 10px 10px; width:70px; border-radius:0px 0px 10px 0px; border:1px solid #777; border-top:0px; }
 		.infoBox .monitor { display: none; padding:0px 20px 10px; border:1px solid #ccc; border-radius:0 0 10px 10px; margin:0px 0 0 6px; border-top:0px; background:#eee; box-shadow:4px 3px 4px -2px #777; }
 	.col1, .col2 { display: inline-block; vertical-align:top; }
-	.col1 { width: 200px; padding-top:50px; }
-	.col2 { width: 650px; }
+	.col1 { width: 200px; padding-top:50px; margin-right:20px; }
+	.col2 { width: 650px; padding-top:10px; }
+    .btns { margin-bottom:17px; }
 	.PopOptions { margin-bottom:10px; } 
-		.PopOptions label { display:inline-block; width:125px; text-align:right; margin-right:5px;}
-		.PopOptions span { font-weight: bold; }
-	.DNAList { font-size: 12px; margin:5px auto; height:646px; overflow:auto; border:1px solid #bbb; }
-		.count { display:inline-block; width:8%; }
-		.dna { display:inline-block; width:74%; text-align:center; }
-		.fitness { display:inline-block; width:13%; text-align:right; }
-		.gender { display:inline-block; width: 3%; text-align:center; }
-	.EV { display:inline-block; width:165px; }
-		.EV .tags { height:183px; overflow:auto; border:1px solid #ccc; margin-bottom:5px; }
+		.PopOptions label { display:inline-block; width:125px; text-align:right; margin-right:5px; color:#000;}
+		.PopOptions span { font-weight: bold; color:#000; }
+	.DNAList { font-size: 12px; margin:0 auto 5px auto; height:646px; overflow:auto; border:1px solid #bbb; }
+		.count { display:inline-block; width:8%; color:#000; }
+		.dna { display:inline-block; width:74%; text-align:center; color:#000; }
+		.fitness { display:inline-block; width:13%; text-align:right; color:#000; }
+		.gender { display:inline-block; width: 3%; text-align:center; color:#000; }
+	.EV { }
+		.EV .tags { max-height:183px; overflow:auto; border:1px solid #ccc; margin-bottom:5px; }
 		.EV .entry { text-align:left; }
-		.EV .key { display:inline-block; width:75px; text-align:right; text-transform:uppercase; }
-		.EV .value { display:inline-block; font-weight:bold; }
+		.EV .key { display:inline-block; width:75px; text-align:right; text-transform:uppercase; color:#000; }
+		.EV .value { display:inline-block; font-weight:bold; color:#000; }
 	.genotype { }
-		.genotype label { display: block; }
-		.genotype > label { margin-bottom:10px; }
-		.chromo { width:165px; border:1px solid #aaa; padding:3px; }
-			.chromo label.title { background: none repeat scroll 0 0 #fff; border: 1px solid #ccc; padding: 2px 4px; }
-			.chromo label { margin-bottom:5px; }
-			.genes { height:100px; overflow:auto; border:1px solid #ccc; margin-bottom:5px; }
-				.gene { }
+        .genotype > h4 { margin-top: 7px; }
+        h4 { color:#000; background-color:#fff; margin:0px; padding:3px 5px; border-right:1px solid #474747; border-left:1px solid #474747; border-bottom:1px solid #ccc; border-top:3px solid #dc291e; }
+        h4 label { display: block; font-weight:normal; color:#474747; }
+		.chromo {  border:1px solid #474747; margin-bottom:7px; border-top:0px; }
+			.genes { height:100px; overflow:auto; }
+				.gene { color:#000; }
 	.odd,
-	.even { padding:4px 5px; #ccc; border-right:1px solid #ccc; }
+	.even { padding:4px 5px; border-right:1px solid #ccc; }
 	.odd { }
 	.even { background:#fff; }
 </style>
@@ -61,10 +63,6 @@
 <div class="infoBox">
 	<div class="monitor">
 		<div class="col1">
-			<div class="btns">
-				<asp:Button ID="btnClearClicks" runat="server" Text="Clear Clicks" OnClick="btnClearClicks_Click" />
-				<asp:Button ID="btnRestart" runat="server" Text="Restart" OnClick="btnRestart_Click" />
-			</div>
 			<h3>Population Numbers</h3>
 			<div class="PopOptions">	
 				<div class="formRow">
@@ -100,14 +98,19 @@
 					<span><asp:Literal ID="ltlPopSize" runat="server"></asp:Literal></span>
 				</div>
 			</div>
-			<h3>Genotype</h3>
+			<h3>Genotype <label>(Chromosome List)</label></h3>
 			<div class="genotype">
-				<label>Chromosomes:</label>
 				<asp:Repeater ID="rptChromos" runat="server" OnItemDataBound="rptChromos_ItemDataBound">
 					<ItemTemplate>
-						<div class="chromo">
-							<label class="title"><%# ((KeyValuePair<string, GenePool>)Container.DataItem).Key %> - Length : <%# ((KeyValuePair<string, GenePool>)Container.DataItem).Value.GeneLimit %></label>
-							<label><%# ((KeyValuePair<string, GenePool>)Container.DataItem).Value.Count %> Genes</label>
+						<h4>
+                            <%# ((KeyValuePair<string, GenePool>)Container.DataItem).Key %> 
+                            <label>
+                                Gene Length : <%# ((KeyValuePair<string, GenePool>)Container.DataItem).Value.GeneLimit %>
+                                <br />
+							    Gene Pool: <%# ((KeyValuePair<string, GenePool>)Container.DataItem).Value.Count %>
+							</label>
+						</h4>
+                        <div class="chromo">
 							<div class="genes">
 								<asp:Repeater ID="rptGenes" runat="server">
 									<ItemTemplate>
@@ -140,14 +143,12 @@
 			</div>
 		</div>
 		<div class="col2">
-			<h3>Population Makeup</h3>
+            <div class="btns">
+				<asp:Button ID="btnClearClicks" runat="server" Text="Clear Clicks" OnClick="btnClearClicks_Click" />
+				<asp:Button ID="btnRestart" runat="server" Text="Restart Population" OnClick="btnRestart_Click" />
+			</div>
+			<h3>Population Makeup - <label>Unique Karyotypes: <asp:Literal ID="ltlUKaryos" runat="server"></asp:Literal></label></h3>
 			<div class="Controls">
-				<div>
-					<label>Unique Karyotypes:</label> 
-					<span>
-						<asp:Literal ID="ltlUKaryos" runat="server"></asp:Literal>
-					</span>
-				</div>
 				<div class="DNAList">
 					<asp:Repeater ID="rptDNAList" runat="server">
 						<ItemTemplate>

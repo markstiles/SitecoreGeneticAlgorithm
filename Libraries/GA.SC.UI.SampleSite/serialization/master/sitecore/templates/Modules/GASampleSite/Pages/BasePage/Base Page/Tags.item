@@ -1,0 +1,65 @@
+----item----
+version: 1
+id: {F77821D0-E35C-4B91-888F-C41D20125FA2}
+database: master
+path: /sitecore/templates/Modules/GASampleSite/Pages/BasePage/Base Page/Tags
+parent: {2EA10CEE-0898-4811-9904-5D74AE232F3B}
+name: Tags
+master: {00000000-0000-0000-0000-000000000000}
+template: {455A3E98-A627-4B40-8035-E683A0331AC7}
+templatekey: Template field
+
+----field----
+field: {AB162CC0-DC80-4ABF-8871-998EE5D7BA32}
+name: Type
+key: type
+content-length: 21
+
+Multilist with Search
+----field----
+field: {1EB8AE32-E190-44A6-968D-ED904C794EBF}
+name: Source
+key: source
+content-length: 145
+
+StartSearchLocation={DB75869F-0B03-471C-B366-5FA7DAD4DF65}&Filter=_path:DB75869F0B03471CB3665FA7DAD4DF65|-_group:DB75869F0B03471CB3665FA7DAD4DF65
+----field----
+field: {BA3F86A2-4A1C-4D78-B63D-91C2779C1B5E}
+name: __Sortorder
+key: __sortorder
+content-length: 3
+
+400
+----version----
+language: en
+version: 1
+revision: 0d3a29d6-ec91-4144-82c5-d94d119a1196
+
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 15
+
+20140712T120533
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+0d3a29d6-ec91-4144-82c5-d94d119a1196
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 34
+
+20140720T152937:635414669772480775
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin

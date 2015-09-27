@@ -1,0 +1,65 @@
+----item----
+version: 1
+id: {907E3F03-57E2-4BEC-8D76-F2A414D1C339}
+database: master
+path: /sitecore/templates/Modules/GASampleSite/Content/ContentFolder/__Standard Values
+parent: {AE6F662D-040C-4196-8E25-6CB5E2CF1224}
+name: __Standard Values
+master: {00000000-0000-0000-0000-000000000000}
+template: {AE6F662D-040C-4196-8E25-6CB5E2CF1224}
+templatekey: ContentFolder
+
+----field----
+field: {1172F251-DAD4-4EFB-A329-0C63500E4F1E}
+name: __Masters
+key: __masters
+content-length: 38
+
+{3BF61A0B-D7BC-49A8-BBC5-1FADED16B530}
+----version----
+language: en
+version: 1
+revision: 9315543f-c5c0-43d9-9a7b-66e692d7454d
+
+----field----
+field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
+name: __Owner
+key: __owner
+content-length: 14
+
+sitecore\admin
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 15
+
+20140706T092655
+----field----
+field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
+name: __Created by
+key: __created by
+content-length: 14
+
+sitecore\admin
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+9315543f-c5c0-43d9-9a7b-66e692d7454d
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 34
+
+20140706T092704:635402356245102268
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin

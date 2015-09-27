@@ -13,24 +13,6 @@ namespace GA.SC.UI.SampleSite.Sublayouts {
     public partial class GAMonitor {
         
         /// <summary>
-        /// btnClearClicks control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnClearClicks;
-        
-        /// <summary>
-        /// btnRestart control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnRestart;
-        
-        /// <summary>
         /// ltlCrossover control.
         /// </summary>
         /// <remarks>
@@ -119,6 +101,24 @@ namespace GA.SC.UI.SampleSite.Sublayouts {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Repeater rptEV;
+        
+        /// <summary>
+        /// btnClearClicks control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnClearClicks;
+        
+        /// <summary>
+        /// btnRestart control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnRestart;
         
         /// <summary>
         /// ltlUKaryos control.
