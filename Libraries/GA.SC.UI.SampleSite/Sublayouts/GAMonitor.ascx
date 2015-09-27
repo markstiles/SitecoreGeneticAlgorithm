@@ -5,7 +5,6 @@
 <%@ Import Namespace="GA.Nucleus.Population" %>
 <%@ Import Namespace="GA.Nucleus.Gene" %>
 <%@ Import Namespace="GA.SC.UI.SampleSite.EV" %>
-<%@ Import Namespace="GA.SC" %>
 
 <style>
 	h3 { background-color:#474747; color:#fff; height:40px; line-height:40px; padding:0 15px; margin:0px; border-top:5px solid #dc291e; }
